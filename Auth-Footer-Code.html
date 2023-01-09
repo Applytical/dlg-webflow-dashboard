@@ -277,24 +277,24 @@
             // SMS sent. Prompt user to type the code from the message, then sign the
             // user in with confirmationResult.confirm(code).
             window.confirmationResult = confirmationResult;
-          
-          	let code = window.prompt("Please enter your SMS Code");
-let text;
 
-if (code == null || code == "") {
-  text = "User cancelled the prompt.";
-} else {
-  confirmationResult.confirm(code).then((authUser) => {
-  // User signed in successfully.
-  user = authUser;
-  // ...
-}).catch((error) => {
-  // User couldn't sign in (bad verification code?)
-  // ...
-});
-  
-}
-          
+            let code = window.prompt("Please enter your SMS Code");
+            let text;
+
+            if (code == null || code == "") {
+              text = "User cancelled the prompt.";
+            } else {
+              confirmationResult.confirm(code).then((authUser) => {
+                // User signed in successfully.
+                user = authUser;
+                // ...
+              }).catch((error) => {
+                // User couldn't sign in (bad verification code?)
+                // ...
+              });
+
+            }
+
 
             // ...
           }).catch((error) => {
