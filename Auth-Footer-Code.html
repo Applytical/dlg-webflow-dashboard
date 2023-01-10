@@ -1,13 +1,20 @@
 <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.1.1/firebase-auth.js"></script>
 <script>
   var webflowAuth = {
-    loginPath: '/log-in',
+    loginPath: '/login',
     loginRedirectPath: '/user',
-    signupPath: '/sign-up',
+    signupPath: '/signup',
     signupRedirectPath: '/user',
     logoutRedirectPath: '/',
-    firebaseConfig: {} // Get Firebase Config infor
+    firebaseConfig: {
+      apiKey: "AIzaSyBgFjbyL0sLVaMFz5uYYy3LXWe53I9TLak",
+      authDomain: "dlg-dashboard-app.firebaseapp.com",
+      projectId: "dlg-dashboard-app",
+      storageBucket: "dlg-dashboard-app.appspot.com",
+      appId: "256283946678",
+    }
   };
 
   firebase.initializeApp(webflowAuth.firebaseConfig);
@@ -54,6 +61,73 @@
 
         userEmail.forEach(function (el) { el.innerText = user.email; });
         userDisplayName.forEach(function (el) { el.innerText = user.displayName; });
+
+        // Only Show if that URL
+        if (window.location.href == "https://beyond-dashboard-api.webflow.io/user") {
+          axios.post("https://68d8-80-6-132-186.ngrok.io/webflow/customers", {
+            email: "devyn@livingooddaily.com"
+          })
+            .then((response) => {
+              getCustomer(response);
+            });
+
+
+          function getCustomer(response) {
+            console.log(response.data.customer);
+
+            const itemContainer = document.getElementById('Item-Container');
+
+            const item = document.getElementById('content')
+
+            const h1 = item.getElementsByTagName('h1')[0]
+            h1.textContent = response.data.customer.firstName + " " + response.data.customer.lastName;
+            const p = item.getElementsByTagName('p')[0]
+            p.textContent = response.data.customer.emailAddress;
+            itemContainer.appendChild(item);
+          }
+
+        }
+
+        if (window.location.href == "https://beyond-dashboard-api.webflow.io/subscriptions") {
+          axios.post("https://68d8-80-6-132-186.ngrok.io/webflow/customers/subscriptions", {
+            email: "devyn@livingooddaily.com"
+          })
+            .then((response) => {
+              getCustomerSubscriptions(response);
+            });
+
+
+          function getCustomerSubscriptions(response) {
+
+            const cardContainer = document.getElementById("Cards-Container")
+
+            response.data.subscriptions.forEach(subscription => {
+
+              const style = document.getElementById('samplestyle')
+              // Copy the card and it's style
+              const card = style.cloneNode(true)
+
+              card.setAttribute('id', '');
+              card.style.display = 'block';
+
+              card.addEventListener('click', function () {
+                document.location.href = "/item?id=" + subscription.purchaseId;
+
+
+
+              });
+
+              const h3 = card.getElementsByTagName('H5')[0]
+              h3.textContent = subscription.productName;
+
+
+              const price = card.getElementsByTagName('P')[0]
+              price.textContent = `Price: $${subscription.price} NextBillDate:${subscription.nextBillDate}`
+
+              cardContainer.appendChild(card);
+            })
+          }
+        }
       } else {
         userAuth.forEach(function (el) { el.style.display = 'none'; });
         userUnauth.forEach(function (el) { el.style.display = null; });
@@ -246,13 +320,7 @@
         });
     }
     firebase.auth().useDeviceLanguage();
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
-      'size': 'invisible',
-      'callback': (response) => {
-        // reCAPTCHA solved, allow signInWithPhoneNumber.
-        onSignInSubmit();
-      }
-    });
+
 
     var phoneLink = document.querySelectorAll('[data-phone-form]');
     var phoneFormErrors = document.querySelectorAll('[data-phone-error]');
@@ -262,6 +330,13 @@
     phoneLink.forEach(function (el) {
       var phoneNumber = el.querySelector('[data-form-phone]');
       var phoneNumberCode = el.querySelector('[data-form-phone-code]');
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sign-in-button', {
+        'size': 'invisible',
+        'callback': (response) => {
+          //reCAPTCHA solved, allow signInWithPhoneNumber.
+          onSignInSubmit();
+        }
+      });
       const appVerifier = window.recaptchaVerifier;
 
       el.addEventListener('submit', function (e) {
