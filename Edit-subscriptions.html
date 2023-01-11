@@ -1,0 +1,33 @@
+<script>
+    window.onload = (event) => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const purchaseId = urlParams.get('id')
+    axios.post("https://80de-89-105-11-50.ngrok.io/webflow/subscriptions", {
+        purchaseId:purchaseId
+    }) 
+        .then((response) => {
+          ShowSubscription(response);
+        });
+        
+        async function ShowSubscription(response){
+            
+        const cardContainer = document.getElementById("Cards-Container")
+            const style = document.getElementById('samplestyle')
+    
+             const subscriptionName = document.getElementById('subscriptionName')
+          subscriptionName.textContent = response.data.subscription.productName;
+          
+          const price = document.getElementById('subscriptionPrice')
+         price.textContent = `Price: $${response.data.subscription.price}`
+         const subscriptionNextBillDate = document.getElementById('subscriptionNextBilldate')
+         subscriptionNextBillDate.textContent = `NextBillDate:${response.data.subscription.nextBillDate}`
+                    
+    
+            
+        }
+    };
+    
+    
+    
+    </script>
