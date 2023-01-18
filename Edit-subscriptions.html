@@ -1,33 +1,136 @@
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <script>
-    window.onload = (event) => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const purchaseId = urlParams.get('id')
-    axios.post("https://80de-89-105-11-50.ngrok.io/webflow/subscriptions", {
-        purchaseId:purchaseId
-    }) 
-        .then((response) => {
-          ShowSubscription(response);
-        });
-        
-        async function ShowSubscription(response){
-            
-        const cardContainer = document.getElementById("Cards-Container")
-            const style = document.getElementById('samplestyle')
+  const queryString = window.location.search;
+  const urlParams = new URLSearchParams(queryString);
+  const purchaseId = urlParams.get('id')
+  if (purchaseId == undefined) { window.location.replace("/account/subscriptions") };
+  axios.post("https://e076-80-6-132-186.ngrok.io/webflow/subscriptions", {
+    purchaseId: purchaseId
+  })
+    .then((response) => {
+      ShowSubscription(response);
+    });
+
+  async function ShowSubscription(response) {
+
+    let cardContainer = document.getElementById("Cards-Container")
+    const style = document.getElementById('samplestyle')
+
+    const subscriptionName = document.getElementById('subscriptionName')
+    subscriptionName.textContent = response.data.subscription.productName;
+
+    const price = document.getElementById('subscriptionPrice')
+    price.textContent = `$${response.data.subscription.price}`
+
+    const subscriptionFreq = document.getElementById('subscriptionFreq')
+    subscriptionFreq.textContent = `${response.data.subscription.billingIntervalDays} Days`
+
+    // Shipping Address
+    const subscriptionAddressName = document.getElementById('subscriptionAddressName')
+    subscriptionAddressName.textContent = response.data.subscription.shipFirstName + " " + response.data.subscription.shipLastName;
+
+    const subscriptionAddressLine1 = document.getElementById('subscriptionAddressLine1')
+    subscriptionAddressLine1.textContent = response.data.subscription.shipAddress1;
+
+    const subscriptionAddressMisc = document.getElementById('subscriptionAddressMisc')
+    subscriptionAddressMisc.textContent = `${response.data.subscription.shipCity}, ${response.data.subscription.shipPostalCode}, ${response.data.subscription.shipState}`
+    //document.getElementsByClassName('date').flatpickr({
+    //  defaultDate: response.data.subscription.nextBillDate
+    //});
+    let nextBillDate = new Date(response.data.subscription.nextBillDate);
+    let nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
     
-             const subscriptionName = document.getElementById('subscriptionName')
-          subscriptionName.textContent = response.data.subscription.productName;
-          
-          const price = document.getElementById('subscriptionPrice')
-         price.textContent = `Price: $${response.data.subscription.price}`
-         const subscriptionNextBillDate = document.getElementById('subscriptionNextBilldate')
-         subscriptionNextBillDate.textContent = `NextBillDate:${response.data.subscription.nextBillDate}`
-                    
+    const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-original-bill-date", nextBillDateFormatted);
+    const fp = flatpickr(".date", {
+    	defaultDate: nextBillDateFormatted,
+      dateFormat:"m-d-Y"
+    });
     
-            
-        }
-    };
+    fp.config.onChange.push(function(dateStr) {
+    	console.log(dateStr)
+      let date = new Date(dateStr);
+			const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
+    	const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", dateFormatted);
+    	
+    });
     
-    
-    
-    </script>
+   
+
+    const subscriptionStatusUpdate = document.getElementById('cancelSubscription');
+
+    if (response.data.subscription.nextBillDate == null && response.data.subscription.status == "CANCELLED") {
+      subscriptionStatusUpdate.textContent = "Reactivate subscription.";
+      subscriptionStatusUpdate.classList.add("Cancelled");
+    } else if (response.data.subscription.nextBillDate != null && response.data.subscription.status == "ACTIVE") {
+      subscriptionStatusUpdate.textContent = "Cancel subscription";
+      subscriptionStatusUpdate.classList.add("Active");
+    }
+
+
+  };
+  var subscriptionStatusUpdate = document.getElementById('cancelSubscription');
+
+  subscriptionStatusUpdate.addEventListener("click", function (e) {
+    e.preventDefault()
+    if (subscriptionStatusUpdate.classList.contains('Active')) {
+      if (confirm("Are you sure you want to cancel!")) {
+        axios.post("https://509c-89-105-11-50.ngrok.io/webflow/subscriptions/cancel", {
+          purchaseId: purchaseId
+        })
+          .then((response) => {
+            if (response.status = 200) {
+              console.log("Cancelled");
+            }
+          });
+      }
+    } else if (subscriptionStatusUpdate.classList.contains('Cancelled')) {
+      if (confirm("Are you sure you want to reactivate the subscription!")) {
+        axios.post("https://509c-89-105-11-50.ngrok.io/webflow/subscriptions/restart", {
+          purchaseId: purchaseId
+        })
+          .then((response) => {
+            if (response.status = 200) {
+              console.log("Restarted");
+            }
+          });
+
+      }
+    }
+
+  });
+	
+  
+   var updateSubscriptionForm = document.querySelectorAll('[data-subscription-form]');
+    var updateSubscriptionError = document.querySelectorAll('[data-subscription-update-error]');
+    var updateSubscriptionLoading = document.querySelectorAll('[data-subscription-update-loading]');
+    var updateSubscriptionIdle = document.querySelectorAll('[data-subscription-update-idle]');
+
+    updateSubscriptionForm.forEach(function (el) {
+      var updateSubscriptionNextBillDate = el.querySelector('[data-next-bill-date]');
+
+      el.addEventListener('submit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        updateSubscriptionError.forEach(function (el) { el.style.display = 'none'; });
+        updateSubscriptionLoading.forEach(function (el) { el.style.display = 'block'; });
+        updateSubscriptionIdle.forEach(function (el) { el.style.display = 'none'; });
+				const originalBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-original-bill-date');
+				const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
+        if (confirm(`Are you sure you want to update the subscritpion bill date from ${originalBillDate} to ${nextBillDate}`)) {
+        axios.post("https://509c-89-105-11-50.ngrok.io/webflow/subscriptions/update", {
+          purchaseId: purchaseId
+        })
+          .then((response) => {
+            if (response.status = 200) {
+              console.log("Cancelled");
+            }
+          });
+      }
+      
+      });
+    });
+
+
+</script>
