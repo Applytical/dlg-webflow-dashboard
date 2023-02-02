@@ -44,6 +44,13 @@ async function ShowSubscription(response) {
 
   const subscriptionLast4 = document.getElementById('subscriptionCardLast4');
   subscriptionLast4.textContent = `••••${response.data.last4}`;
+  const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+  subscriptionStatusBadge.textContent = "Active";
+  subscriptionStatusBadge.style.backgroundColor = "#EC008B";
+
+
+  const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
+  subscriptionProductImage.src = response.data.productImg;
 
   const productQty = document.querySelector('.quantity-number');
   productQty.setAttribute("data-initial-qty", response.data.productQty);
@@ -53,9 +60,19 @@ async function ShowSubscription(response) {
   let nextBillDateFormatted;
 
   if (response.data.nextBillDate !== null) {
+
+    const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+    subscriptionStatusBadge.textContent = "Active";
+    subscriptionStatusBadge.style.backgroundColor = "#EC008B";
+
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   } else {
+    
+    const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+    subscriptionStatusBadge.textContent = "Cancelled";
+    subscriptionStatusBadge.style.backgroundColor = "#404168";
+
     nextBillDate = new Date();
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   }
@@ -103,7 +120,7 @@ var subscriptionStatusUpdate = document.getElementById('cancelSubscription');
 subscriptionStatusUpdate.addEventListener("click", function (e) {
   e.preventDefault()
   if (subscriptionStatusUpdate.classList.contains('Active')) {
-    modalAgree.textContent = 'Cancel'
+    modalAgree.textContent = 'Cancel Subscription'
     modalTitle.textContent = 'Are you sure you want to cancel?'
 
     modal.style.display = 'flex';
