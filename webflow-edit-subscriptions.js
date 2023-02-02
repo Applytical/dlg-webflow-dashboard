@@ -51,6 +51,8 @@ async function ShowSubscription(response) {
 
   const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
   subscriptionProductImage.src = response.data.productImg;
+  subscriptionProductImage.srcset = response.data.productImg;
+
 
   const productQty = document.querySelector('.quantity-number');
   productQty.setAttribute("data-initial-qty", response.data.productQty);
