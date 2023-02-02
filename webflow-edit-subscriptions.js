@@ -44,12 +44,12 @@ async function ShowSubscription(response) {
 
   const subscriptionLast4 = document.getElementById('subscriptionCardLast4');
   subscriptionLast4.textContent = `••••${response.data.last4}`;
-  const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+  const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
   subscriptionStatusBadge.textContent = "Active";
   subscriptionStatusBadge.style.backgroundColor = "#EC008B";
 
 
-  const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
+  const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
   subscriptionProductImage.src = response.data.productImg;
 
   const productQty = document.querySelector('.quantity-number');
@@ -61,15 +61,15 @@ async function ShowSubscription(response) {
 
   if (response.data.nextBillDate !== null) {
 
-    const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+    const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Active";
     subscriptionStatusBadge.style.backgroundColor = "#EC008B";
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   } else {
-    
-    const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+
+    const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Cancelled";
     subscriptionStatusBadge.style.backgroundColor = "#404168";
 
