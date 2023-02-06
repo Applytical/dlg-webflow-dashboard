@@ -268,6 +268,7 @@ const quantityControl = document.querySelectorAll("[data-quantity-control]");
 
 quantityControl.forEach(function (el) {
   let quantityElement = el.querySelector("[name=quantity]");
+  quantityElement.readOnly = true;
   el.addEventListener("click", function (e) {
     e.preventDefault();
 
