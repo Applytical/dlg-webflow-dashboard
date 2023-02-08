@@ -241,7 +241,8 @@ changeCardDetails.addEventListener("click", function (e) {
   e.preventDefault()
 
   const refreshPage = document.getElementById('refreshPage').style.display = "block";
-  refreshPage.addEventListener('click', function (e) {
+  const refreshPageDiv = document.getElementById('refreshPageDiv')
+  refreshPageDiv.addEventListener('click', function (e) {
 
     window.location.reload();
 
