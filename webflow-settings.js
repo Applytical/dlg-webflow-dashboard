@@ -242,7 +242,7 @@ changeCardDetails.addEventListener("click", function (e) {
 
   const refreshPage = document.getElementById('refreshPage').style.display = "block";
   const refreshPageDiv = document.getElementById('refreshPageDiv')
-  refreshPageDiv.addEventListener('click', function (e) {
+  refreshPage.addEventListener('click', function (e) {
 
     window.location.reload();
 
