@@ -12,6 +12,8 @@ axios.post(`${url}/webflow/subscriptions/all`, {
     if (error.response.data == "Could Not Find Customer") {
       const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
       const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
+      const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
+
       const hideTopBar = document.getElementById('navTopBar').style.display = 'none';
       const footer = document.getElementById('footer').style.display = 'none';
       const lifestyleBtn = document.getElementById('joinLifeStyle');
@@ -41,7 +43,7 @@ function getSubscriptions(subscriptions) {
   const mainDashboard = document.getElementById('mainDashboard').style.display = 'block';
   const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
   const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
-  
+
   const cardContainer = document.getElementById("Cards-Container")
 
   subscriptions.forEach(subscription => {
