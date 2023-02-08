@@ -76,8 +76,8 @@ function getSubscriptions(subscriptions) {
       const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
       subscriptionProductImage.src = subscription.productImg;
       subscriptionProductImage.addEventListener("error", function (event) {
-        event.target.src = subscription.productImg;
-        event.onerror = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543"
+        event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+        event.onerror = null;
       })
 
 
