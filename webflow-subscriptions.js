@@ -36,7 +36,11 @@ axios.post(`${url}/webflow/subscriptions/all`, {
   });
 
 function getSubscriptions(subscriptions) {
+  const hideSideBar = document.getElementById('navSideBar').style.display = 'block';
+  const mainDashboard = document.getElementById('mainDashboard').style.display = 'block';
   const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
+  const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
+  
   const cardContainer = document.getElementById("Cards-Container")
 
   subscriptions.forEach(subscription => {

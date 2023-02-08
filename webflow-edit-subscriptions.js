@@ -52,6 +52,11 @@ async function ShowSubscription(response) {
   const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
   subscriptionProductImage.src = response.data.productImg;
   subscriptionProductImage.srcset = response.data.productImg;
+  subscriptionProductImage.addEventListener("error", function (event) {
+    event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+    event.target.srcset = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+    event.onerror = null;
+  })
 
 
   const productQty = document.querySelector('.quantity-number');
