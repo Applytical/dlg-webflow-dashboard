@@ -44,10 +44,10 @@ function getSubscriptions(subscriptions) {
   const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
   const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
 
-  const cardContainer = document.getElementById("Cards-Container")
-
   subscriptions.forEach(subscription => {
     if (subscription.nextBillDate !== null && subscription.status == "ACTIVE") {
+
+      const cardContainer = document.getElementById("Cards-Container");
 
       const style = document.getElementById('cardstyle');
       // Copy the card and it's style
@@ -97,7 +97,10 @@ function getSubscriptions(subscriptions) {
       cardContainer.appendChild(card);
 
     } else {
-      const style = document.getElementById('cardstyle');
+
+      const cancelledContainer = document.getElementById("Cancelled-Container");
+
+      const style = document.getElementById('cardstyleCancelled');
       // Copy the card and it's style
       const card = style.cloneNode(true)
 
@@ -128,6 +131,11 @@ function getSubscriptions(subscriptions) {
 
       const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
       subscriptionProductImage.src = subscription.productImg;
+      subscriptionProductImage.addEventListener("error", function (event) {
+        event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+        event.target.srcset = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+        event.onerror = null;
+      });
 
       const subscriptionLink = card.getElementsByClassName('subscription-link')[0].addEventListener('click', function (e) {
         document.location.href = "/account/subscription?id=" + subscription.purchaseId;
