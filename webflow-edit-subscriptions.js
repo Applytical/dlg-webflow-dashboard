@@ -10,6 +10,9 @@ axios.post(`${url}webflow/subscriptions`, {
   });
 
 async function ShowSubscription(response) {
+  const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
+  const showSideBar = document.getElementById('navSideBar').style.display = 'block';
+  const mainDashboard = document.getElementById('mainDashboard').style.display = 'block';
   document.title = response.data.productName;
   const subscriptionName = document.getElementById('subscriptionName')
   subscriptionName.textContent = response.data.productName;
