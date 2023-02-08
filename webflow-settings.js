@@ -1,10 +1,12 @@
 const customerEmail = sessionStorage.getItem("email");
+const customerId = sessionStorage.getItem("customerId");
 axios.post(`${url}webflow/customer/`, {
   email: customerEmail
 })
   .then((response) => {
     shippingAddress(response.data);
     billingAddress(response.data);
+    card(response.data);
   });
 
 async function shippingAddress(customer) {
@@ -66,6 +68,29 @@ async function billingAddress(customer) {
   billCountry.readOnly = true
 
 }
+async function card(customer) {
+
+  const last4 = document.getElementById('cardLast4');
+  last4.textContent = `Card Ending in: ••••${customer.cardLast4}`;
+
+  const cardExpiry = document.getElementById('cardExpiry');
+  let date = new Date(customer.cardExpiryDate);
+  const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCFullYear().toString();
+  cardExpiry.textContent = `Card Expiry: ${dateFormatted}`;
+
+
+}
+
+
+
+const modal = document.getElementById("subscriptionModal");
+const modalContent = document.getElementById("subscriptionModalContent");
+const closeModal = document.getElementById('modalClose');
+const modalAgree = document.getElementById("subscriptionModalAgree");
+const modalCancel = document.getElementById("subscriptionModalCancel");
+const modalTitle = document.getElementById("subscriptionModalTitle");
+
+
 const billingAddressForm = document.querySelectorAll('[data-billing-address-form]');
 const billingAddressErrors = document.querySelectorAll('[data-billing-address-error]');
 
@@ -85,8 +110,16 @@ billingAddressForm.forEach(function (el) {
     e.stopPropagation();
 
     billingAddressErrors.forEach(function (el) { el.style.display = 'none'; });
+    modalAgree.textContent = 'Update'
+    modalTitle.textContent = 'Are you sure you want to update billing address?'
 
-    if (confirm("Are you sure you want to update you Billing Address!")) {
+    modal.style.display = 'flex';
+    modalAgree.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
+
       axios.post(`${url}webflow/customer/update`, {
         billingFirstName: billingFirstName.value,
         billingLastName: billingLastName.value,
@@ -96,24 +129,36 @@ billingAddressForm.forEach(function (el) {
         billingState: billingState.value,
         billingZipCode: billingZipCode.value,
         billingCountry: billingCountry.value,
+        customerId: customerId
       })
         .then((response) => {
           if (response.status == 200) {
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Billing Address Updated";
+            modal.style.display = "none";
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
             const errorMessageBanner = document.getElementById('errorBannerMessage');
             errorMessageBanner.textContent = "Something Went Wrong"
+            modal.style.display = "none";
           }
 
         }).catch((error) => {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
+          modal.style.display = "none";
         });
-    }
+    });
+
+    modalCancel.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      modal.style.display = 'none';
+
+    });
   });
 })
 
@@ -137,39 +182,89 @@ shippingAddressForm.forEach(function (el) {
     e.preventDefault();
     e.stopPropagation();
 
+    modalAgree.textContent = 'Update'
+    modalTitle.textContent = 'Are you sure you want to update shipping address?'
+
+    modal.style.display = 'flex';
+
     shippingAddressErrors.forEach(function (el) { el.style.display = 'none'; });
+    modalAgree.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
 
-    if (confirm("Are you sure you want to update you Shipping Address!")) {
       axios.post(`${url}webflow/customer/update`, {
         shippingFirstName: shippingFirstName.value,
         shippingLastName: shippingLastName.value,
-        billingAddress1: shippingAddress1.value,
-        billingAddress2: shippingAddress2.value,
+        shippingAddress1: shippingAddress1.value,
+        shippingAddress2: shippingAddress2.value,
         shippingCity: shippingCity.value,
         shippingState: shippingState.value,
         shippingZipCode: shippingZipCode.value,
         shippingCountry: shippingCountry.value,
+        customerId: customerId
       })
         .then((response) => {
           if (response.status == 200) {
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Shipping Address Updated";
+            modal.style.display = "none"
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
             const errorMessageBanner = document.getElementById('errorBannerMessage');
-            errorMessageBanner.textContent = "Something Went Wrong"
+            errorMessageBanner.textContent = "Something Went Wrong";
+            modal.style.display = "none";
           }
 
         }).catch((error) => {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
+          modal.style.display = "none";
         });
-    }
+    });
+
+    modalCancel.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      modal.style.display = 'none';
+
+    });
   });
 })
+
+var changeCardDetails = document.getElementById('changeCardDetails');
+
+changeCardDetails.addEventListener("click", function (e) {
+  e.preventDefault()
+
+  const refreshPage = document.getElementById('refreshPage').style.display = "block";
+  refreshPage.addEventListener('click', function (e) {
+
+    window.location.reload();
+
+  });
+  const orderId = sessionStorage.getItem("orderId");
+  if (!orderId) {
+    axios.post(`${url}webflow/customer/getId`, {
+      customerId: customerId
+    })
+      .then((response) => {
+        const orderId = sessionStorage.setItem("orderId", response.data);
+        window.open(`${cardUrl}?emailAddress=${customerEmail}&orderId=${response.data}`);
+
+      }).catch((error) => {
+        const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+        const errorMessageBanner = document.getElementById('errorBannerMessage');
+        errorMessageBanner.textContent = error.response.data;
+      });
+  } else {
+    window.open(`https://funnels.thisisatestsiteonly.com/54386d78-0dbf-40f5-8126-3ffae3e1feeb/?emailAddress=${customerEmail}&orderId=${orderId}`);
+
+  }
+});
 
 const closeSucessBanner = document.getElementById('successBanner');
 
