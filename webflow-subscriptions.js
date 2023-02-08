@@ -8,7 +8,7 @@ axios.post(`${url}/webflow/subscriptions/all`, {
     getSubscriptions(response.data)
   })
   .catch((error) => {
-    console.log(error.response.data);
+    // console.log(error.response.data);
     if (error.response.data == "Could Not Find Customer") {
       const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
       const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
