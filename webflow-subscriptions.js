@@ -8,7 +8,7 @@ axios.post(`${url}/webflow/subscriptions/all`, {
     getSubscriptions(response.data)
   })
   .catch((error) => {
-    // console.log(error.response.data);
+    console.log(error.response.data);
     if (error.response.data == "Could Not Find Customer") {
       const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
       const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
@@ -44,10 +44,10 @@ function getSubscriptions(subscriptions) {
   const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
   const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
 
+  const cardContainer = document.getElementById("Cards-Container")
+
   subscriptions.forEach(subscription => {
     if (subscription.nextBillDate !== null && subscription.status == "ACTIVE") {
-
-      const cardContainer = document.getElementById("Cards-Container");
 
       const style = document.getElementById('cardstyle');
       // Copy the card and it's style
@@ -97,10 +97,7 @@ function getSubscriptions(subscriptions) {
       cardContainer.appendChild(card);
 
     } else {
-
-      const cancelledContainer = document.getElementById("Cancelled-Container");
-
-      const style = document.getElementById('cardstyleCancelled');
+      const style = document.getElementById('cardstyle');
       // Copy the card and it's style
       const card = style.cloneNode(true)
 
