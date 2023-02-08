@@ -240,8 +240,8 @@ var changeCardDetails = document.getElementById('changeCardDetails');
 changeCardDetails.addEventListener("click", function (e) {
   e.preventDefault()
 
-  const refreshPage = document.getElementById('refreshPage').style.display = "block";
-  const refreshPageDiv = document.getElementById('refreshPageDiv')
+  const refreshPage = document.getElementById('refreshPage')
+  const refreshPageDiv = document.getElementById('refreshPageDiv').style.display = "block";
   refreshPage.addEventListener('click', function (e) {
 
     window.location.reload();
