@@ -262,7 +262,7 @@ changeCardDetails.addEventListener("click", function (e) {
         errorMessageBanner.textContent = error.response.data;
       });
   } else {
-    window.open(`https://funnels.thisisatestsiteonly.com/54386d78-0dbf-40f5-8126-3ffae3e1feeb/?emailAddress=${customerEmail}&orderId=${orderId}`);
+    window.open(`${cardUrl}?emailAddress=${customerEmail}&orderId=${orderId}`);
 
   }
 });
