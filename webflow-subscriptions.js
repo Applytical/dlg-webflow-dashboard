@@ -8,7 +8,8 @@ axios.post(`${url}/webflow/subscriptions/all`, {
     getSubscriptions(response.data)
   })
   .catch((error) => {
-    showError(error)
+  conole.log(error);
+    //showError(error)
   });
 
 function getSubscriptions(subscriptions) {
