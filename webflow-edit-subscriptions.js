@@ -58,8 +58,8 @@ async function ShowSubscription(response) {
   subscriptionProductImage.src = response.data.productImg;
   subscriptionProductImage.srcset = response.data.productImg;
   subscriptionProductImage.addEventListener("error", function (event) {
-    event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
-    event.target.srcset = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+    event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/dashboard.jpg?v=1676298620";
+    event.target.srcset = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/dashboard.jpg?v=1676298620";
     event.onerror = null;
   })
 
