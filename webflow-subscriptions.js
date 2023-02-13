@@ -8,37 +8,7 @@ axios.post(`${url}/webflow/subscriptions/all`, {
     getSubscriptions(response.data)
   })
   .catch((error) => {
-  if(error){
- 
-    console.log(error.response.data);
-    if (error.response.data == "Could Not Find Customer") {
-      const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
-      const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
-      const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
-
-      const hideTopBar = document.getElementById('navTopBar').style.display = 'none';
-      const footer = document.getElementById('footer').style.display = 'none';
-      const lifestyleBtn = document.getElementById('joinLifeStyle');
-
-      lifestyleBtn.addEventListener('click', function (e) {
-        const refreshPage = document.getElementById('refreshPage');
-        const refreshPageDiv = document.getElementById('refreshPageDiv').style.display = "block";
-        refreshPage.addEventListener('click', function (e) {
-
-          window.location.reload();
-
-        });
-      });
-      
-    }
-
-
-
-    } else {
-      const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
-
-    }
-
+    showError(error)
   });
 
 function getSubscriptions(subscriptions) {
@@ -52,7 +22,7 @@ function getSubscriptions(subscriptions) {
 
   subscriptions.forEach(subscription => {
     if (subscription.nextBillDate !== null && subscription.status == "ACTIVE") {
-
+      
       const style = document.getElementById('cardstyle');
       // Copy the card and it's style
       const card = style.cloneNode(true)
@@ -146,4 +116,31 @@ function getSubscriptions(subscriptions) {
       cardContainer.appendChild(card);
     }
   })
+}
+function showError(error){
+  if (error.response.data == "Could Not Find Customer") {
+    const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
+    const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
+    const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
+
+    const hideTopBar = document.getElementById('navTopBar').style.display = 'none';
+    const footer = document.getElementById('footer').style.display = 'none';
+    const lifestyleBtn = document.getElementById('joinLifeStyle');
+
+    lifestyleBtn.addEventListener('click', function (e) {
+      const refreshPage = document.getElementById('refreshPage');
+      const refreshPageDiv = document.getElementById('refreshPageDiv').style.display = "block";
+      refreshPage.addEventListener('click', function (e) {
+
+        window.location.reload();
+
+      });
+    });
+
+
+
+  } else {
+    const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
+
+  }
 }
