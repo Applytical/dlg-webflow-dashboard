@@ -174,6 +174,7 @@ shippingAddressForm.forEach(function (el) {
   const shippingAddress1 = el.querySelector('[data-shipping-address1]');
   const shippingAddress2 = el.querySelector('[data-shipping-address2]');
   const shippingCity = el.querySelector('[data-shipping-city]');
+  
   const shippingState = el.querySelector('[data-shipping-state]');
   const shippingZipCode = el.querySelector('[data-shipping-zip]');
   const shippingCountry = el.querySelector('[data-shipping-country]');
