@@ -13,7 +13,7 @@ axios.post(`${url}/webflow/subscriptions/all`, {
 
 function getSubscriptions(subscriptions) {
   const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
-  const showSideBar = document.getElementById('navSideBar').style.display = 'block';
+  const showSideBar = document.getElementById('navSideBar').style.display = 'flex';
   const mainDashboard = document.getElementById('mainDashboard').style.display = 'block';
   const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
   const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
