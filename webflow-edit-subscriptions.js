@@ -1,5 +1,3 @@
-
-
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const purchaseId = urlParams.get('id')
@@ -88,12 +86,14 @@ async function ShowSubscription(response) {
     nextBillDate = new Date();
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   }
+  let minDate = new Date();
   let maxDate = new Date(nextBillDate);
   maxDate.setDate(maxDate.getDate() + 30)
   const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-original-bill-date", nextBillDateFormatted);
   const fp = flatpickr(".date", {
     defaultDate: nextBillDateFormatted,
     dateFormat: "m-d-Y",
+    minDate: minDate,
     maxDate: maxDate
   });
 
