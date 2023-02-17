@@ -151,7 +151,13 @@ subscriptionStatusUpdate.addEventListener("click", function (e) {
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Cancelled";
-            window.location.reload();
+            subscriptionStatusUpdate.classList.add("Cancelled");
+            subscriptionStatusUpdate.classList.remove("Active");
+            subscriptionStatusUpdate.textContent = "Reactivate subscription.";
+            const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+            subscriptionStatusBadge.textContent = "Cancelled";
+            subscriptionStatusBadge.style.backgroundColor = "#404168";
+            
           }
         }).catch((error) => {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
@@ -188,7 +194,12 @@ subscriptionStatusUpdate.addEventListener("click", function (e) {
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Reactivated";
-            window.location.reload();
+            subscriptionStatusUpdate.classList.remove("Cancelled");
+            subscriptionStatusUpdate.classList.add("Active");
+            subscriptionStatusUpdate.textContent = "Cancel subscription";
+            const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+            subscriptionStatusBadge.textContent = "Active";
+            subscriptionStatusBadge.style.backgroundColor = "#EC008B";
           }
         }).catch((error) => {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
