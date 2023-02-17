@@ -148,6 +148,7 @@ subscriptionStatusUpdate.addEventListener("click", function (e) {
       })
         .then((response) => {
           if (response.status = 200) {
+            modal.style.display = 'none';
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Cancelled";
@@ -191,6 +192,7 @@ subscriptionStatusUpdate.addEventListener("click", function (e) {
       })
         .then((response) => {
           if (response.status = 200) {
+            modal.style.display = 'none';
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Reactivated";
