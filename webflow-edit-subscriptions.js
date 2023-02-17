@@ -104,11 +104,11 @@ async function ShowSubscription(response) {
   });
 
   if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
-    const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
-    var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "block";
-  } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
     var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
     const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
+  } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
+    const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
+    var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "block";
   }
   let hideContainer = document.getElementById("subscriptionLoading").style.display = "none";
   let updateContainer = document.getElementById("subscriptionLoaded").style.display = "block";
@@ -189,7 +189,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
     modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
 
-    axios.post(`${url}webflow/subscriptions/restartl`, {
+    axios.post(`${url}webflow/subscriptions/restart`, {
       purchaseId: purchaseId
     })
       .then((response) => {
