@@ -103,15 +103,15 @@ async function ShowSubscription(response) {
 
   });
 
-  const subscriptionStatusUpdate = document.getElementById('cancelSubscription');
+  // const subscriptionStatusUpdate = document.getElementById('cancelSubscription');
 
-  if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
-    subscriptionStatusUpdate.textContent = "Reactivate subscription.";
-    subscriptionStatusUpdate.classList.add("Cancelled");
-  } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
-    subscriptionStatusUpdate.textContent = "Cancel subscription";
-    subscriptionStatusUpdate.classList.add("Active");
-  }
+  // if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
+  //   subscriptionStatusUpdate.textContent = "Reactivate subscription.";
+  //   subscriptionStatusUpdate.classList.add("Cancelled");
+  // } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
+  //   subscriptionStatusUpdate.textContent = "Cancel subscription";
+  //   subscriptionStatusUpdate.classList.add("Active");
+  // }
   let hideContainer = document.getElementById("subscriptionLoading").style.display = "none";
   let updateContainer = document.getElementById("subscriptionLoaded").style.display = "block";
 };
@@ -126,98 +126,100 @@ const modalTitle = document.getElementById("subscriptionModalTitle");
 
 
 
-var subscriptionStatusUpdate = document.getElementById('cancelSubscription');
+var subscriptionCancel = document.getElementById('cancelSubscription');
 
-subscriptionStatusUpdate.addEventListener("click", function (e) {
+subscriptionCancel.addEventListener("click", function (e) {
   e.preventDefault()
-  if (subscriptionStatusUpdate.classList.contains('Active')) {
-    modalAgree.textContent = 'Cancel Subscription'
-    modalTitle.textContent = 'Are you sure you want to cancel?'
 
-    modal.style.display = 'flex';
+  modalAgree.textContent = 'Cancel Subscription'
+  modalTitle.textContent = 'Are you sure you want to cancel?'
 
-    modalAgree.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
+  modal.style.display = 'flex';
 
-      modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
+  modalAgree.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-      axios.post(`${url}webflow/subscriptions/cancel`, {
-        purchaseId: purchaseId
-      })
-        .then((response) => {
-          if (response.status = 200) {
-            modal.style.display = 'none';
-            const successBanner = document.getElementById('successBanner').style.display = 'block';
-            const successBannerMessage = document.getElementById('successBannerMessage');
-            successBannerMessage.textContent = "Subscription Cancelled";
-            subscriptionStatusUpdate.classList.add("Cancelled");
-            subscriptionStatusUpdate.classList.remove("Active");
-            subscriptionStatusUpdate.textContent = "Reactivate subscription.";
-            const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-            subscriptionStatusBadge.textContent = "Cancelled";
-            subscriptionStatusBadge.style.backgroundColor = "#404168";
-            
-          }
-        }).catch((error) => {
-          const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-          const errorMessageBanner = document.getElementById('errorBannerMessage');
-          errorMessageBanner.textContent = error.response.data
-        });
-    });
+    modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
 
-    modalCancel.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
+    axios.post(`${url}webflow/subscriptions/cancel`, {
+      purchaseId: purchaseId
+    })
+      .then((response) => {
+        if (response.status = 200) {
+          modal.style.display = 'none';
+          const successBanner = document.getElementById('successBanner').style.display = 'block';
+          const successBannerMessage = document.getElementById('successBannerMessage');
+          successBannerMessage.textContent = "Subscription Cancelled";;
+          const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+          subscriptionStatusBadge.textContent = "Cancelled";
+          subscriptionStatusBadge.style.backgroundColor = "#404168";
+          var subscriptionCancel = document.getElementById('cancelSubscription').style.display = none;
+          const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = block;
 
-      modal.style.display = 'none';
+        }
+      }).catch((error) => {
+        const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+        const errorMessageBanner = document.getElementById('errorBannerMessage');
+        errorMessageBanner.textContent = error.response.data
+      });
+  });
 
-    });
+  modalCancel.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-  } else if (subscriptionStatusUpdate.classList.contains('Cancelled')) {
-    modalAgree.textContent = 'Reactivate'
-    modalTitle.textContent = 'Are you sure you want to reactivate the subscription!'
+    modal.style.display = 'none';
 
-    modal.style.display = 'flex';
+  });
+});
 
-    modalAgree.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
 
-      modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
+var subscriptionReactivate = document.getElementById('reactivateSubscription');
 
-      axios.post(`${url}webflow/subscriptions/restart`, {
-        purchaseId: purchaseId
-      })
-        .then((response) => {
-          if (response.status = 200) {
-            modal.style.display = 'none';
-            const successBanner = document.getElementById('successBanner').style.display = 'block';
-            const successBannerMessage = document.getElementById('successBannerMessage');
-            successBannerMessage.textContent = "Subscription Reactivated";
-            subscriptionStatusUpdate.classList.remove("Cancelled");
-            subscriptionStatusUpdate.classList.add("Active");
-            subscriptionStatusUpdate.textContent = "Cancel subscription";
-            const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-            subscriptionStatusBadge.textContent = "Active";
-            subscriptionStatusBadge.style.backgroundColor = "#EC008B";
-          }
-        }).catch((error) => {
-          const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-          const errorMessageBanner = document.getElementById('errorBannerMessage');
-          errorMessageBanner.textContent = error.response.data
-        });
-    });
+subscriptionReactivate.addEventListener("click", function (e) {
+  e.preventDefault()
 
-    modalCancel.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
+  modalAgree.textContent = 'Reactivate'
+  modalTitle.textContent = 'Are you sure you want to reactivate the subscription!'
 
-      modal.style.display = 'none';
+  modal.style.display = 'flex';
 
-    });
-  }
+  modalAgree.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
+    modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
+
+    axios.post(`${url}webflow/subscriptions/restartl`, {
+      purchaseId: purchaseId
+    })
+      .then((response) => {
+        if (response.status = 200) {
+          modal.style.display = 'none';
+          const successBanner = document.getElementById('successBanner').style.display = 'block';
+          const successBannerMessage = document.getElementById('successBannerMessage');
+          const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+          subscriptionStatusBadge.textContent = "Cancelled";
+          subscriptionStatusBadge.style.backgroundColor = "#404168";
+          const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = none;
+          var subscriptionCancel = document.getElementById('cancelSubscription').style.display = block;
+
+        }
+      }).catch((error) => {
+        const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+        const errorMessageBanner = document.getElementById('errorBannerMessage');
+        errorMessageBanner.textContent = error.response.data
+      });
+  });
+
+  modalCancel.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    modal.style.display = 'none';
+
+  });
 });
 
 
