@@ -104,11 +104,11 @@ async function ShowSubscription(response) {
   });
 
   if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
-    const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = none;
+    const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = none;
     var subscriptionCancel = document.getElementById('cancelSubscription').style.display = block;
   } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
     var subscriptionCancel = document.getElementById('cancelSubscription').style.display = none;
-    const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = block;
+    const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = block;
   }
   let hideContainer = document.getElementById("subscriptionLoading").style.display = "none";
   let updateContainer = document.getElementById("subscriptionLoaded").style.display = "block";
@@ -153,7 +153,7 @@ subscriptionCancel.addEventListener("click", function (e) {
           subscriptionStatusBadge.textContent = "Cancelled";
           subscriptionStatusBadge.style.backgroundColor = "#404168";
           var subscriptionCancel = document.getElementById('cancelSubscription').style.display = none;
-          const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = block;
+          const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = block;
 
         }
       }).catch((error) => {
@@ -200,7 +200,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
           const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
           subscriptionStatusBadge.textContent = "Cancelled";
           subscriptionStatusBadge.style.backgroundColor = "#404168";
-          const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = none;
+          const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = none;
           var subscriptionCancel = document.getElementById('cancelSubscription').style.display = block;
 
         }
