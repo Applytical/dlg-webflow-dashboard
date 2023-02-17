@@ -103,15 +103,13 @@ async function ShowSubscription(response) {
 
   });
 
-  // const subscriptionStatusUpdate = document.getElementById('cancelSubscription');
-
-  // if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
-  //   subscriptionStatusUpdate.textContent = "Reactivate subscription.";
-  //   subscriptionStatusUpdate.classList.add("Cancelled");
-  // } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
-  //   subscriptionStatusUpdate.textContent = "Cancel subscription";
-  //   subscriptionStatusUpdate.classList.add("Active");
-  // }
+  if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
+    const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = none;
+    var subscriptionCancel = document.getElementById('cancelSubscription').style.display = block;
+  } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
+    var subscriptionCancel = document.getElementById('cancelSubscription').style.display = none;
+    const subscriptionStatusUpdate = document.getElementById('reactiveSubscription').style.display = block;
+  }
   let hideContainer = document.getElementById("subscriptionLoading").style.display = "none";
   let updateContainer = document.getElementById("subscriptionLoaded").style.display = "block";
 };
