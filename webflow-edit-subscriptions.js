@@ -309,7 +309,7 @@ quantityControl.forEach(function (el) {
     quantityElement.setAttribute("data-quantity", quantityElement.value);
 
     const priceElement = document.getElementById('subscriptionPrice');
-    let price = quantityElement.value * Number(priceElement.getAttribute("intital-price"));
+    let price = quantityElement.value * Number(priceElement.getAttribute("initital-price"));
 
       console.log(price);
   });
