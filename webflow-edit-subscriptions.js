@@ -296,7 +296,7 @@ quantityControl.forEach(function (el) {
 
     if (e.target.className.includes("button-plus")) {
       quantityElement.value++;
-      el.querySelector(".button-minus").classList.remove("quantityMinusDisabled"); z
+      el.querySelector(".button-minus").classList.remove("quantityMinusDisabled");
     } else if (e.target.className.includes("button-minus")) {
       if (Number(quantityElement.value) !== 1) {
         quantityElement.value--;
