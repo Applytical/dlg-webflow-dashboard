@@ -247,9 +247,8 @@ updateSubscriptionForm.forEach(function (el) {
     modal.style.display = 'flex';
 
     const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
-    let subscriptionQuantity = el.querySelector("[name=quantity]").getAttribute("data-quantity");
-
-
+    const subscriptionQuantity = el.querySelector("[name=quantity]").getAttribute("data-quantity");
+    const price = document.getElementById('subscriptionPrice').textContent
 
     modalAgree.addEventListener('click', function (e) {
       e.preventDefault();
@@ -261,7 +260,7 @@ updateSubscriptionForm.forEach(function (el) {
         nextBillDate: nextBillDate,
         productQty: subscriptionQuantity,
         purchaseId: purchaseId,
-      })
+        price: price
         .then((response) => {
           if (response.status = 200) {
             modal.style.display = 'none';
