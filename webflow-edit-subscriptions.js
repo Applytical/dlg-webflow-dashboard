@@ -16,9 +16,10 @@ async function ShowSubscription(response) {
   const subscriptionName = document.getElementById('subscriptionName')
   subscriptionName.textContent = response.data.productName;
 
-  const price = document.getElementById('subscriptionPrice')
+  const price = document.getElementById('subscriptionPrice');
   price.textContent = `$${response.data.price}`
   price.setAttribute("data-price", response.data.price);
+  price.setAttribute("data-initial-price", response.data.intitalPrice);
   price.setAttribute("data-updated-price", response.data.price);
 
   const subscriptionFreq = document.getElementById('subscriptionFreq');
@@ -100,11 +101,13 @@ async function ShowSubscription(response) {
     let date = new Date(dateStr);
     const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
     const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", dateFormatted);
-
   });
-
+  // Hide elements based on subscription status 
   if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
-    var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+    const subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+    const hidenextBillDateDiv = document.getElementById('nextBillDateDiv').style.display = "none";
+    const hideUpdateSubButton = document.getElementById('updateSubButton').style.display = "none";
+
     const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
   } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
     const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
@@ -304,6 +307,11 @@ quantityControl.forEach(function (el) {
       }
     }
     quantityElement.setAttribute("data-quantity", quantityElement.value);
+
+    const priceElement = document.getElementById('subscriptionPrice');
+    let price = quantityElement.value * Number(priceElement.getAttribute(intitalPrice));
+
+      console.log(price);
   });
 });
 
