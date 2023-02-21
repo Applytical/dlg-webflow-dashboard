@@ -19,7 +19,7 @@ async function ShowSubscription(response) {
   const price = document.getElementById('subscriptionPrice');
   price.textContent = `$${response.data.price}`
   price.setAttribute("data-price", response.data.price);
-  price.setAttribute("data-initial-price", response.data.intitalPrice);
+  price.setAttribute("data-intitalprice", response.data.intitalPrice);
   price.setAttribute("data-updated-price", response.data.price);
 
   const subscriptionFreq = document.getElementById('subscriptionFreq');
@@ -309,7 +309,8 @@ quantityControl.forEach(function (el) {
     quantityElement.setAttribute("data-quantity", quantityElement.value);
 
     const priceElement = document.getElementById('subscriptionPrice');
-    let price = quantityElement.value * Number(priceElement.getAttribute("initital-price"));
+    let price = quantityElement.value * Number(priceElement.dataset.intitalprice);
+    console.log(priceElement.dataset.intitalprice);
 
       console.log(price);
   });
