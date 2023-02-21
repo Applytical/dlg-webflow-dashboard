@@ -311,7 +311,7 @@ quantityControl.forEach(function (el) {
     const priceElement = document.getElementById('subscriptionPrice');
     let price = quantityElement.value * Number(priceElement.dataset.intitalprice);
     
-    priceElement.value = `$${price.toFixed(2)}`
+    priceElement.textContent  = `$${price.toFixed(2)}`
   });
 });
 
