@@ -261,6 +261,7 @@ updateSubscriptionForm.forEach(function (el) {
         productQty: subscriptionQuantity,
         purchaseId: purchaseId,
         price: price
+      })
         .then((response) => {
           if (response.status = 200) {
             modal.style.display = 'none';
@@ -274,7 +275,7 @@ updateSubscriptionForm.forEach(function (el) {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
-        });;
+        });
     });
 
     modalCancel.addEventListener('click', function (e) {
@@ -309,8 +310,8 @@ quantityControl.forEach(function (el) {
 
     const priceElement = document.getElementById('subscriptionPrice');
     let price = quantityElement.value * Number(priceElement.dataset.intitalprice);
-    
-    priceElement.textContent  = `$${price.toFixed(2)}`
+
+    priceElement.textContent = `$${price.toFixed(2)}`
   });
 });
 
