@@ -105,7 +105,7 @@ function getSubscriptions(subscriptions) {
       cardContainer.appendChild(card);
     }
 
-    const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
+    // const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
     const mainDashboard = document.getElementById('mainDashboard').style.display = 'flex';
     const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
     const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
@@ -115,6 +115,7 @@ function showError(error){
   if (error.response.data == "Could Not Find Customer") {
     const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
     const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
+    const AddSubscriptionCTA = document.getElementById('AddSubscriptionCTA').style.display = 'none';
     const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
 
     const hideTopBar = document.getElementById('navTopBar').style.display = 'none';
