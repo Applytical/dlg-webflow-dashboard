@@ -13,8 +13,8 @@ axios.post(`${url}/webflow/subscriptions/all`, {
 
 function getSubscriptions(subscriptions) {
   const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
-  const mainDashboard = document.getElementById('mainDashboard').style.display = 'block';
-  const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
+  const mainDashboard = document.getElementById('mainDashboard').style.display = 'flex';
+  const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'flex';
   const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
 
   const cardContainer = document.getElementById("Cards-Container")
@@ -32,8 +32,6 @@ function getSubscriptions(subscriptions) {
       const subscriptionName = card.getElementsByClassName('subscription-name')[0];
       subscriptionName.textContent = subscription.productName;
 
-      const subscriptionId = card.getElementsByClassName('subscription_id')[0];
-      subscriptionId.textContent = subscription.purchaseId;
 
       const subscriptionQty = card.getElementsByClassName('subscription-qty')[0];
       subscriptionQty.textContent = subscription.productQty
@@ -79,9 +77,6 @@ function getSubscriptions(subscriptions) {
 
       const subscriptionName = card.getElementsByClassName('subscription-name')[0];
       subscriptionName.textContent = subscription.productName;
-
-      const subscriptionId = card.getElementsByClassName('subscription_id')[0];
-      subscriptionId.textContent = subscription.purchaseId;
 
       const subscriptionQty = card.getElementsByClassName('subscription-qty')[0];
       subscriptionQty.textContent = subscription.productQty
