@@ -12,11 +12,6 @@ axios.post(`${url}/webflow/subscriptions/all`, {
   });
 
 function getSubscriptions(subscriptions) {
-  const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
-  const mainDashboard = document.getElementById('mainDashboard').style.display = 'flex';
-  const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'flex';
-  const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
-
   const cardContainer = document.getElementById("Cards-Container")
 
   subscriptions.forEach(subscription => {
@@ -109,6 +104,11 @@ function getSubscriptions(subscriptions) {
       // Place the card into the div "Cards-Container"
       cardContainer.appendChild(card);
     }
+
+    const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
+    const mainDashboard = document.getElementById('mainDashboard').style.display = 'flex';
+    const allSubscriptions = document.getElementById("allSubscriptions").style.display = 'block';
+    const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
   })
 }
 function showError(error){
