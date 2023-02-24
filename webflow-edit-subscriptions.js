@@ -138,41 +138,41 @@ subscriptionCancel.addEventListener("click", function (e) {
   cancelSubscriptionFlow.style.dispaly = "flex";
   modal.style.display = 'flex';
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
+  cancelFlow.forEach(function (el) {
+    el.addEventListener('submit', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-  cancelFlow.addEventListener('submit', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
+      console.log(e);
+      // axios.post(`${url}webflow/subscriptions/cancel`, {
+      //   purchaseId: purchaseId
+      // })
+      //   .then((response) => {
+      //     if (response.status = 200) {
+      //       modal.style.display = 'none';
+      //       const successBanner = document.getElementById('successBanner').style.display = 'block';
+      //       const successBannerMessage = document.getElementById('successBannerMessage');
+      //       successBannerMessage.textContent = "Subscription Cancelled";;
+      //       const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+      //       subscriptionStatusBadge.textContent = "Cancelled";
+      //       subscriptionStatusBadge.style.backgroundColor = "#404168";
+      //       var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+      //       const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
 
-    console.log(e);
-    // axios.post(`${url}webflow/subscriptions/cancel`, {
-    //   purchaseId: purchaseId
-    // })
-    //   .then((response) => {
-    //     if (response.status = 200) {
-    //       modal.style.display = 'none';
-    //       const successBanner = document.getElementById('successBanner').style.display = 'block';
-    //       const successBannerMessage = document.getElementById('successBannerMessage');
-    //       successBannerMessage.textContent = "Subscription Cancelled";;
-    //       const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-    //       subscriptionStatusBadge.textContent = "Cancelled";
-    //       subscriptionStatusBadge.style.backgroundColor = "#404168";
-    //       var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-    //       const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
+      //     }
+      //   }).catch((error) => {
+      //     const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+      //     const errorMessageBanner = document.getElementById('errorBannerMessage');
+      //     errorMessageBanner.textContent = error.response.data
+      //   });
+    });
 
-    //     }
-    //   }).catch((error) => {
-    //     const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-    //     const errorMessageBanner = document.getElementById('errorBannerMessage');
-    //     errorMessageBanner.textContent = error.response.data
-    //   });
-  });
+    modalCancel.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
 
-  modalCancel.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    modal.style.display = 'none';
-
+      modal.style.display = 'none';
+    });
   });
 });
 
