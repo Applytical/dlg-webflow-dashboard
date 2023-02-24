@@ -143,8 +143,8 @@ subscriptionCancel.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
       const active_radio = document.querySelector('.w--redirected-checked');
-      const wrapper = active_radio.parentElement();
-      let reason = wrapper.querySelector('spam.w-form-label').innerHTML;
+      const wrapper = active_radio.parentElement;
+      let reason = wrapper.querySelector('span.w-form-label').innerHTML;
       console.log(reason);
 
 
