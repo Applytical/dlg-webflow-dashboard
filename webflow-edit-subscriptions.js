@@ -133,10 +133,9 @@ const modalTitle = document.getElementById("subscriptionModalTitle");
 var subscriptionCancel = document.getElementById('cancelSubscription');
 
 subscriptionCancel.addEventListener("click", function (e) {
-  e.preventDefault()
 
-  cancelSubscriptionFlow.style.dispaly = "flex";
   modal.style.display = 'flex';
+  cancelSubscriptionFlow.style.display = "flex";
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
   cancelFlow.forEach(function (el) {
     el.addEventListener('submit', function (e) {
