@@ -142,14 +142,18 @@ subscriptionCancel.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
 
-      const radio = document.querySelector('input[name=reasons]:checked').checked;
-      if(radio == true){
-
-        radio.id == "chosenReason";
+      function addUser() {
+        //how to check what is the selected radio input
+        alert(getCheckedRadioValue('reasons'));
       }
 
-      const reason = document.getElementById("chosenReason");
-      
+      function getCheckedRadioValue(name) {
+        var elements = document.getElementsByName(name);
+
+        for (var i = 0, len = elements.length; i < len; ++i)
+          if (elements[i].checked) return elements[i].value;
+      }
+
 
 
 
