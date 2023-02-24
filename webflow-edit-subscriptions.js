@@ -120,6 +120,9 @@ async function ShowSubscription(response) {
 
 const modal = document.getElementById("subscriptionModal");
 const modalContent = document.getElementById("subscriptionModalContent");
+const updateSubscriptions = document.getElementById("updateSubscriptions");
+const cancelSubscriptionFlow = document.getElementById("cancelSubscriptionFlow");
+
 const closeModal = document.getElementById('modalClose');
 const modalAgree = document.getElementById("subscriptionModalAgree");
 const modalCancel = document.getElementById("subscriptionModalCancel");
@@ -132,38 +135,36 @@ var subscriptionCancel = document.getElementById('cancelSubscription');
 subscriptionCancel.addEventListener("click", function (e) {
   e.preventDefault()
 
-  modalAgree.textContent = 'Cancel Subscription'
-  modalTitle.textContent = 'Are you sure you want to cancel?'
-
+  cancelSubscriptionFlow.style.dispaly = "flex";
   modal.style.display = 'flex';
+  var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
 
-  modalAgree.addEventListener('click', function (e) {
+  cancelFlow.addEventListener('submit', function (e) {
     e.preventDefault();
     e.stopPropagation();
 
-    modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
+    console.log(e);
+    // axios.post(`${url}webflow/subscriptions/cancel`, {
+    //   purchaseId: purchaseId
+    // })
+    //   .then((response) => {
+    //     if (response.status = 200) {
+    //       modal.style.display = 'none';
+    //       const successBanner = document.getElementById('successBanner').style.display = 'block';
+    //       const successBannerMessage = document.getElementById('successBannerMessage');
+    //       successBannerMessage.textContent = "Subscription Cancelled";;
+    //       const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+    //       subscriptionStatusBadge.textContent = "Cancelled";
+    //       subscriptionStatusBadge.style.backgroundColor = "#404168";
+    //       var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+    //       const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
 
-    axios.post(`${url}webflow/subscriptions/cancel`, {
-      purchaseId: purchaseId
-    })
-      .then((response) => {
-        if (response.status = 200) {
-          modal.style.display = 'none';
-          const successBanner = document.getElementById('successBanner').style.display = 'block';
-          const successBannerMessage = document.getElementById('successBannerMessage');
-          successBannerMessage.textContent = "Subscription Cancelled";;
-          const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-          subscriptionStatusBadge.textContent = "Cancelled";
-          subscriptionStatusBadge.style.backgroundColor = "#404168";
-          var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-          const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
-
-        }
-      }).catch((error) => {
-        const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-        const errorMessageBanner = document.getElementById('errorBannerMessage');
-        errorMessageBanner.textContent = error.response.data
-      });
+    //     }
+    //   }).catch((error) => {
+    //     const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+    //     const errorMessageBanner = document.getElementById('errorBannerMessage');
+    //     errorMessageBanner.textContent = error.response.data
+    //   });
   });
 
   modalCancel.addEventListener('click', function (e) {
@@ -183,7 +184,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
   modalAgree.textContent = 'Reactivate'
   modalTitle.textContent = 'Are you sure you want to reactivate the subscription!'
-
+  updateSubscriptions.style.dispaly = "flex";
   modal.style.display = 'flex';
 
   modalAgree.addEventListener('click', function (e) {
@@ -243,7 +244,7 @@ updateSubscriptionForm.forEach(function (el) {
     updateSubscriptionIdle.forEach(function (el) { el.style.display = 'none'; });
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update?'
-
+    updateSubscriptions.style.dispaly = "flex";
     modal.style.display = 'flex';
 
     const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
