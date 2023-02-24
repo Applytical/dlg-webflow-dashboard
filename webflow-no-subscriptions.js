@@ -5,7 +5,7 @@ lifestyleBtn.addEventListener('click', function (e) {
   const refreshPageDiv = document.getElementById('refreshPageDiv').style.display = "block";
   refreshPage.addEventListener('click', function (e) {
 
-    window.location.href("/account/subscriptions");
+    window.location.href = "/account/subscriptions";
 
   });
 });
