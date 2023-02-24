@@ -56,8 +56,8 @@ async function ShowSubscription(response) {
   subscriptionProductImage.src = response.data.productImg;
   subscriptionProductImage.srcset = response.data.productImg;
   subscriptionProductImage.addEventListener("error", function (event) {
-    event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/dashboard.jpg?v=1676298620";
-    event.target.srcset = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/dashboard.jpg?v=1676298620";
+    event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+    event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
     event.onerror = null;
   })
 

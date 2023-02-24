@@ -43,13 +43,14 @@ function getSubscriptions(subscriptions) {
 
       const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
       subscriptionStatusBadge.textContent = "Active";
-      subscriptionStatusBadge.style.backgroundColor = "#EC008B";
+      subscriptionStatusBadge.style.backgroundColor = "Ec008c";
 
 
       const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
       subscriptionProductImage.src = subscription.productImg;
       subscriptionProductImage.addEventListener("error", function (event) {
-        event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+        event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+        event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
         event.onerror = null;
       })
 
@@ -92,8 +93,8 @@ function getSubscriptions(subscriptions) {
       const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
       subscriptionProductImage.src = subscription.productImg;
       subscriptionProductImage.addEventListener("error", function (event) {
-        event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/dashboard.jpg?v=1676298620";
-        event.target.srcset = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/dashboard.jpg?v=1676298620";
+        event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+        event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
         event.onerror = null;
       });
 
@@ -113,27 +114,7 @@ function getSubscriptions(subscriptions) {
 }
 function showError(error){
   if (error.response.data == "Could Not Find Customer") {
-    const NoSubscriptions = document.getElementById('noSubscriptions').style.display = 'flex';
-    const hideSideBar = document.getElementById('navSideBar').style.display = 'none';
-    const AddSubscriptionCTA = document.getElementById('AddSubscriptionCTA').style.display = 'none';
-    const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
-
-    const hideTopBar = document.getElementById('navTopBar').style.display = 'none';
-    const footer = document.getElementById('footer').style.display = 'none';
-    const lifestyleBtn = document.getElementById('joinLifeStyle');
-
-    lifestyleBtn.addEventListener('click', function (e) {
-      const refreshPage = document.getElementById('refreshPage');
-      const refreshPageDiv = document.getElementById('refreshPageDiv').style.display = "block";
-      refreshPage.addEventListener('click', function (e) {
-
-        window.location.reload();
-
-      });
-    });
-
-
-
+    window.location.href = "/account/no-subscription-page"
   } else {
     const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
 
