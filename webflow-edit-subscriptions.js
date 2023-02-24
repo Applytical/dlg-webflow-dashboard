@@ -144,7 +144,7 @@ subscriptionCancel.addEventListener("click", function (e) {
 
       const reason = document.querySelector('input[name=reasons]:checked').checked;
 
-      console.log(reason);
+      console.log(reason.value);
       // axios.post(`${url}webflow/subscriptions/cancel`, {
       //   purchaseId: purchaseId
       // })
