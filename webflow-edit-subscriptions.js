@@ -133,31 +133,22 @@ const modalTitle = document.getElementById("subscriptionModalTitle");
 var subscriptionCancel = document.getElementById('cancelSubscription');
 
 subscriptionCancel.addEventListener("click", function (e) {
-
+  
   modal.style.display = 'flex';
   cancelSubscriptionFlow.style.display = "flex";
+  let selectedValue = null;
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
   cancelFlow.forEach(function (el) {
     el.addEventListener('submit', function (e) {
       e.preventDefault();
       e.stopPropagation();
-
-      function addUser() {
-        //how to check what is the selected radio input
-        alert(getCheckedRadioValue('reasons'));
+      var radios = document.getElementsByName("reasons");
+      for(var i = 0; i < radios.length; i++) {
+          if(radios[i].checked) selectedValue = radios[i].value;   
       }
-
-      function getCheckedRadioValue(name) {
-        var elements = document.getElementsByName(name);
-
-        for (var i = 0, len = elements.length; i < len; ++i)
-          if (elements[i].checked) return elements[i].value;
-      }
+      console.log(selectedValue);
 
 
-
-
-      console.log(reason.value);
       // axios.post(`${url}webflow/subscriptions/cancel`, {
       //   purchaseId: purchaseId
       // })
