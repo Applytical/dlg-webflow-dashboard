@@ -142,7 +142,16 @@ subscriptionCancel.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
 
-      const reason = document.querySelector('input[name=reasons]:checked').checked;
+      const radio = document.querySelector('input[name=reasons]:checked').checked;
+      if(radio == true){
+
+        radio.id == "chosenReason";
+      }
+
+      const reason = document.getElementById("chosenReason");
+      
+
+
 
       console.log(reason.value);
       // axios.post(`${url}webflow/subscriptions/cancel`, {
