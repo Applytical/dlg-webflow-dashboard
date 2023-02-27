@@ -57,12 +57,12 @@ async function ShowSubscription(response) {
   var select = document.getElementById('subscriptionsFreqDropdown'),
     option,
     i = 0,
-    il = products.frequency.length;
+    il = response.data.frequency.length;
 
   for (; i < il; i += 1) {
     option = document.createElement('option');
-    option.setAttribute('product_id', langArray[i].value);
-    option.appendChild(document.createTextNode(langArray[i].text));
+    option.setAttribute('product_id', response.data.frequency.length[i].product_id);
+    option.appendChild(document.createTextNode(response.data.frequency[i].text));
     select.appendChild(option);
   }
 
