@@ -107,6 +107,9 @@ async function ShowSubscription(response) {
     const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
     const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", dateFormatted);
   });
+
+
+
   // Hide elements based on subscription status 
   if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
     const subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
@@ -328,7 +331,6 @@ async function cancelFlowRequest(cancelPayload) {
         subscriptionStatusBadge.textContent = "Cancelled";
         subscriptionStatusBadge.style.backgroundColor = "#404168";
         var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-        const nextBillDateDiv = document.getElementById('nextBillDateDiv').style.display = "none";
         const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
 
         const myTimeout = setTimeout(refreshPage, 5000);
