@@ -159,7 +159,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
 
         var cancelFlow = document.getElementById('otherReasonCancel');
 
-        var otherReasonSubmit = document.getElementsById('otherReasonBtn');
+        var otherReasonSubmit = document.getElementById('otherReasonBtn');
         otherReasonSubmit.addEventListener('click', function (e) {
             
             const otherTextField = document.getElementById("otherTextField");
