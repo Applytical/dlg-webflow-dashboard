@@ -56,13 +56,13 @@ async function ShowSubscription(response) {
 
   response.data.frequency.forEach((element, index) => {
     let option_elem = document.createElement('option');
-    
+
     let option_value;
-    if(element.product_id == 30){
+    if(element.billingIntervalDays == 30){
       option_value = "30 Days";
-    }  else if(element.product_id == 60){
+    }  else if(element.billingIntervalDays == 60){
       option_value = "60 Days";
-    }  if(element.product_id == 90){
+    }  if(element.billingIntervalDays == 90){
       option_value = "90 Days";
     }
     // Add index to option_elem
