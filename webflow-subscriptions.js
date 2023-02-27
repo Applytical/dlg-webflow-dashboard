@@ -43,7 +43,7 @@ function getSubscriptions(subscriptions) {
 
       const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
       subscriptionStatusBadge.textContent = "Active";
-      subscriptionStatusBadge.style.backgroundColor = "Ec008c";
+      subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
 
       const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
