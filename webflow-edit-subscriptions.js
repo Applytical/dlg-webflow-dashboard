@@ -141,6 +141,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
   const cancelFlowModalClose = document.getElementById("cancelFlowModalCancel");
   const modalClose = document.getElementById('closeModal');
   const cancellationReasonsDiv = document.getElementById("cancellationReasons");
+  const areYouSure = document.getElementById("areYouSure");
   const otherReasonCancel = document.getElementById("otherReasonCancel");
   var changeBillDateModal = document.getElementById('changeBillDateModal');
   cancellationReasonsDiv.style.display = "block";
@@ -210,6 +211,8 @@ subscriptionCancel.addEventListener("click", async function (e) {
               if (response.status = 200) {
                 modal.style.display = 'none';
                 cancellationReasonsDiv.style.display = "none";
+                otherReasonCancel.style.display = "none";
+                changeBillDateModal.style.display = "none";
                 const successBanner = document.getElementById('successBanner').style.display = 'block';
                 const successBannerMessage = document.getElementById('successBannerMessage');
                 successBannerMessage.textContent = "Subscription Updated";
@@ -218,6 +221,9 @@ subscriptionCancel.addEventListener("click", async function (e) {
             })
             .catch((error) => {
               modal.style.display = 'none';
+              cancellationReasonsDiv.style.display = "none";
+              otherReasonCancel.style.display = "none";
+              changeBillDateModal.style.display = "none";
               const errorBanner = document.getElementById('errorBanner').style.display = 'block';
               const errorMessageBanner = document.getElementById('errorBannerMessage');
               errorMessageBanner.textContent = error.response.data
@@ -226,14 +232,32 @@ subscriptionCancel.addEventListener("click", async function (e) {
         });
 
       } else {
+        areYouSure.style.display = "block";
 
-        const request = {
-          purchaseId: purchaseId,
-          reason: reason
-        }
-        console.log(request);
-        const sendRequest = await cancelFlowRequest(request);
+        var cancel = document.getElementById('yesCancelBtn');
+        cancel.addEventListener('click', function (e) {
+          cancellationReasonsDiv.style.display = "none";
+          otherReasonCancel.style.display = "none";
+          changeBillDateModal.style.display = "none";
+          e.preventDefault();
+          e.stopPropagation();
+          const request = {
+            purchaseId: purchaseId,
+            reason: reason
+          }
+          const sendRequest = cancelFlowRequest(request);
+        });
 
+
+        var closeModal = document.getElementById('noCancelBtn');
+        closeModal.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          modal.style.display = 'none';
+          cancellationReasonsDiv.style.display = "none";
+          otherReasonCancel.style.display = "none";
+          changeBillDateModal.style.display = "none";
+        });
       }
     });
 
