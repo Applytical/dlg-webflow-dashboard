@@ -169,7 +169,6 @@ subscriptionCancel.addEventListener("click", async function (e) {
                         
             const sendRequest =  await cancelFlowRequest(request);
 
-
           });
         });
 
@@ -183,7 +182,6 @@ subscriptionCancel.addEventListener("click", async function (e) {
         }
                     
         const sendRequest =  await cancelFlowRequest(request);
-
 
       }
     });
@@ -246,8 +244,9 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
   modalAgree.textContent = 'Reactivate'
   modalTitle.textContent = 'Are you sure you want to reactivate the subscription!'
-  updateSubscriptions.style.dispaly = "flex";
+  cancelSubscriptionFlow.style.display = "none";
   modal.style.display = 'flex';
+  updateSubscriptions.style.dispaly = "flex";
 
   modalAgree.addEventListener('click', function (e) {
     e.preventDefault();
