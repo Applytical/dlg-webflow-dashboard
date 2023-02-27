@@ -133,6 +133,8 @@ const modalTitle = document.getElementById("subscriptionModalTitle");
 var subscriptionCancel = document.getElementById('cancelSubscription');
 
 subscriptionCancel.addEventListener("click", function (e) {
+  const cancelFlowModalClose = document.getElementById("cancelFlowModalCancel");
+const modalClose = document.getElementById('closeModal');
 
   modal.style.display = 'flex';
   cancelSubscriptionFlow.style.display = "flex";
@@ -173,11 +175,17 @@ subscriptionCancel.addEventListener("click", function (e) {
         });
     });
 
-    modalCancel.addEventListener('click', function (e) {
+    modalClose.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       cancelSubscriptionFlow.style.display = "none";
       modal.style.display = 'none';
+    });
+
+    cancelFlowModalClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      modal.style.display = 'none';
+      cancelSubscriptionFlow.style.display = "none";
     });
   });
 });
@@ -229,6 +237,8 @@ subscriptionReactivate.addEventListener("click", function (e) {
     modal.style.display = 'none';
 
   });
+
+  
 });
 
 
