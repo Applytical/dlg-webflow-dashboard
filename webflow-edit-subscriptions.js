@@ -135,14 +135,15 @@ var subscriptionCancel = document.getElementById('cancelSubscription');
 subscriptionCancel.addEventListener("click", async function (e) {
   const cancelFlowModalClose = document.getElementById("cancelFlowModalCancel");
   const modalClose = document.getElementById('closeModal');
+  const cancellationReasonsDiv = document.getElementById("cancellationReasons");
+  const otherReasonCancel = document.getElementById("otherReasonCancel");
+  cancellationReasonsDiv.style.display = "block";
+  otherReasonCancel.style.display = "none";
 
   modal.style.display = 'flex';
   cancelSubscriptionFlow.style.display = "flex";
-  let selectedValue = null;
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
   cancelFlow.forEach(function (el) {
-    const cancellationReasonsDiv = document.getElementById("cancellationReasons");
-    const otherReasonCancel = document.getElementById("otherReasonCancel");
 
     el.addEventListener('submit', async function (e) {
       e.preventDefault();
@@ -154,6 +155,23 @@ subscriptionCancel.addEventListener("click", async function (e) {
         cancellationReasonsDiv.style.display = "none";
         otherReasonCancel.style.display = "block";
 
+        var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
+        cancelFlow.forEach(function (el) {
+
+          el.addEventListener('submit', async function (e) {
+            
+            const otherTextField = document.getElementById("otherTextField");
+
+            const request = {
+              purchaseId: purchaseId,
+              reason: otherTextField.value
+            }
+                        
+            const sendRequest =  await cancelFlowRequest(request);
+
+
+          });
+        });
 
       } else if (reason == "Already have enough stock") {
 
@@ -170,6 +188,14 @@ subscriptionCancel.addEventListener("click", async function (e) {
       }
     });
 
+    const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
+
+    cancelFlowGoBack.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      otherReasonCancel.style.display = "none";
+      cancellationReasonsDiv.style.display = "block";
+    });
 
     modalClose.addEventListener('click', function (e) {
       e.preventDefault();
