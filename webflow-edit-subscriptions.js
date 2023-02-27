@@ -246,7 +246,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
   modalAgree.textContent = 'Reactivate'
   modalTitle.textContent = 'Are you sure you want to reactivate the subscription!'
 
-  updateSubscriptions.style.dispaly = "flex";
+  updateSubscriptions.style.display = "flex";
   modal.style.display = 'flex';
 
   modalAgree.addEventListener('click', function (e) {
