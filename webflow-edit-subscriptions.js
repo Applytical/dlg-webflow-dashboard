@@ -142,8 +142,10 @@ subscriptionCancel.addEventListener("click", async function (e) {
   const modalClose = document.getElementById('closeModal');
   const cancellationReasonsDiv = document.getElementById("cancellationReasons");
   const otherReasonCancel = document.getElementById("otherReasonCancel");
+  var changeBillDateModal = document.getElementById('changeBillDateModal');
   cancellationReasonsDiv.style.display = "block";
   otherReasonCancel.style.display = "none";
+  changeBillDateModal.style.display = "none";
 
   modal.style.display = 'flex';
   cancelSubscriptionFlow.style.display = "flex";
@@ -175,7 +177,6 @@ subscriptionCancel.addEventListener("click", async function (e) {
         });
 
       } else if (reason == "Already have enough stock") {
-        var otherReasonSubmit = document.getElementById('changeBillDateModal');
         cancellationReasonsDiv.style.display = "none";
         otherReasonCancel.style.display = "none";
         changeBillDateModal.style.display = "block";
@@ -209,6 +210,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.preventDefault();
       e.stopPropagation();
       otherReasonCancel.style.display = "none";
+      changeBillDateModal.style.display = "none";
       cancellationReasonsDiv.style.display = "block";
     });
 
@@ -217,6 +219,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
     cancelFlowBillDateGoBack.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
+      changeBillDateModal.style.display = "none";
       otherReasonCancel.style.display = "none";
       cancellationReasonsDiv.style.display = "block";
     });
