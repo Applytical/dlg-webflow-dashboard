@@ -53,6 +53,22 @@ async function ShowSubscription(response) {
 
 
 
+
+  var select = document.getElementById('subscriptionsFreqDropdown'),
+    option,
+    i = 0,
+    il = products.frequency.length;
+
+  for (; i < il; i += 1) {
+    option = document.createElement('option');
+    option.setAttribute('product_id', langArray[i].value);
+    option.appendChild(document.createTextNode(langArray[i].text));
+    select.appendChild(option);
+  }
+
+
+
+
   const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
   subscriptionProductImage.src = response.data.productImg;
   subscriptionProductImage.srcset = response.data.productImg;
@@ -368,7 +384,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
       .then((response) => {
         if (response.status = 200) {
           updateSubscriptions.style.dispaly = "none";
-          
+
           modal.style.display = 'none';
           const successBanner = document.getElementById('successBanner').style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
