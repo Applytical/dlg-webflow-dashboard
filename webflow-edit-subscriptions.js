@@ -176,7 +176,7 @@ subscriptionCancel.addEventListener("click", function (e) {
     modalCancel.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-
+      cancelSubscriptionFlow.style.display = "none";
       modal.style.display = 'none';
     });
   });
@@ -204,6 +204,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
     })
       .then((response) => {
         if (response.status = 200) {
+          updateSubscriptions.style.dispaly = "none";
           modal.style.display = 'none';
           const successBanner = document.getElementById('successBanner').style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
@@ -224,7 +225,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
   modalCancel.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-
+    updateSubscriptions.style.dispaly = "none";
     modal.style.display = 'none';
 
   });
@@ -332,6 +333,7 @@ window.onclick = function (event) {
 closeModal.addEventListener("click", function (e) {
   e.preventDefault();
   modal.style.display = 'none';
+  cancelSubscriptionFlow.style.display = "none";
 });
 
 const closeSucessBanner = document.getElementById('successBanner');
