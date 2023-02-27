@@ -162,29 +162,11 @@ subscriptionCancel.addEventListener("click", async function (e) {
           purchaseId: purchaseId,
           reason: reason
         }
-        console.log(request);           
+        console.log(request);
         // const sendRequest =  await cancelFlowRequest(request);
 
       }
     });
-    
-    var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
-        cancelFlow.forEach(function (el) {
-
-          el.addEventListener('submit', async function (e) {
-            
-            const otherTextField = document.getElementById("otherTextField");
-
-            const request = {
-              purchaseId: purchaseId,
-              reason: otherTextField.value
-            }
-            console.log(request);
-                        
-            // const sendRequest =  await cancelFlowRequest(request);
-
-          });
-        });
 
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
 
@@ -207,6 +189,23 @@ subscriptionCancel.addEventListener("click", async function (e) {
       modal.style.display = 'none';
       cancelSubscriptionFlow.style.display = "none";
     });
+  });
+});
+var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
+cancelFlow.forEach(function (el) {
+
+  el.addEventListener('submit', async function (e) {
+
+    const otherTextField = document.getElementById("otherTextField");
+
+    const request = {
+      purchaseId: purchaseId,
+      reason: otherTextField.value
+    }
+    console.log(request);
+
+    // const sendRequest =  await cancelFlowRequest(request);
+
   });
 });
 async function cancelFlowRequest(cancelPayload) {
