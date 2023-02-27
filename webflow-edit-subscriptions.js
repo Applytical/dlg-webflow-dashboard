@@ -132,48 +132,44 @@ const modalTitle = document.getElementById("subscriptionModalTitle");
 
 var subscriptionCancel = document.getElementById('cancelSubscription');
 
-subscriptionCancel.addEventListener("click", function (e) {
+subscriptionCancel.addEventListener("click", async function (e) {
   const cancelFlowModalClose = document.getElementById("cancelFlowModalCancel");
-const modalClose = document.getElementById('closeModal');
+  const modalClose = document.getElementById('closeModal');
 
   modal.style.display = 'flex';
   cancelSubscriptionFlow.style.display = "flex";
   let selectedValue = null;
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
   cancelFlow.forEach(function (el) {
-    el.addEventListener('submit', function (e) {
+    const cancellationReasonsDiv = document.getElementById("cancellationReasons");
+    const otherReasonCancel = document.getElementById("otherReasonCancel");
+
+    el.addEventListener('submit', async function (e) {
       e.preventDefault();
       e.stopPropagation();
       const active_radio = document.querySelector('.w--redirected-checked');
       const wrapper = active_radio.parentElement;
       let reason = wrapper.querySelector('span.w-form-label').innerHTML;
-      console.log(reason);
+      if (reason == "Other") {
+        cancellationReasonsDiv.style.display = "none";
+        otherReasonCancel.style.display = "block";
 
 
-      axios.post(`${url}webflow/subscriptions/cancel`, {
-        purchaseId: purchaseId,
-        cancelReason: reason
-      })
-        .then((response) => {
-          if (response.status = 200) {
-            modal.style.display = 'none';
-            cancelSubscriptionFlow.style.display = "none";
-            const successBanner = document.getElementById('successBanner').style.display = 'block';
-            const successBannerMessage = document.getElementById('successBannerMessage');
-            successBannerMessage.textContent = "Subscription Cancelled";;
-            const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-            subscriptionStatusBadge.textContent = "Cancelled";
-            subscriptionStatusBadge.style.backgroundColor = "#404168";
-            var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-            const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
+      } else if (reason == "Already have enough stock") {
 
-          }
-        }).catch((error) => {
-          const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-          const errorMessageBanner = document.getElementById('errorBannerMessage');
-          errorMessageBanner.textContent = error.response.data
-        });
+      } else {
+
+        const request = {
+          purchaseId: purchaseId,
+          reason: reason
+        }
+                    
+        const sendRequest =  await cancelFlowRequest(request);
+
+
+      }
     });
+
 
     modalClose.addEventListener('click', function (e) {
       e.preventDefault();
@@ -189,6 +185,32 @@ const modalClose = document.getElementById('closeModal');
     });
   });
 });
+async function cancelFlowRequest(cancelPayload) {
+
+  axios.post(`${url}webflow/subscriptions/cancel`, {
+    purchaseId: cancelPayload.purchaseId,
+    cancelReason: cancelPayload.reason
+  })
+    .then((response) => {
+      if (response.status = 200) {
+        modal.style.display = 'none';
+        cancelSubscriptionFlow.style.display = "none";
+        const successBanner = document.getElementById('successBanner').style.display = 'block';
+        const successBannerMessage = document.getElementById('successBannerMessage');
+        successBannerMessage.textContent = "Subscription Cancelled";;
+        const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+        subscriptionStatusBadge.textContent = "Cancelled";
+        subscriptionStatusBadge.style.backgroundColor = "#404168";
+        var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+        const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
+
+      }
+    }).catch((error) => {
+      const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+      const errorMessageBanner = document.getElementById('errorBannerMessage');
+      errorMessageBanner.textContent = error.response.data
+    });
+}
 
 
 var subscriptionReactivate = document.getElementById('reactivateSubscription');
@@ -238,7 +260,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
   });
 
-  
+
 });
 
 
