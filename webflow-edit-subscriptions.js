@@ -186,9 +186,42 @@ subscriptionCancel.addEventListener("click", async function (e) {
 
         const fp = flatpickr(".modal-date", {
           defaultDate: nextBillDateStorage,
-          dateFormat: "m-d-Y",  
+          dateFormat: "m-d-Y",
           minDate: minDate,
           inline: true
+
+        });
+
+        fp.config.onChange.push(function (dateStr) {
+          let date = new Date(dateStr);
+          const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
+          const nextBillDateStorage = sessionStorage.setItem("next-bill-date-changed", dateFormatted);
+        });
+
+        var updateBillDateModal = document.getElementById('updateBillDateModal');
+        updateBillDateModal.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
+          axios.post(`${url}webflow/subscriptions/update`, {
+            nextBillDate: nextBillDateStorage,
+          })
+            .then((response) => {
+              if (response.status = 200) {
+                modal.style.display = 'none';
+                cancellationReasonsDiv.style.display = "none";
+                const successBanner = document.getElementById('successBanner').style.display = 'block';
+                const successBannerMessage = document.getElementById('successBannerMessage');
+                successBannerMessage.textContent = "Subscription Updated";
+                const myTimeout = setTimeout(refreshPage, 5000);
+              }
+            })
+            .catch((error) => {
+              modal.style.display = 'none';
+              const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+              const errorMessageBanner = document.getElementById('errorBannerMessage');
+              errorMessageBanner.textContent = error.response.data
+            });
 
         });
 
@@ -199,7 +232,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
           reason: reason
         }
         console.log(request);
-        // const sendRequest =  await cancelFlowRequest(request);
+        const sendRequest = await cancelFlowRequest(request);
 
       }
     });
