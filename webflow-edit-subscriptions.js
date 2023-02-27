@@ -52,19 +52,20 @@ async function ShowSubscription(response) {
   subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
 
+  var select = document.getElementById('subscriptionsFreqDropdown');
 
+  response.data.frequency.forEach((element, index) => {
+    let option_elem = document.createElement('option');
 
-  var select = document.getElementById('subscriptionsFreqDropdown'),
-    option,
-    i = 0,
-    il = response.data.frequency.length;
+    // Add index to option_elem
+    option_elem.value = index;
 
-  for (; i < il; i += 1) {
-    option = document.createElement('option');
-    option.setAttribute('product_id', response.data.frequency.length[i].product_id);
-    option.appendChild(document.createTextNode(response.data.frequency[i].text));
-    select.appendChild(option);
-  }
+    // Add element HTML
+    option_elem.textContent = element;
+
+    // Append option_elem to select_elem
+    select.appendChild(option_elem);
+  });
 
 
 
