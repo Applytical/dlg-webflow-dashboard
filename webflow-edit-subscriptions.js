@@ -88,6 +88,9 @@ async function ShowSubscription(response) {
     nextBillDate = new Date();
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   }
+
+  const nextBillDateStorage = sessionStorage.setItem("next-bill-date", nextBillDateFormatted)
+
   let minDate = new Date();
   let maxDate = new Date(nextBillDate);
   maxDate.setDate(maxDate.getDate() + 30)
@@ -151,29 +154,42 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.preventDefault();
       e.stopPropagation();
       const active_radio = document.querySelector('.w--redirected-checked');
-      const wrapper = active_radio.parentElement; 
+      const wrapper = active_radio.parentElement;
       let reason = wrapper.querySelector('span.w-form-label').innerHTML;
       if (reason == "Other") {
-        cancellationReasonsDiv.style.display = "none";  
+        cancellationReasonsDiv.style.display = "none";
         otherReasonCancel.style.display = "block";
 
         var cancelFlow = document.getElementById('otherReasonCancel');
 
         var otherReasonSubmit = document.getElementById('otherReasonBtn');
         otherReasonSubmit.addEventListener('click', function (e) {
-            
-            const otherTextField = document.getElementById("otherTextField");
-
-            const request = {
-              purchaseId: purchaseId,
-              reason: otherTextField.value
-            }
-            console.log(request);
-                        
-            // const sendRequest =  await cancelFlowRequest(request);
+          e.preventDefault();
+          e.stopPropagation();
+          const otherTextField = document.getElementById("otherTextField");
+          const request = {
+            purchaseId: purchaseId,
+            reason: otherTextField.value
+          }
+          const sendRequest = cancelFlowRequest(request);
         });
 
       } else if (reason == "Already have enough stock") {
+        var otherReasonSubmit = document.getElementById('changeBillDateModal');
+        cancellationReasonsDiv.style.display = "none";
+        otherReasonCancel.style.display = "none";
+        changeBillDateModal.style.display = "block";
+
+        let minDate = new Date();
+        const nextBillDateStorage = sessionStorage.getItem("next-bill-date")
+
+        const fp = flatpickr(".modal-date", {
+          defaultDate: nextBillDateStorage,
+          dateFormat: "m-d-Y",  
+          minDate: minDate,
+          inline: true
+
+        });
 
       } else {
 
@@ -181,7 +197,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
           purchaseId: purchaseId,
           reason: reason
         }
-        console.log(request);           
+        console.log(request);
         // const sendRequest =  await cancelFlowRequest(request);
 
       }
@@ -190,6 +206,15 @@ subscriptionCancel.addEventListener("click", async function (e) {
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
 
     cancelFlowGoBack.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      otherReasonCancel.style.display = "none";
+      cancellationReasonsDiv.style.display = "block";
+    });
+
+    const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
+
+    cancelFlowBillDateGoBack.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
       otherReasonCancel.style.display = "none";
@@ -272,7 +297,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
           subscriptionStatusBadge.style.backgroundColor = "#ec008c";
           const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
           var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "block";
-        const myTimeout = setTimeout(refreshPage, 5000);
+          const myTimeout = setTimeout(refreshPage, 5000);
 
 
         }
