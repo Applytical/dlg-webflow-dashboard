@@ -120,7 +120,7 @@ async function ShowSubscription(response) {
 
 const modal = document.getElementById("subscriptionModal");
 const modalContent = document.getElementById("subscriptionModalContent");
-const updateSubscriptions = document.getElementById("updateSubscriptions");
+
 const cancelSubscriptionFlow = document.getElementById("cancelSubscriptionFlow");
 
 const closeModal = document.getElementById('modalClose');
@@ -238,6 +238,7 @@ async function cancelFlowRequest(cancelPayload) {
 
 
 var subscriptionReactivate = document.getElementById('reactivateSubscription');
+const updateSubscriptions = document.getElementById("updateSubscriptions");
 
 subscriptionReactivate.addEventListener("click", function (e) {
   e.preventDefault()
