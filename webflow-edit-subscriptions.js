@@ -328,7 +328,9 @@ async function cancelFlowRequest(cancelPayload) {
         subscriptionStatusBadge.textContent = "Cancelled";
         subscriptionStatusBadge.style.backgroundColor = "#404168";
         var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+        const nextBillDateDiv = document.getElementById('nextBillDateDiv').style.display = "none";
         const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
+
         const myTimeout = setTimeout(refreshPage, 5000);
 
       }
@@ -364,6 +366,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
       .then((response) => {
         if (response.status = 200) {
           updateSubscriptions.style.dispaly = "none";
+          
           modal.style.display = 'none';
           const successBanner = document.getElementById('successBanner').style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
