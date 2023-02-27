@@ -233,6 +233,8 @@ subscriptionCancel.addEventListener("click", async function (e) {
 
         var noBillDataChange = document.getElementById('noBillDataChange');
         noBillDataChange.addEventListener('click', function (e) {
+          modal.style.display = 'none';
+          areYouSure.style.display = "none";
           cancellationReasonsDiv.style.display = "none";
           otherReasonCancel.style.display = "none";
           changeBillDateModal.style.display = "none";
