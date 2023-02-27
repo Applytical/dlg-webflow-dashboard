@@ -157,10 +157,10 @@ subscriptionCancel.addEventListener("click", async function (e) {
         cancellationReasonsDiv.style.display = "none";  
         otherReasonCancel.style.display = "block";
 
-        var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
-        cancelFlow.forEach(function (el) {
+        var cancelFlow = document.getElementById('otherReasonCancel');
 
-          el.addEventListener('submit', async function (e) {
+        var otherReasonSubmit = document.getElementsByClassName('.other-reason-submit-btn');
+        otherReasonSubmit.addEventListener('submit', async function (e) {
             
             const otherTextField = document.getElementById("otherTextField");
 
@@ -171,8 +171,6 @@ subscriptionCancel.addEventListener("click", async function (e) {
             console.log(request);
                         
             // const sendRequest =  await cancelFlowRequest(request);
-
-          });
         });
 
       } else if (reason == "Already have enough stock") {
