@@ -49,7 +49,8 @@ async function ShowSubscription(response) {
   subscriptionLast4.textContent = `••••${response.data.last4}`;
   const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
   subscriptionStatusBadge.textContent = "Active";
-  subscriptionStatusBadge.style.backgroundColor = "#EC008B";
+  subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+
 
 
   const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
@@ -73,7 +74,8 @@ async function ShowSubscription(response) {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Active";
-    subscriptionStatusBadge.style.backgroundColor = "#EC008B";
+    subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
@@ -228,6 +230,7 @@ async function cancelFlowRequest(cancelPayload) {
         subscriptionStatusBadge.style.backgroundColor = "#404168";
         var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
         const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
+        const myTimeout = setTimeout(refreshPage, 5000);
 
       }
     }).catch((error) => {
@@ -265,11 +268,14 @@ subscriptionReactivate.addEventListener("click", function (e) {
           modal.style.display = 'none';
           const successBanner = document.getElementById('successBanner').style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
+          successBannerMessage.textContent = "Subscription Reactivated";;
           const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-          subscriptionStatusBadge.textContent = "Cancelled";
-          subscriptionStatusBadge.style.backgroundColor = "#404168";
+          subscriptionStatusBadge.textContent = "Active";
+          subscriptionStatusBadge.style.backgroundColor = "#ec008c";
           const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
           var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "block";
+        const myTimeout = setTimeout(refreshPage, 5000);
+
 
         }
       }).catch((error) => {
@@ -289,6 +295,9 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
 
 });
+function refreshPage() {
+  window.location.reload();
+}
 
 
 const updateSubscriptionForm = document.querySelectorAll('[data-subscription-form]');
