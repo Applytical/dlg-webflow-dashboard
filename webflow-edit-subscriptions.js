@@ -154,8 +154,21 @@ subscriptionCancel.addEventListener("click", async function (e) {
       if (reason == "Other") {
         cancellationReasonsDiv.style.display = "none";
         otherReasonCancel.style.display = "block";
+      } else if (reason == "Already have enough stock") {
 
-        var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
+      } else {
+
+        const request = {
+          purchaseId: purchaseId,
+          reason: reason
+        }
+        console.log(request);           
+        // const sendRequest =  await cancelFlowRequest(request);
+
+      }
+    });
+    
+    var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
         cancelFlow.forEach(function (el) {
 
           el.addEventListener('submit', async function (e) {
@@ -166,25 +179,12 @@ subscriptionCancel.addEventListener("click", async function (e) {
               purchaseId: purchaseId,
               reason: otherTextField.value
             }
+            console.log(request);
                         
-            const sendRequest =  await cancelFlowRequest(request);
+            // const sendRequest =  await cancelFlowRequest(request);
 
           });
         });
-
-      } else if (reason == "Already have enough stock") {
-
-      } else {
-
-        const request = {
-          purchaseId: purchaseId,
-          reason: reason
-        }
-                    
-        const sendRequest =  await cancelFlowRequest(request);
-
-      }
-    });
 
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
 
