@@ -231,6 +231,20 @@ subscriptionCancel.addEventListener("click", async function (e) {
 
         });
 
+        var noBillDataChange = document.getElementById('noBillDataChange');
+        noBillDataChange.addEventListener('click', function (e) {
+          cancellationReasonsDiv.style.display = "none";
+          otherReasonCancel.style.display = "none";
+          changeBillDateModal.style.display = "none";
+          e.preventDefault();
+          e.stopPropagation();
+          const request = {
+            purchaseId: purchaseId,
+            reason: reason
+          }
+          const sendRequest = cancelFlowRequest(request);
+        });
+
       } else {
         areYouSure.style.display = "block";
 
