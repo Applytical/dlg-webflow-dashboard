@@ -55,6 +55,7 @@ async function ShowSubscription(response) {
   var select = document.getElementById('subscriptionsFreqDropdown');
 
   response.data.frequency.forEach((element, index) => {
+    console.log(element);
     let option_elem = document.createElement('option');
 
     // Add index to option_elem
