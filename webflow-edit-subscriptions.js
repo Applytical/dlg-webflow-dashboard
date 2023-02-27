@@ -149,11 +149,30 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.preventDefault();
       e.stopPropagation();
       const active_radio = document.querySelector('.w--redirected-checked');
-      const wrapper = active_radio.parentElement;
+      const wrapper = active_radio.parentElement; 
       let reason = wrapper.querySelector('span.w-form-label').innerHTML;
       if (reason == "Other") {
-        cancellationReasonsDiv.style.display = "none";
+        cancellationReasonsDiv.style.display = "none";  
         otherReasonCancel.style.display = "block";
+
+        var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
+        cancelFlow.forEach(function (el) {
+
+          el.addEventListener('submit', async function (e) {
+            
+            const otherTextField = document.getElementById("otherTextField");
+
+            const request = {
+              purchaseId: purchaseId,
+              reason: otherTextField.value
+            }
+            console.log(request);
+                        
+            // const sendRequest =  await cancelFlowRequest(request);
+
+          });
+        });
+
       } else if (reason == "Already have enough stock") {
 
       } else {
@@ -162,7 +181,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
           purchaseId: purchaseId,
           reason: reason
         }
-        console.log(request);
+        console.log(request);           
         // const sendRequest =  await cancelFlowRequest(request);
 
       }
@@ -189,23 +208,6 @@ subscriptionCancel.addEventListener("click", async function (e) {
       modal.style.display = 'none';
       cancelSubscriptionFlow.style.display = "none";
     });
-  });
-});
-var otherReasonFlow = document.querySelectorAll('[data-cancel-flow-other]');
-cancelFlow.forEach(function (el) {
-
-  el.addEventListener('submit', async function (e) {
-
-    const otherTextField = document.getElementById("otherTextField");
-
-    const request = {
-      purchaseId: purchaseId,
-      reason: otherTextField.value
-    }
-    console.log(request);
-
-    // const sendRequest =  await cancelFlowRequest(request);
-
   });
 });
 async function cancelFlowRequest(cancelPayload) {
