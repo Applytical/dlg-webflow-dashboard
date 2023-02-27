@@ -55,14 +55,13 @@ async function ShowSubscription(response) {
   var select = document.getElementById('subscriptionsFreqDropdown');
 
   response.data.frequency.forEach((element, index) => {
-    console.log(element);
     let option_elem = document.createElement('option');
 
     // Add index to option_elem
     option_elem.value = index;
 
     // Add element HTML
-    option_elem.textContent = element;
+    option_elem.textContent = element.product_id;
 
     // Append option_elem to select_elem
     select.appendChild(option_elem);
