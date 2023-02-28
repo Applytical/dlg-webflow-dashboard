@@ -285,6 +285,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
         });
 
       } else {
+        cancellationReasonsDiv.style.display = "none";
         areYouSure.style.display = "block";
 
         var cancel = document.getElementById('yesCancelBtn');
