@@ -292,6 +292,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
         cancel.addEventListener('click', function (e) {
           cancellationReasonsDiv.style.display = "none";
           otherReasonCancel.style.display = "none";
+          areYouSure.style.display = "none";
           changeBillDateModal.style.display = "none";
           e.preventDefault();
           e.stopPropagation();
@@ -309,6 +310,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
           modal.style.display = 'none';
           cancellationReasonsDiv.style.display = "none";
           otherReasonCancel.style.display = "none";
+          areYouSure.style.display = "none";
           changeBillDateModal.style.display = "none";
         });
       }
