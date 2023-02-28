@@ -34,15 +34,20 @@ function getSubscriptions(subscriptions) {
 
     const subscriptionNextBilldate = card.getElementsByClassName('subscription-nextbilldate')[0];
     subscriptionNextBilldate.textContent = subscription.nextBillDate;
-    //subscriptionNextBilldate.style.display = "none";
-
+    if (subscription.status != "ACTIVE") {
+      subscriptionNextBilldate.style.display = "none";
+    }
+    
     const subscriptionFrequency = card.getElementsByClassName('subscription-frequency')[0];
     subscriptionFrequency.textContent = subscription.billingIntervalDays + " Days";
 
     const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = subscription.status;
-    subscriptionStatusBadge.style.backgroundColor = "#ec008c";
-    //subscriptionStatusBadge.style.backgroundColor = "#404168";
+    if (subscription.status == "ACTIVE") {
+      subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+    } else {
+      subscriptionStatusBadge.style.backgroundColor = "#404168";
+    }
 
     const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
     subscriptionProductImage.src = subscription.productImg;
