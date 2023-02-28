@@ -15,99 +15,53 @@ function getSubscriptions(subscriptions) {
   const cardContainer = document.getElementById("Cards-Container");
   const cancelledContainer = document.getElementById("Cancelled-Container");
 
-  subscriptions.forEach(subscription => {
-    if (subscription.nextBillDate !== null && subscription.status == "ACTIVE") {
-      
-      const style = document.getElementById('cardstyle');
-      // Copy the card and it's style
-      const card = style.cloneNode(true)
+  subscriptions.forEach(subscription => {      
+    const style = document.getElementById('cardstyle');
+    // Copy the card and it's style
+    const card = style.cloneNode(true)
 
-      card.setAttribute('id', '');
-      card.style.display = 'block';
+    card.setAttribute('id', '');
+    card.style.display = 'block';
 
-      const subscriptionName = card.getElementsByClassName('subscription-name')[0];
-      subscriptionName.textContent = subscription.productName;
+    const subscriptionName = card.getElementsByClassName('subscription-name')[0];
+    subscriptionName.textContent = subscription.productName;
 
+    const subscriptionQty = card.getElementsByClassName('subscription-qty')[0];
+    subscriptionQty.textContent = subscription.productQty;
 
-      const subscriptionQty = card.getElementsByClassName('subscription-qty')[0];
-      subscriptionQty.textContent = subscription.productQty
+    const subscriptionPrice = card.getElementsByClassName('subscription-price')[0];
+    subscriptionPrice.textContent = `$${subscription.price}`;
 
-      const subscriptionPrice = card.getElementsByClassName('subscription-price')[0];
-      subscriptionPrice.textContent = `$${subscription.price}`;
+    const subscriptionNextBilldate = card.getElementsByClassName('subscription-nextbilldate')[0];
+    subscriptionNextBilldate.textContent = subscription.nextBillDate;
+    //subscriptionNextBilldate.style.display = "none";
 
-      const subscriptionNextBilldate = card.getElementsByClassName('subscription-nextbilldate')[0];
-      subscriptionNextBilldate.textContent = subscription.nextBillDate
+    const subscriptionFrequency = card.getElementsByClassName('subscription-frequency')[0];
+    subscriptionFrequency.textContent = subscription.billingIntervalDays + " Days";
 
-      const subscriptionFrequency = card.getElementsByClassName('subscription-frequency')[0];
-      subscriptionFrequency.textContent = subscription.billingIntervalDays + " Days"
+    const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+    subscriptionStatusBadge.textContent = subscription.status;
+    subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+    //subscriptionStatusBadge.style.backgroundColor = "#404168";
 
+    const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
+    subscriptionProductImage.src = subscription.productImg;
+    subscriptionProductImage.srcset = subscription.productImg;
+    subscriptionProductImage.addEventListener("error", function (event) {
+      event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+      event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+      event.onerror = null;
+    });
 
-      const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
-      subscriptionStatusBadge.textContent = "Active";
-      subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+    const subscriptionLink = card.getElementsByClassName('subscription-link')[0].addEventListener('click', function (e) {
+      document.location.href = "/account/subscription?id=" + subscription.purchaseId;
+    });
 
-
-      const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
-      subscriptionProductImage.src = subscription.productImg;
-      subscriptionProductImage.srcset = subscription.productImg;
-      subscriptionProductImage.addEventListener("error", function (event) {
-        event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-        event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-        event.onerror = null;
-      });
-
-
-
-      const subscriptionLink = card.getElementsByClassName('subscription-link')[0].addEventListener('click', function (e) {
-        document.location.href = "/account/subscription?id=" + subscription.purchaseId;
-      });
-
-      // Place the card into the div "Cards-Container"
+    // Place the card into the div "Cards-Container"
+    if (subscription.status == "ACTIVE") {
       cardContainer.appendChild(card);
-
     } else {
-      const style = document.getElementById('cardstyle');
-      // Copy the card and it's style
-      const card = style.cloneNode(true)
-
-      card.setAttribute('id', '');
-      card.style.display = 'block';
-
-      const subscriptionName = card.getElementsByClassName('subscription-name')[0];
-      subscriptionName.textContent = subscription.productName;
-
-      const subscriptionQty = card.getElementsByClassName('subscription-qty')[0];
-      subscriptionQty.textContent = subscription.productQty
-
-      const subscriptionPrice = card.getElementsByClassName('subscription-price')[0];
-      subscriptionPrice.textContent = `$${subscription.price}`;
-
-      const subscriptionNextBilldate = card.getElementsByClassName('nextbilldate')[0];
-      subscriptionNextBilldate.style.display = "none"
-
-      const subscriptionFrequency = card.getElementsByClassName('subscription-frequency')[0];
-      subscriptionFrequency.textContent = subscription.billingIntervalDays + " Days"
-
-      const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
-      subscriptionStatusBadge.textContent = "Cancelled";
-      subscriptionStatusBadge.style.backgroundColor = "#404168";
-
-      const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
-      subscriptionProductImage.src = subscription.productImg;
-      subscriptionProductImage.srcset = subscription.productImg;
-      subscriptionProductImage.addEventListener("error", function (event) {
-        event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-        event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-        event.onerror = null; 
-      });
-    
-
-      const subscriptionLink = card.getElementsByClassName('subscription-link')[0].addEventListener('click', function (e) {
-        document.location.href = "/account/subscription?id=" + subscription.purchaseId;
-      });
-
-      // Place the card into the div "Cards-Container"
-      cardContainer.appendChild(card);
+      cancelledContainer.appendChild(card);
     }
 
     // const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
@@ -116,11 +70,11 @@ function getSubscriptions(subscriptions) {
     const subscriptionsTitle = document.getElementById("subscriptionsTitle").style.display = 'block';
   })
 }
+
 function showError(error){
   if (error.response.data == "Could Not Find Customer") {
     window.location.href = "/account/no-subscription-page"
   } else {
     const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
-
   }
 }
