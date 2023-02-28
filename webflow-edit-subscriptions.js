@@ -122,7 +122,6 @@ async function ShowSubscription(response) {
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
-    const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", dateFormatted);
   } else {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
@@ -139,6 +138,7 @@ async function ShowSubscription(response) {
   let maxDate = new Date(nextBillDate);
   maxDate.setDate(maxDate.getDate() + 30)
   const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-original-bill-date", nextBillDateFormatted);
+  const billDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", nextBillDateFormatted);
   const fp = flatpickr(".date", {
     defaultDate: nextBillDateFormatted,
     dateFormat: "m-d-Y",
