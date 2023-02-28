@@ -66,7 +66,7 @@ async function ShowSubscription(response) {
       option_value = "90 Days";
     }
     if(response.data.billingIntervalDays == element.billingIntervalDays){
-      option_elem.setAttribute('selected');
+      option_elem.setAttribute('selected', "selected");
     }
     // Add index to option_elem
     option_elem.value = element.product_id;
