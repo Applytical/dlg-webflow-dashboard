@@ -12,7 +12,8 @@ axios.post(`${url}/webflow/subscriptions/all`, {
   });
 
 function getSubscriptions(subscriptions) {
-  const cardContainer = document.getElementById("Cards-Container")
+  const cardContainer = document.getElementById("Cards-Container");
+  const cancelledContainer = document.getElementById("Cancelled-Container");
 
   subscriptions.forEach(subscription => {
     if (subscription.nextBillDate !== null && subscription.status == "ACTIVE") {
