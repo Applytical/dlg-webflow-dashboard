@@ -51,7 +51,6 @@ async function ShowSubscription(response) {
   subscriptionStatusBadge.textContent = "Active";
   subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
-
   var select = document.getElementById('subscriptionsFreqDropdown');
 
   response.data.frequency.forEach((element, index) => {
@@ -87,14 +86,11 @@ async function ShowSubscription(response) {
       select.options[i].removeAttribute("selected");
     }
 
-
     // Set the selected attribute to the current option
     select.setAttribute('product_id', this.value);
     select.options[select.selectedIndex].setAttribute('selected', true);
 
   });
-
-
 
   const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
   subscriptionProductImage.src = response.data.productImg;
@@ -104,7 +100,6 @@ async function ShowSubscription(response) {
     event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
     event.onerror = null;
   })
-
 
   const productQty = document.querySelector('.quantity-number');
   productQty.setAttribute("data-initial-qty", response.data.productQty);
@@ -120,7 +115,6 @@ async function ShowSubscription(response) {
     subscriptionStatusBadge.textContent = "Active";
     subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
-
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   } else {
@@ -135,7 +129,6 @@ async function ShowSubscription(response) {
 
   const nextBillDateStorage = sessionStorage.setItem("next-bill-date", nextBillDateFormatted)
   const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", nextBillDateFormatted)
-
 
   let minDate = new Date();
   let maxDate = new Date(nextBillDate);
@@ -154,8 +147,6 @@ async function ShowSubscription(response) {
 
   });
 
-
-
   // Hide elements based on subscription status 
   if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
     const subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
@@ -171,7 +162,6 @@ async function ShowSubscription(response) {
   let updateContainer = document.getElementById("subscriptionLoaded").style.display = "block";
 };
 
-
 const modal = document.getElementById("subscriptionModal");
 const modalContent = document.getElementById("subscriptionModalContent");
 
@@ -181,8 +171,6 @@ const closeModal = document.getElementById('modalClose');
 const modalAgree = document.getElementById("subscriptionModalAgree");
 const modalCancel = document.getElementById("subscriptionModalCancel");
 const modalTitle = document.getElementById("subscriptionModalTitle");
-
-
 
 var subscriptionCancel = document.getElementById('cancelSubscription');
 
@@ -360,6 +348,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
     });
   });
 });
+
 async function cancelFlowRequest(cancelPayload) {
 
   axios.post(`${url}webflow/subscriptions/cancel`, {
@@ -388,7 +377,6 @@ async function cancelFlowRequest(cancelPayload) {
       errorMessageBanner.textContent = error.response.data
     });
 }
-
 
 var subscriptionReactivate = document.getElementById('reactivateSubscription');
 const updateSubscriptions = document.getElementById("updateSubscriptions");
@@ -443,22 +431,18 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
   });
 
-
 });
 function refreshPage() {
   window.location.reload();
 }
-
 
 const updateSubscriptionForm = document.querySelectorAll('[data-subscription-form]');
 const updateSubscriptionError = document.querySelectorAll('[data-subscription-update-error]');
 const updateSubscriptionLoading = document.querySelectorAll('[data-subscription-update-loading]');
 const updateSubscriptionIdle = document.querySelectorAll('[data-subscription-update-idle]');
 
-
 updateSubscriptionForm.forEach(function (el) {
   const updateSubscriptionNextBillDate = el.querySelector('[data-next-bill-date]');
-
 
   el.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -468,7 +452,7 @@ updateSubscriptionForm.forEach(function (el) {
     updateSubscriptionLoading.forEach(function (el) { el.style.display = 'block'; });
     updateSubscriptionIdle.forEach(function (el) { el.style.display = 'none'; });
     modalAgree.textContent = 'Update'
-    modalTitle.textContent = 'Are you sure you want to update?'
+    modalTitle.textContent = 'Are you sure you want to update your subscription?'
 
     updateSubscriptions.style.display = "flex";
     modal.style.display = 'flex';
@@ -549,7 +533,6 @@ window.onclick = function (event) {
   }
 }
 
-
 closeModal.addEventListener("click", function (e) {
   e.preventDefault();
   modal.style.display = 'none';
@@ -570,4 +553,3 @@ closeErrorBanner.addEventListener("click", function (e) {
   closeErrorBanner.style.display = 'none';
 
 });
-
