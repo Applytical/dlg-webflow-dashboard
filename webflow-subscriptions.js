@@ -36,9 +36,10 @@ function getSubscriptions(subscriptions) {
     subscriptionPrice.textContent = `$${subscription.price}`;
 
     const subscriptionNextBilldate = card.querySelector('.subscription-nextbilldate');
+    const nextbilldate = card.querySelector('.nextbilldate');
     subscriptionNextBilldate.textContent = subscription.nextBillDate;
     if (subscription.status != "ACTIVE") {
-      subscriptionNextBilldate.style.display = "none";
+      nextbilldate.style.display = "none";
     }
 
     const subscriptionFrequency = card.querySelector('.subscription-frequency');
