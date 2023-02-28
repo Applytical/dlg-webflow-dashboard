@@ -67,6 +67,7 @@ async function ShowSubscription(response) {
     }
     if (response.data.billingIntervalDays == element.billingIntervalDays) {
       option_elem.setAttribute('selected', true);
+      select.setAttribute('product_id', element.product_id);
     }
     // Add index to option_elem
     option_elem.value = element.product_id;
