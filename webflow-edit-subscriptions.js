@@ -107,6 +107,7 @@ async function ShowSubscription(response) {
 
   const productQty = document.querySelector('.quantity-number');
   productQty.setAttribute("data-initial-qty", response.data.productQty);
+  productQty.setAttribute("data-quantiyy", response.data.productQty);
   productQty.value = `${response.data.productQty}`;
   productQty.min = 1;
   let nextBillDate;
@@ -121,6 +122,7 @@ async function ShowSubscription(response) {
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
+    const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", dateFormatted);
   } else {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
