@@ -26,25 +26,25 @@ function getSubscriptions(subscriptions) {
     card.setAttribute('id', '');
     card.style.display = 'block';
 
-    const subscriptionName = card.getElementsByClassName('subscription-name')[0];
+    const subscriptionName = card.querySelector('.subscription-name');
     subscriptionName.textContent = subscription.productName;
 
-    const subscriptionQty = card.getElementsByClassName('subscription-qty')[0];
+    const subscriptionQty = card.querySelector('.subscription-qty');
     subscriptionQty.textContent = subscription.productQty;
 
-    const subscriptionPrice = card.getElementsByClassName('subscription-price')[0];
+    const subscriptionPrice = card.querySelector('.subscription-price');
     subscriptionPrice.textContent = `$${subscription.price}`;
 
-    const subscriptionNextBilldate = card.getElementsByClassName('subscription-nextbilldate')[0];
+    const subscriptionNextBilldate = card.querySelector('.subscription-nextbilldate');
     subscriptionNextBilldate.textContent = subscription.nextBillDate;
     if (subscription.status != "ACTIVE") {
       subscriptionNextBilldate.style.display = "none";
     }
 
-    const subscriptionFrequency = card.getElementsByClassName('subscription-frequency')[0];
+    const subscriptionFrequency = card.querySelector('.subscription-frequency');
     subscriptionFrequency.textContent = subscription.billingIntervalDays + " Days";
 
-    const subscriptionStatusBadge = card.getElementsByClassName('subscription-badge')[0];
+    const subscriptionStatusBadge = card.querySelector('.subscription-badge');
     subscriptionStatusBadge.textContent = subscription.status;
     if (subscription.status == "ACTIVE") {
       subscriptionStatusBadge.style.backgroundColor = "#ec008c";
@@ -52,7 +52,7 @@ function getSubscriptions(subscriptions) {
       subscriptionStatusBadge.style.backgroundColor = "#404168";
     }
 
-    const subscriptionProductImage = card.getElementsByClassName('product-image')[0];
+    const subscriptionProductImage = card.querySelector('.product-image');
     subscriptionProductImage.src = subscription.productImg;
     subscriptionProductImage.srcset = subscription.productImg;
     subscriptionProductImage.addEventListener("error", function (event) {
@@ -61,7 +61,7 @@ function getSubscriptions(subscriptions) {
       event.onerror = null;
     });
 
-    const subscriptionLink = card.getElementsByClassName('subscription-link')[0].addEventListener('click', function (e) {
+    const subscriptionLink = card.querySelector('.subscription-link').addEventListener('click', function (e) {
       document.location.href = "/account/subscription?id=" + subscription.purchaseId;
     });
 
