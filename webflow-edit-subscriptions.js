@@ -91,8 +91,6 @@ async function ShowSubscription(response) {
     select.setAttribute('product_id', this.value);
     select.options[select.selectedIndex].setAttribute('selected', true);
 
-
-    console.log('You selected: ', this.value);
   });
 
 
@@ -473,18 +471,17 @@ updateSubscriptionForm.forEach(function (el) {
     const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
     const subscriptionQuantity = el.querySelector("[name=quantity]").getAttribute("data-quantity");
     const price = document.getElementById('subscriptionPrice').textContent
-    // var select = document.getElementById('subscriptionsFreqDropdown').value;
+    var product_id = document.getElementById('subscriptionsFreqDropdown').getAttribute("product_id");
 
     modalAgree.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-
       modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
 
       axios.post(`${url}webflow/subscriptions/update`, {
         nextBillDate: nextBillDate,
         productQty: subscriptionQuantity,
-        // product_id: product_id,
+        product_id: product_id,
         purchaseId: purchaseId,
         price: price
       })
