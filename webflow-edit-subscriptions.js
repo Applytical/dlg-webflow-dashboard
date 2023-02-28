@@ -465,7 +465,8 @@ updateSubscriptionForm.forEach(function (el) {
     updateSubscriptionIdle.forEach(function (el) { el.style.display = 'none'; });
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update?'
-    updateSubscriptions.style.dispaly = "flex";
+
+    updateSubscriptions.style.display = "flex";
     modal.style.display = 'flex';
 
     const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
