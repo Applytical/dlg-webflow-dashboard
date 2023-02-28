@@ -46,7 +46,8 @@ function getSubscriptions(subscriptions) {
     subscriptionFrequency.textContent = subscription.billingIntervalDays + " Days";
 
     const subscriptionStatusBadge = card.querySelector('.subscription-badge');
-    subscriptionStatusBadge.textContent = subscription.status;
+    let status = subscription.status.toLowerCase();
+    subscriptionStatusBadge.textContent = status;
     if (subscription.status == "ACTIVE") {
       subscriptionStatusBadge.style.backgroundColor = "#ec008c";
     } else {
