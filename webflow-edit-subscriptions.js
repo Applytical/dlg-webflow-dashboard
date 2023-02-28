@@ -65,7 +65,7 @@ async function ShowSubscription(response) {
     } if (element.billingIntervalDays == 90) {
       option_value = "90 Days";
     }
-    if(response.data.billingIntervalDays == element.billingIntervalDays){
+    if (response.data.billingIntervalDays == element.billingIntervalDays) {
       option_elem.setAttribute('selected', true);
     }
     // Add index to option_elem
@@ -80,13 +80,20 @@ async function ShowSubscription(response) {
   });
 
   select.addEventListener('change', function () {
-    var option = select.options[select.selectedIndex];
-    option.removeAttribute("selected");
+
+    // Loop through all the options and remove the selected attribute
+    for (let i = 0; i < select.options.length; i++) {
+      select.options[i].removeAttribute("selected");
+    }
+
+
+    // Set the selected attribute to the current option
     select.setAttribute('product_id', this.value);
     select.options[select.selectedIndex].setAttribute('selected', true);
+
+
     console.log('You selected: ', this.value);
   });
-
 
 
 
