@@ -122,6 +122,8 @@ async function ShowSubscription(response) {
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
+    const billDate = document.getElementById("nextBillDateDiv");
+    billDate.setAttribute("data-next-bill-date", nextBillDateFormatted);
   } else {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
@@ -137,8 +139,6 @@ async function ShowSubscription(response) {
   let minDate = new Date();
   let maxDate = new Date(nextBillDate);
   maxDate.setDate(maxDate.getDate() + 30)
-  const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-original-bill-date", nextBillDateFormatted);
-  const billDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", nextBillDateFormatted);
   const fp = flatpickr(".date", {
     defaultDate: nextBillDateFormatted,
     dateFormat: "m-d-Y",
@@ -149,7 +149,8 @@ async function ShowSubscription(response) {
   fp.config.onChange.push(function (dateStr) {
     let date = new Date(dateStr);
     const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
-    const subscriptionDate = document.getElementById('next-bill-date').setAttribute("data-subscription-next-bill-date", dateFormatted);
+    const billDate = document.getElementById("nextBillDateDiv");
+    billDate.setAttribute("data-next-bill-date", nextBillDateFormatted);
   });
 
 
@@ -471,8 +472,9 @@ updateSubscriptionForm.forEach(function (el) {
     updateSubscriptions.style.display = "flex";
     modal.style.display = 'flex';
 
-    const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
-    const subscriptionQuantity = el.querySelector("[name=quantity]").getAttribute("data-quantity");
+    const billDate = document.getElementById("nextBillDateDiv");
+    billDate.getAttribute("data-next-bill-date");
+    const subscriptionQuantity = el.querySelector("[name=quantity]").value
     const price = document.getElementById('subscriptionPrice').textContent
     var product_id = document.getElementById('subscriptionsFreqDropdown').getAttribute("product_id");
 
