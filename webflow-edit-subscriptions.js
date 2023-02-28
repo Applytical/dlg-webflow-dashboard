@@ -80,7 +80,8 @@ async function ShowSubscription(response) {
   });
 
   select.addEventListener('change', function () {
-    select.options.removeAttribute("selected");
+    var option = select.options[select.selectedIndex];
+    option.removeAttribute("selected");
     select.setAttribute('product_id', this.value);
     select.options[select.selectedIndex].setAttribute('selected', true);
     console.log('You selected: ', this.value);
