@@ -122,8 +122,6 @@ async function ShowSubscription(response) {
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
-    const billDate = document.getElementById("nextBillDateDiv");
-    billDate.setAttribute("data-next-bill-date", nextBillDateFormatted);
   } else {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
@@ -135,6 +133,8 @@ async function ShowSubscription(response) {
   }
 
   const nextBillDateStorage = sessionStorage.setItem("next-bill-date", nextBillDateFormatted)
+  const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", nextBillDateFormatted)
+
 
   let minDate = new Date();
   let maxDate = new Date(nextBillDate);
@@ -149,8 +149,8 @@ async function ShowSubscription(response) {
   fp.config.onChange.push(function (dateStr) {
     let date = new Date(dateStr);
     const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
-    const billDate = document.getElementById("nextBillDateDiv");
-    billDate.setAttribute("data-next-bill-date", nextBillDateFormatted);
+    const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", dateFormatted)
+
   });
 
 
@@ -472,11 +472,10 @@ updateSubscriptionForm.forEach(function (el) {
     updateSubscriptions.style.display = "flex";
     modal.style.display = 'flex';
 
-    const billDate = document.getElementById("nextBillDateDiv");
-    billDate.getAttribute("data-next-bill-date");
+    const nextBillDate = sessionStorage.getItem("next-bill-date-form")
     const subscriptionQuantity = el.querySelector("[name=quantity]").value
     const price = document.getElementById('subscriptionPrice').textContent
-    var product_id = document.getElementById('subscriptionsFreqDropdown').getAttribute("product_id");
+    const product_id = document.getElementById('subscriptionsFreqDropdown').getAttribute("product_id");
 
     modalAgree.addEventListener('click', function (e) {
       e.preventDefault();
