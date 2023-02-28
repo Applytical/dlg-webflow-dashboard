@@ -66,7 +66,7 @@ async function ShowSubscription(response) {
       option_value = "90 Days";
     }
     if(response.data.billingIntervalDays == element.billingIntervalDays){
-      option_elem.setAttribute('selected', "selected");
+      option_elem.setAttribute('selected', true);
     }
     // Add index to option_elem
     option_elem.value = element.product_id;
@@ -80,7 +80,8 @@ async function ShowSubscription(response) {
   });
 
   select.addEventListener('change', function () {
-
+    select.setAttribute('product_id', this.value);
+    select.options[select.selectedIndex].setAttribute('selected', true);
     console.log('You selected: ', this.value);
   });
 
@@ -463,6 +464,7 @@ updateSubscriptionForm.forEach(function (el) {
     const nextBillDate = updateSubscriptionNextBillDate.getAttribute('data-subscription-next-bill-date');
     const subscriptionQuantity = el.querySelector("[name=quantity]").getAttribute("data-quantity");
     const price = document.getElementById('subscriptionPrice').textContent
+    // var select = document.getElementById('subscriptionsFreqDropdown').value;
 
     modalAgree.addEventListener('click', function (e) {
       e.preventDefault();
@@ -473,6 +475,7 @@ updateSubscriptionForm.forEach(function (el) {
       axios.post(`${url}webflow/subscriptions/update`, {
         nextBillDate: nextBillDate,
         productQty: subscriptionQuantity,
+        // product_id: product_id,
         purchaseId: purchaseId,
         price: price
       })
