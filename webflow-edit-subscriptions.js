@@ -302,7 +302,6 @@ subscriptionCancel.addEventListener("click", async function (e) {
           const sendRequest = cancelFlowRequest(request);
         });
 
-
         var closeModal = document.getElementById('noCancelBtn');
         closeModal.addEventListener('click', function (e) {
           e.preventDefault();
@@ -322,6 +321,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.stopPropagation();
       otherReasonCancel.style.display = "none";
       changeBillDateModal.style.display = "none";
+      areYouSure.style.display = "none";
       cancellationReasonsDiv.style.display = "block";
     });
 
@@ -332,6 +332,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.stopPropagation();
       changeBillDateModal.style.display = "none";
       otherReasonCancel.style.display = "none";
+      areYouSure.style.display = "none";
       cancellationReasonsDiv.style.display = "block";
     });
 
@@ -339,6 +340,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.preventDefault();
       e.stopPropagation();
       cancelSubscriptionFlow.style.display = "none";
+      areYouSure.style.display = "none";
       modal.style.display = 'none';
     });
 
@@ -346,6 +348,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
       e.preventDefault();
       modal.style.display = 'none';
       cancelSubscriptionFlow.style.display = "none";
+      areYouSure.style.display = "none";
     });
   });
 });
