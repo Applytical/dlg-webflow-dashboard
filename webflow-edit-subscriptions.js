@@ -58,22 +58,30 @@ async function ShowSubscription(response) {
     let option_elem = document.createElement('option');
 
     let option_value;
-    if(element.billingIntervalDays == 30){
+    if (element.billingIntervalDays == 30) {
       option_value = "30 Days";
-    }  else if(element.billingIntervalDays == 60){
+    } else if (element.billingIntervalDays == 60) {
       option_value = "60 Days";
-    }  if(element.billingIntervalDays == 90){
+    } if (element.billingIntervalDays == 90) {
       option_value = "90 Days";
+    }
+    if(response.data.billingIntervalDays == element.billingIntervalDays){
+      option_elem.setAttribute('selected');
     }
     // Add index to option_elem
     option_elem.value = element.product_id;
-   
+
     // Add element HTML
     option_elem.textContent = option_value;
 
 
     // Append option_elem to select_elem
     select.appendChild(option_elem);
+  });
+
+  select.addEventListener('change', function () {
+
+    console.log('You selected: ', this.value);
   });
 
 
