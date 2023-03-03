@@ -20,9 +20,6 @@ function getSubscriptions(subscriptions) {
     // Copy the card and it's style
     const card = style.cloneNode(true)
 
-    console.log("TEST");
-    console.log(subscription.status);
-
     card.setAttribute('id', '');
     card.style.display = 'block';
 
