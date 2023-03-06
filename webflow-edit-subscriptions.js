@@ -253,6 +253,9 @@ subscriptionCancel.addEventListener("click", async function (e) {
                 const successBanner = document.getElementById('successBanner').style.display = 'block';
                 const successBannerMessage = document.getElementById('successBannerMessage');
                 successBannerMessage.textContent = "Subscription Updated";
+                setTimeout(() => {
+                  successBanner.style.display = 'none';
+                  }, 3000);
                 const myTimeout = setTimeout(refreshPage, 5000);
               }
             })
@@ -263,7 +266,10 @@ subscriptionCancel.addEventListener("click", async function (e) {
               changeBillDateModal.style.display = "none";
               const errorBanner = document.getElementById('errorBanner').style.display = 'block';
               const errorMessageBanner = document.getElementById('errorBannerMessage');
-              errorMessageBanner.textContent = error.response.data
+              errorMessageBanner.textContent = error.response.data;
+              setTimeout(() => {
+                errorBanner.style.display = 'none';
+                }, 3000);
             });
 
         });
@@ -381,6 +387,9 @@ async function cancelFlowRequest(cancelPayload) {
       const errorBanner = document.getElementById('errorBanner').style.display = 'block';
       const errorMessageBanner = document.getElementById('errorBannerMessage');
       errorMessageBanner.textContent = error.response.data
+      setTimeout(() => {
+        errorBanner.style.display = 'none';
+        }, 3000);
     });
 }
 
@@ -486,6 +495,9 @@ updateSubscriptionForm.forEach(function (el) {
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Updated";
+            setTimeout(() => {
+            successBanner.style.display = 'none';
+            }, 3000);
           }
         })
         .catch((error) => {
@@ -493,6 +505,9 @@ updateSubscriptionForm.forEach(function (el) {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
+          setTimeout(() => {
+            errorBanner.style.display = 'none';
+            }, 3000);
         });
     });
 
