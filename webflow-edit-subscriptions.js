@@ -52,7 +52,6 @@ async function ShowSubscription(response) {
   subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
   var select = document.getElementById('subscriptionsFreqDropdown');
-  console.log(response.data.frequency);
   response.data.frequency.forEach((element, index) => {
 
     let option_elem = document.createElement('option');
@@ -103,8 +102,6 @@ async function ShowSubscription(response) {
     subscriptionProductImage.srcset = placeholder
   }
 
-
-
   function UrlExists(url) {
     var http = new XMLHttpRequest();
     http.open('HEAD', url, false);
@@ -120,11 +117,14 @@ async function ShowSubscription(response) {
   let nextBillDate;
   let nextBillDateFormatted;
 
+  console.log(response.data);
+
   if (response.data.nextBillDate !== null) {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Active";
     subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
