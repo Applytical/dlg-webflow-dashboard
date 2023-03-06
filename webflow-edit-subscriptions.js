@@ -52,12 +52,10 @@ async function ShowSubscription(response) {
   subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
   var select = document.getElementById('subscriptionsFreqDropdown');
-
+  console.log(response.data.frequency);
   response.data.frequency.forEach((element, index) => {
+
     let option_elem = document.createElement('option');
-
-    console.log(element); 
-
     let option_value;
     if (element.billingIntervalDays == 30) {
       option_value = "30 Days";
