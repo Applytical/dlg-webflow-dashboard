@@ -91,7 +91,8 @@ async function ShowSubscription(response) {
     select.options[select.selectedIndex].setAttribute('selected', true);
 
   });
-
+  const imageSrc = UrlExists(response.data.productImg);
+  console.log(imageSrc);
   const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
   subscriptionProductImage.src = response.data.productImg;
   subscriptionProductImage.srcset = response.data.productImg;
@@ -101,6 +102,14 @@ async function ShowSubscription(response) {
     event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
     event.onerror = null;
   })
+
+
+  function UrlExists(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status;
+  }
 
   const productQty = document.querySelector('.quantity-number');
   productQty.setAttribute("data-initial-qty", response.data.productQty);
@@ -256,7 +265,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
                 successBannerMessage.textContent = "Subscription Updated";
                 setTimeout(() => {
                   successBanner.style.display = 'none';
-                  }, 3000);
+                }, 3000);
                 const myTimeout = setTimeout(refreshPage, 5000);
               }
             })
@@ -270,7 +279,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
               errorMessageBanner.textContent = error.response.data;
               setTimeout(() => {
                 errorBanner.style.display = 'none';
-                }, 3000);
+              }, 3000);
             });
 
         });
@@ -390,7 +399,7 @@ async function cancelFlowRequest(cancelPayload) {
       errorMessageBanner.textContent = error.response.data
       setTimeout(() => {
         errorBanner.style.display = 'none';
-        }, 3000);
+      }, 3000);
     });
 }
 
@@ -497,7 +506,7 @@ updateSubscriptionForm.forEach(function (el) {
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Updated";
             setTimeout(() => {
-            successBanner.style.display = 'none';
+              successBanner.style.display = 'none';
             }, 3000);
           }
         })
@@ -508,7 +517,7 @@ updateSubscriptionForm.forEach(function (el) {
           errorMessageBanner.textContent = error.response.data
           setTimeout(() => {
             errorBanner.style.display = 'none';
-            }, 3000);
+          }, 3000);
         });
     });
 
