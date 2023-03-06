@@ -117,8 +117,6 @@ async function ShowSubscription(response) {
   let nextBillDate;
   let nextBillDateFormatted;
 
-  console.log(response.data);
-
   if (response.data.nextBillDate !== null) {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
@@ -148,7 +146,6 @@ async function ShowSubscription(response) {
     defaultDate: nextBillDateFormatted,
     dateFormat: "m-d-Y",
     minDate: minDate,
-    maxDate: maxDate
   });
 
   fp.config.onChange.push(function (dateStr) {
