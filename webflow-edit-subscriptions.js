@@ -56,6 +56,8 @@ async function ShowSubscription(response) {
   response.data.frequency.forEach((element, index) => {
     let option_elem = document.createElement('option');
 
+    console.log(element); 
+
     let option_value;
     if (element.billingIntervalDays == 30) {
       option_value = "30 Days";
@@ -96,23 +98,13 @@ async function ShowSubscription(response) {
   const placeholder = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
 
   if(imageSrc != 404){
-
     subscriptionProductImage.src = response.data.productImg;
     subscriptionProductImage.srcset = response.data.productImg;
-    
   } else {
     subscriptionProductImage.src = placeholder
     subscriptionProductImage.srcset = placeholder
   }
-  // console.log(imageSrc);
-  // subscriptionProductImage.src = response.data.productImg;
-  // subscriptionProductImage.srcset = response.data.productImg;
-  // console.log(subscriptionProductImage.src);
-  // subscriptionProductImage.addEventListener("error", function (event) {
-  //   event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-  //   event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-  //   event.onerror = null;
-  // })
+
 
 
   function UrlExists(url) {
