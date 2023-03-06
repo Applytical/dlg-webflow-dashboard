@@ -92,16 +92,27 @@ async function ShowSubscription(response) {
 
   });
   const imageSrc = UrlExists(response.data.productImg);
-  console.log(imageSrc);
-  const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
-  subscriptionProductImage.src = response.data.productImg;
-  subscriptionProductImage.srcset = response.data.productImg;
-  console.log(subscriptionProductImage.src);
-  subscriptionProductImage.addEventListener("error", function (event) {
-    event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-    event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-    event.onerror = null;
-  })
+  const subscriptionProductImage = document.querySelector('.product-image');
+  const placeholder = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+
+  if(imageSrc != 404){
+
+    subscriptionProductImage.src = response.data.productImg;
+    subscriptionProductImage.srcset = response.data.productImg;
+    
+  } else {
+    subscriptionProductImage.src = placeholder
+    subscriptionProductImage.srcset = placeholder
+  }
+  // console.log(imageSrc);
+  // subscriptionProductImage.src = response.data.productImg;
+  // subscriptionProductImage.srcset = response.data.productImg;
+  // console.log(subscriptionProductImage.src);
+  // subscriptionProductImage.addEventListener("error", function (event) {
+  //   event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+  //   event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+  //   event.onerror = null;
+  // })
 
 
   function UrlExists(url) {
