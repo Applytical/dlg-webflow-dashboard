@@ -311,6 +311,16 @@
 
 
     var phoneNumber = document.querySelector('[data-form-phone-number]');
+
+    var accountEmail = document.getElementById('accountEmail');
+
+    const phoneNumberEmail = sessionStorage.getItem("email");
+
+    if(phoneNumberEmail){
+      accountEmail.value = phoneNumberEmail;
+    } else {
+      accountEmail.style.display = "block";
+    }
     var requestButton = document.querySelector('[data-form-phone-request]');
     var oneTimeLogin = document.querySelector('[data-form-phone-login]');
 
@@ -377,9 +387,12 @@
           var phoneNumberCode = el.querySelector('[data-form-phone-code]');
           phoneNumberCode.innerHTML = `<i class="fa fa-circle-o-notch fa-spin"></i>Loading`
           confirmationResult.confirm(phoneNumberCode.value).then((authUser) => {
+
+
             // User signed in successfully.
             user = authUser;
-            window.location.href = webflowAuth.loginRedirectPath;
+            console.log(user);
+            // window.location.href = webflowAuth.loginRedirectPath;
           }).catch((error) => {
             var errorCode = error.code;
             var errorMessage = error.message;
