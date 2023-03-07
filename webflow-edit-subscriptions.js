@@ -145,7 +145,7 @@ async function ShowSubscription(response) {
   const fp = flatpickr(".date", {
     defaultDate: nextBillDateFormatted,
     dateFormat: "m-d-Y",
-    minDate: minDate,
+    minDate: minDate, 
   });
 
   fp.config.onChange.push(function (dateStr) {
@@ -253,7 +253,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
             nextBillDate: nextBillDateStorage,
           })
             .then((response) => {
-              if (response.status = 200) {
+              if (response.status == 200) {
                 modal.style.display = 'none';
                 cancellationReasonsDiv.style.display = "none";
                 otherReasonCancel.style.display = "none";
