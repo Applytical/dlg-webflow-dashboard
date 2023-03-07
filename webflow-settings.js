@@ -85,6 +85,7 @@ async function card(customer) {
 
 const modal = document.getElementById("subscriptionModalSettings");
 const modalContent = document.getElementById("subscriptionModalContent");
+const subscriptionModelMessage = document.getElementById("subscriptionModelMessage");
 const closeModal = document.getElementById('modalClose');
 const modalAgree = document.getElementById("subscriptionModalAgree");
 const modalCancel = document.getElementById("subscriptionModalCancel");
@@ -112,6 +113,7 @@ billingAddressForm.forEach(function (el) {
     billingAddressErrors.forEach(function (el) { el.style.display = 'none'; });
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update billing address?'
+    subscriptionModelMessage.textContent = "Updating this billing address will update the billing address of all active subscriptions.";
 
     modal.style.display = 'flex';
     modalAgree.addEventListener('click', function (e) {
@@ -138,7 +140,7 @@ billingAddressForm.forEach(function (el) {
             successBannerMessage.textContent = "Billing Address Updated";
             modal.style.display = "none";
             setTimeout(() => {
-              successBannerMessage.style.display = 'none';
+              successBanner.style.display = 'none';
               }, 3000);
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
@@ -194,6 +196,8 @@ shippingAddressForm.forEach(function (el) {
 
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update shipping address?'
+    subscriptionModelMessage.textContent = "Updating this shipping address will update the shipiing address of all active subscriptions.";
+
 
     modal.style.display = 'flex';
 
