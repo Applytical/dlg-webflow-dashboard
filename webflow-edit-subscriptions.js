@@ -376,7 +376,7 @@ async function cancelFlowRequest(cancelPayload) {
     cancelReason: cancelPayload.reason
   })
     .then((response) => {
-      if (response.status = 200) {
+      if (response.status == 200) {
         modal.style.display = 'none';
         cancelSubscriptionFlow.style.display = "none";
         const successBanner = document.getElementById('successBanner').style.display = 'block';
@@ -423,7 +423,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
       purchaseId: purchaseId
     })
       .then((response) => {
-        if (response.status = 200) {
+        if (response.status == 200) {
           updateSubscriptions.style.dispaly = "none";
 
           modal.style.display = 'none';
@@ -498,7 +498,7 @@ updateSubscriptionForm.forEach(function (el) {
         price: price
       })
         .then((response) => {
-          if (response.status = 200) {
+          if (response.status == 200) {
             modal.style.display = 'none';
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
@@ -509,7 +509,7 @@ updateSubscriptionForm.forEach(function (el) {
           }
         })
         .catch((error) => {
-          modal.style.display = 'none';
+          modal.style.display == 'none';
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
