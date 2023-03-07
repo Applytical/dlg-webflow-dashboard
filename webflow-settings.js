@@ -137,11 +137,17 @@ billingAddressForm.forEach(function (el) {
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Billing Address Updated";
             modal.style.display = "none";
+            setTimeout(() => {
+              successBannerMessage.style.display = 'none';
+              }, 3000);
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
             const errorMessageBanner = document.getElementById('errorBannerMessage');
             errorMessageBanner.textContent = "Something Went Wrong"
             modal.style.display = "none";
+            setTimeout(() => {
+              errorBanner.style.display = 'none';
+              }, 3000);
           }
 
         }).catch((error) => {
@@ -149,6 +155,9 @@ billingAddressForm.forEach(function (el) {
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
           modal.style.display = "none";
+          setTimeout(() => {
+            errorBanner.style.display = 'none';
+            }, 3000);
         });
     });
 
@@ -211,11 +220,17 @@ shippingAddressForm.forEach(function (el) {
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Shipping Address Updated";
             modal.style.display = "none"
+            setTimeout(() => {
+              successBanner.style.display = 'none';
+              }, 3000);
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
             const errorMessageBanner = document.getElementById('errorBannerMessage');
             errorMessageBanner.textContent = "Something Went Wrong";
             modal.style.display = "none";
+            setTimeout(() => {
+              errorBanner.style.display = 'none';
+              }, 3000);
           }
 
         }).catch((error) => {
@@ -223,6 +238,9 @@ shippingAddressForm.forEach(function (el) {
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
           modal.style.display = "none";
+          setTimeout(() => {
+            errorBanner.style.display = 'none';
+            }, 3000);
         });
     });
 
@@ -261,6 +279,9 @@ changeCardDetails.addEventListener("click", function (e) {
         const errorBanner = document.getElementById('errorBanner').style.display = 'block';
         const errorMessageBanner = document.getElementById('errorBannerMessage');
         errorMessageBanner.textContent = error.response.data;
+        setTimeout(() => {
+          errorBanner.style.display = 'none';
+          }, 3000);
       });
   } else {
     window.open(`${cardUrl}?emailAddress=${customerEmail}&orderId=${orderId}`);

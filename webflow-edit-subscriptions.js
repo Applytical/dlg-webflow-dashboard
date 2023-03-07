@@ -52,10 +52,9 @@ async function ShowSubscription(response) {
   subscriptionStatusBadge.style.backgroundColor = "#ec008c";
 
   var select = document.getElementById('subscriptionsFreqDropdown');
-
   response.data.frequency.forEach((element, index) => {
-    let option_elem = document.createElement('option');
 
+    let option_elem = document.createElement('option');
     let option_value;
     if (element.billingIntervalDays == 30) {
       option_value = "30 Days";
@@ -91,15 +90,24 @@ async function ShowSubscription(response) {
     select.options[select.selectedIndex].setAttribute('selected', true);
 
   });
+  const imageSrc = UrlExists(response.data.productImg);
+  const subscriptionProductImage = document.querySelector('.product-image');
+  const placeholder = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
 
-  const subscriptionProductImage = document.getElementsByClassName('product-image')[0];
-  subscriptionProductImage.src = response.data.productImg;
-  subscriptionProductImage.srcset = response.data.productImg;
-  subscriptionProductImage.addEventListener("error", function (event) {
-    event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-    event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
-    event.onerror = null;
-  })
+  if(imageSrc != 404){
+    subscriptionProductImage.src = response.data.productImg;
+    subscriptionProductImage.srcset = response.data.productImg;
+  } else {
+    subscriptionProductImage.src = placeholder
+    subscriptionProductImage.srcset = placeholder
+  }
+
+  function UrlExists(url) {
+    var http = new XMLHttpRequest();
+    http.open('HEAD', url, false);
+    http.send();
+    return http.status;
+  }
 
   const productQty = document.querySelector('.quantity-number');
   productQty.setAttribute("data-initial-qty", response.data.productQty);
@@ -114,6 +122,7 @@ async function ShowSubscription(response) {
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Active";
     subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+
 
     nextBillDate = new Date(response.data.nextBillDate);
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
@@ -137,7 +146,6 @@ async function ShowSubscription(response) {
     defaultDate: nextBillDateFormatted,
     dateFormat: "m-d-Y",
     minDate: minDate,
-    maxDate: maxDate
   });
 
   fp.config.onChange.push(function (dateStr) {
@@ -253,6 +261,9 @@ subscriptionCancel.addEventListener("click", async function (e) {
                 const successBanner = document.getElementById('successBanner').style.display = 'block';
                 const successBannerMessage = document.getElementById('successBannerMessage');
                 successBannerMessage.textContent = "Subscription Updated";
+                setTimeout(() => {
+                  successBanner.style.display = 'none';
+                }, 3000);
                 const myTimeout = setTimeout(refreshPage, 5000);
               }
             })
@@ -263,7 +274,10 @@ subscriptionCancel.addEventListener("click", async function (e) {
               changeBillDateModal.style.display = "none";
               const errorBanner = document.getElementById('errorBanner').style.display = 'block';
               const errorMessageBanner = document.getElementById('errorBannerMessage');
-              errorMessageBanner.textContent = error.response.data
+              errorMessageBanner.textContent = error.response.data;
+              setTimeout(() => {
+                errorBanner.style.display = 'none';
+              }, 3000);
             });
 
         });
@@ -381,6 +395,9 @@ async function cancelFlowRequest(cancelPayload) {
       const errorBanner = document.getElementById('errorBanner').style.display = 'block';
       const errorMessageBanner = document.getElementById('errorBannerMessage');
       errorMessageBanner.textContent = error.response.data
+      setTimeout(() => {
+        errorBanner.style.display = 'none';
+      }, 3000);
     });
 }
 
@@ -486,6 +503,9 @@ updateSubscriptionForm.forEach(function (el) {
             const successBanner = document.getElementById('successBanner').style.display = 'block';
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Updated";
+            setTimeout(() => {
+              successBanner.style.display = 'none';
+            }, 3000);
           }
         })
         .catch((error) => {
@@ -493,6 +513,9 @@ updateSubscriptionForm.forEach(function (el) {
           const errorBanner = document.getElementById('errorBanner').style.display = 'block';
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
+          setTimeout(() => {
+            errorBanner.style.display = 'none';
+          }, 3000);
         });
     });
 
