@@ -388,7 +388,10 @@ async function cancelFlowRequest(cancelPayload) {
         var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
         const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
 
-        const myTimeout = setTimeout(refreshPage, 5000);
+        setTimeout(() => {
+          window.location.href = " /account/subscriptions";
+        }, 3000);
+
 
       }
     }).catch((error) => {
