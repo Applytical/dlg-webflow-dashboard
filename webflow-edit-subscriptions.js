@@ -262,7 +262,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
                 const successBannerMessage = document.getElementById('successBannerMessage');
                 successBannerMessage.textContent = "Subscription Updated";
                 setTimeout(() => {
-                  successBanner.style.display = 'none';
+                  const successBanner = document.getElementById('successBanner').style.display = 'none';
                 }, 3000);
                 const myTimeout = setTimeout(refreshPage, 5000);
               }
@@ -276,7 +276,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
               const errorMessageBanner = document.getElementById('errorBannerMessage');
               errorMessageBanner.textContent = error.response.data;
               setTimeout(() => {
-                errorBanner.style.display = 'none';
+                const errorBanner = document.getElementById('errorBanner').style.display = 'none';
               }, 3000);
             });
 
@@ -424,7 +424,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
     })
       .then((response) => {
         if (response.status == 200) {
-          updateSubscriptions.style.dispaly = "none";
+          updateSubscriptions.style.display = "none";
 
           modal.style.display = 'none';
           const successBanner = document.getElementById('successBanner').style.display = 'block';
@@ -435,6 +435,9 @@ subscriptionReactivate.addEventListener("click", function (e) {
           subscriptionStatusBadge.style.backgroundColor = "#ec008c";
           const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
           var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "block";
+          setTimeout(() => {
+            const successBanner = document.getElementById('successBanner').style.display = 'none';
+          }, 3000);
           const myTimeout = setTimeout(refreshPage, 5000);
 
 
@@ -443,6 +446,9 @@ subscriptionReactivate.addEventListener("click", function (e) {
         const errorBanner = document.getElementById('errorBanner').style.display = 'block';
         const errorMessageBanner = document.getElementById('errorBannerMessage');
         errorMessageBanner.textContent = error.response.data
+        setTimeout(() => {
+          const errorBanner = document.getElementById('errorBanner').style.display = 'none';
+        }, 3000);
       });
   });
 
@@ -504,7 +510,7 @@ updateSubscriptionForm.forEach(function (el) {
             const successBannerMessage = document.getElementById('successBannerMessage');
             successBannerMessage.textContent = "Subscription Updated";
             setTimeout(() => {
-              successBanner.style.display = 'none';
+              const successBanner = document.getElementById('successBanner').style.display = 'none';
             }, 3000);
           }
         })
@@ -514,7 +520,7 @@ updateSubscriptionForm.forEach(function (el) {
           const errorMessageBanner = document.getElementById('errorBannerMessage');
           errorMessageBanner.textContent = error.response.data
           setTimeout(() => {
-            errorBanner.style.display = 'none';
+            const errorBanner = document.getElementById('errorBanner').style.display = 'none';
           }, 3000);
         });
     });
