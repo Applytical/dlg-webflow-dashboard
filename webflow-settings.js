@@ -83,7 +83,7 @@ async function card(customer) {
 
 
 
-const modal = document.getElementById("subscriptionModal");
+const modal = document.getElementById("subscriptionModalSettings");
 const modalContent = document.getElementById("subscriptionModalContent");
 const closeModal = document.getElementById('modalClose');
 const modalAgree = document.getElementById("subscriptionModalAgree");
