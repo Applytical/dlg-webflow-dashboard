@@ -80,7 +80,7 @@ function getSubscriptions(subscriptions) {
 
 function showError(error){
   if (error.response.data == "Could Not Find Customer") {
-    //window.location.href = "/account/no-subscription-page"
+    window.location.href = "/account/no-subscription-page"
   } else {
     const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
   }
