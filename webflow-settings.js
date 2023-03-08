@@ -83,8 +83,9 @@ async function card(customer) {
 
 
 
-const modal = document.getElementById("subscriptionModal");
+const modal = document.getElementById("subscriptionModalSettings");
 const modalContent = document.getElementById("subscriptionModalContent");
+const subscriptionModelMessage = document.getElementById("subscriptionModelMessage");
 const closeModal = document.getElementById('modalClose');
 const modalAgree = document.getElementById("subscriptionModalAgree");
 const modalCancel = document.getElementById("subscriptionModalCancel");
@@ -112,6 +113,7 @@ billingAddressForm.forEach(function (el) {
     billingAddressErrors.forEach(function (el) { el.style.display = 'none'; });
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update billing address?'
+    subscriptionModelMessage.textContent = "Updating this billing address will update the billing address of all active subscriptions.";
 
     modal.style.display = 'flex';
     modalAgree.addEventListener('click', function (e) {
@@ -138,8 +140,8 @@ billingAddressForm.forEach(function (el) {
             successBannerMessage.textContent = "Billing Address Updated";
             modal.style.display = "none";
             setTimeout(() => {
-              successBannerMessage.style.display = 'none';
-              }, 3000);
+              successBanner.style.display = 'none';
+            }, 3000);
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
             const errorMessageBanner = document.getElementById('errorBannerMessage');
@@ -147,7 +149,7 @@ billingAddressForm.forEach(function (el) {
             modal.style.display = "none";
             setTimeout(() => {
               errorBanner.style.display = 'none';
-              }, 3000);
+            }, 3000);
           }
 
         }).catch((error) => {
@@ -157,7 +159,7 @@ billingAddressForm.forEach(function (el) {
           modal.style.display = "none";
           setTimeout(() => {
             errorBanner.style.display = 'none';
-            }, 3000);
+          }, 3000);
         });
     });
 
@@ -183,7 +185,7 @@ shippingAddressForm.forEach(function (el) {
   const shippingAddress1 = el.querySelector('[data-shipping-address1]');
   const shippingAddress2 = el.querySelector('[data-shipping-address2]');
   const shippingCity = el.querySelector('[data-shipping-city]');
-  
+
   const shippingState = el.querySelector('[data-shipping-state]');
   const shippingZipCode = el.querySelector('[data-shipping-zip]');
   const shippingCountry = el.querySelector('[data-shipping-country]');
@@ -194,6 +196,8 @@ shippingAddressForm.forEach(function (el) {
 
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update shipping address?'
+    subscriptionModelMessage.textContent = "Updating this shipping address will update the shipiing address of all active subscriptions.";
+
 
     modal.style.display = 'flex';
 
@@ -222,7 +226,7 @@ shippingAddressForm.forEach(function (el) {
             modal.style.display = "none"
             setTimeout(() => {
               successBanner.style.display = 'none';
-              }, 3000);
+            }, 3000);
           } else {
             const errorBanner = document.getElementById('errorBanner').style.display = 'block';
             const errorMessageBanner = document.getElementById('errorBannerMessage');
@@ -230,7 +234,7 @@ shippingAddressForm.forEach(function (el) {
             modal.style.display = "none";
             setTimeout(() => {
               errorBanner.style.display = 'none';
-              }, 3000);
+            }, 3000);
           }
 
         }).catch((error) => {
@@ -240,7 +244,7 @@ shippingAddressForm.forEach(function (el) {
           modal.style.display = "none";
           setTimeout(() => {
             errorBanner.style.display = 'none';
-            }, 3000);
+          }, 3000);
         });
     });
 
@@ -281,7 +285,7 @@ changeCardDetails.addEventListener("click", function (e) {
         errorMessageBanner.textContent = error.response.data;
         setTimeout(() => {
           errorBanner.style.display = 'none';
-          }, 3000);
+        }, 3000);
       });
   } else {
     window.open(`${cardUrl}?emailAddress=${customerEmail}&orderId=${orderId}`);
@@ -303,3 +307,13 @@ closeErrorBanner.addEventListener("click", function (e) {
   closeErrorBanner.style.display = 'none';
 
 });
+
+closeModal.addEventListener("click", function (e) {
+  e.preventDefault();
+  modal.style.display = 'none';
+});
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
