@@ -216,7 +216,7 @@ function showAllProducts(products) {
       modal.style.display = 'none';
 
       axios.post(`${url}/webflow/subscriptions/order/cancel`, {
-        purchaseId: response.data.purchaseId  
+        orderId: response.data.orderId  
       })
         .then((response) => {
        
@@ -225,7 +225,19 @@ function showAllProducts(products) {
         });
   
     });
-
+    
+    closeModal.addEventListener("click", function (e) {
+      e.preventDefault();
+      modal.style.display = 'none';
+      axios.post(`${url}/webflow/subscriptions/order/cancel`, {
+        orderId: response.data.orderId  
+      })
+        .then((response) => {
+       
+        }).catch((error) => {
+          console.log(error);
+        });
+    });
   };
 
 
@@ -235,10 +247,6 @@ function showAllProducts(products) {
   //     modal.style.display = "none";
   //   }
   // }
-  closeModal.addEventListener("click", function (e) {
-    e.preventDefault();
-    modal.style.display = 'none';
-  });
 
   const closeSucessBanner = document.getElementById('successBanner');
 
