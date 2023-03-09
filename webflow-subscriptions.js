@@ -37,7 +37,7 @@ function getSubscriptions(subscriptions) {
 
     // Reformat the next billing date
     let nextBillDate = new Date(subscription.nextBillDate);
-    let nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + “/” + nextBillDate.getUTCDate() + “/” + nextBillDate.getUTCFullYear().toString();
+    let nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + '/' + nextBillDate.getUTCDate() + '/' + nextBillDate.getUTCFullYear().toString();
     subscriptionNextBilldate.textContent = nextBillDateFormatted;
     if (subscription.status != "ACTIVE") {
       nextbilldate.style.display = "none";
