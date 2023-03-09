@@ -2,7 +2,7 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const purchaseId = urlParams.get('id')
 if (purchaseId == undefined) { window.location.replace("/account/subscriptions") };
-axios.post(`${url}webflow/subscriptions`, {
+axios.post(`${url}/webflow/subscriptions`, {
   purchaseId: purchaseId
 })
   .then((response) => {
@@ -249,7 +249,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
           e.preventDefault();
           e.stopPropagation();
           const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
-          axios.post(`${url}webflow/subscriptions/update`, {
+          axios.post(`${url}/webflow/subscriptions/update`, {
             nextBillDate: nextBillDateStorage,
           })
             .then((response) => {
@@ -371,7 +371,7 @@ subscriptionCancel.addEventListener("click", async function (e) {
 
 async function cancelFlowRequest(cancelPayload) {
 
-  axios.post(`${url}webflow/subscriptions/cancel`, {
+  axios.post(`${url}/webflow/subscriptions/cancel`, {
     purchaseId: cancelPayload.purchaseId,
     cancelReason: cancelPayload.reason
   })
@@ -422,7 +422,7 @@ subscriptionReactivate.addEventListener("click", function (e) {
 
     modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
 
-    axios.post(`${url}webflow/subscriptions/restart`, {
+    axios.post(`${url}/webflow/subscriptions/restart`, {
       purchaseId: purchaseId
     })
       .then((response) => {
@@ -499,7 +499,7 @@ updateSubscriptionForm.forEach(function (el) {
       e.stopPropagation();
       modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
 
-      axios.post(`${url}webflow/subscriptions/update`, {
+      axios.post(`${url}/webflow/subscriptions/update`, {
         nextBillDate: nextBillDate,
         productQty: subscriptionQuantity,
         product_id: product_id,

@@ -1,6 +1,6 @@
 const customerEmail = sessionStorage.getItem("email");
 const customerId = sessionStorage.getItem("customerId");
-axios.post(`${url}webflow/customer/`, {
+axios.post(`${url}/webflow/customer/`, {
   email: customerEmail
 })
   .then((response) => {
@@ -122,7 +122,7 @@ billingAddressForm.forEach(function (el) {
 
       modalAgree.innerHTML = '<i class="fa fa-circle-o-notch fa-spin"></i>'
 
-      axios.post(`${url}webflow/customer/update`, {
+      axios.post(`${url}/webflow/customer/update`, {
         billingFirstName: billingFirstName.value,
         billingLastName: billingLastName.value,
         billingAddress1: billingAddress1.value,
