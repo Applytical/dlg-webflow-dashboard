@@ -102,7 +102,6 @@ function showAllProducts(products) {
   });
 
   async function showAddProduct(response) {
-    console.log(response);
     modal.style.display = "flex";
     const productName = document.getElementsByClassName('modal-product-name')[0];
     productName.textContent = response.data.product_name;
@@ -225,7 +224,6 @@ function showAllProducts(products) {
         });
   
     });
-    
     closeModal.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
