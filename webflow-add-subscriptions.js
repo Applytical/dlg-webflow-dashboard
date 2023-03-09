@@ -29,8 +29,10 @@ function showAllProducts(products) {
     const addProductImage = card.getElementsByClassName('add-product-image')[0];
     addProductImage.src = product.img_url;
     addProductImage.addEventListener("error", function (event) {
-      event.target.src = "https://cdn.shopify.com/s/files/1/0005/0947/6927/files/Livingood_Daily_Logo_Triangle.png?v=1613689543";
+      event.target.src = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+      event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
       event.onerror = null;
+    });
     })
 
     const addProductName = card.getElementsByClassName('add-product-name')[0];
