@@ -184,7 +184,7 @@ function showAllProducts(products) {
         e.stopPropagation();
         addProductFormErrors.forEach(function (el) { el.style.display = 'none'; });
 
-        axios.post(`${url}/webflow/subscriptions/update`, {
+        axios.post(`${url}/webflow/subscriptions/new/update`, {
           productQty: quantityElement.value,
           price: priceElement.dataset.price,
           nextBillDate: nextBillDate,
