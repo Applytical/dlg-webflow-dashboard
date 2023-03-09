@@ -196,7 +196,7 @@ shippingAddressForm.forEach(function (el) {
 
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update shipping address?'
-    subscriptionModelMessage.textContent = "Updating this shipping address will update the shipiing address of all active subscriptions.";
+    subscriptionModelMessage.textContent = "Updating this shipping address will update the shipping address of all active subscriptions.";
 
 
     modal.style.display = 'flex';
