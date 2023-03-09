@@ -140,6 +140,7 @@ billingAddressForm.forEach(function (el) {
             successBannerMessage.textContent = "Billing Address Updated";
             modal.style.display = "none";
             setTimeout(() => {
+              const successBanner = document.getElementById('successBanner');
               successBanner.style.display = 'none';
             }, 3000);
           } else {
@@ -148,6 +149,7 @@ billingAddressForm.forEach(function (el) {
             errorMessageBanner.textContent = "Something Went Wrong"
             modal.style.display = "none";
             setTimeout(() => {
+              const errorBanner = document.getElementById('errorBanner');
               errorBanner.style.display = 'none';
             }, 3000);
           }
@@ -158,6 +160,7 @@ billingAddressForm.forEach(function (el) {
           errorMessageBanner.textContent = error.response.data
           modal.style.display = "none";
           setTimeout(() => {
+            const errorBanner = document.getElementById('errorBanner');
             errorBanner.style.display = 'none';
           }, 3000);
         });
@@ -225,6 +228,7 @@ shippingAddressForm.forEach(function (el) {
             successBannerMessage.textContent = "Shipping Address Updated";
             modal.style.display = "none"
             setTimeout(() => {
+              const successBanner = document.getElementById('successBanner');
               successBanner.style.display = 'none';
             }, 3000);
           } else {
@@ -233,6 +237,7 @@ shippingAddressForm.forEach(function (el) {
             errorMessageBanner.textContent = "Something Went Wrong";
             modal.style.display = "none";
             setTimeout(() => {
+              const errorBanner = document.getElementById('errorBanner');
               errorBanner.style.display = 'none';
             }, 3000);
           }
@@ -243,6 +248,7 @@ shippingAddressForm.forEach(function (el) {
           errorMessageBanner.textContent = error.response.data
           modal.style.display = "none";
           setTimeout(() => {
+            const errorBanner = document.getElementById('errorBanner');
             errorBanner.style.display = 'none';
           }, 3000);
         });
@@ -284,6 +290,7 @@ changeCardDetails.addEventListener("click", function (e) {
         const errorMessageBanner = document.getElementById('errorBannerMessage');
         errorMessageBanner.textContent = error.response.data;
         setTimeout(() => {
+          const errorBanner = document.getElementById('errorBanner');
           errorBanner.style.display = 'none';
         }, 3000);
       });
