@@ -188,7 +188,7 @@ function showAllProducts(products) {
           productQty: quantityElement.value,
           price: priceElement.dataset.price,
           nextBillDate: nextBillDate,
-          purchaseId: response.data.purchaseId
+          purchaseId: response.data.purchaseId  
         })
           .then((response) => {
             if (response.status == 200) {
@@ -208,15 +208,27 @@ function showAllProducts(products) {
           });
       });
     });
+
+    modalCancel.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+  
+      modal.style.display = 'none';
+
+      axios.post(`${url}/webflow/subscriptions/order/cancel`, {
+        purchaseId: response.data.purchaseId  
+      })
+        .then((response) => {
+       
+        }).catch((error) => {
+          console.log(error);
+        });
+  
+    });
+
   };
 
-  modalCancel.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
 
-    modal.style.display = 'none';
-
-  });
 
   // window.onclick = function (event) {
   //   if (event.target == modal) {
