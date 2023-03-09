@@ -33,7 +33,6 @@ function showAllProducts(products) {
       event.target.srcset = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
       event.onerror = null;
     });
-    })
 
     const addProductName = card.getElementsByClassName('add-product-name')[0];
     addProductName.textContent = product.base_product_name;
