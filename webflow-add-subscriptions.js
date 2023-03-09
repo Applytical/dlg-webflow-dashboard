@@ -125,7 +125,7 @@ function showAllProducts(products) {
 
 
     let nextBillDate = new Date();
-    nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
+    let nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
     const nextBillDateStorage = sessionStorage.setItem("next-bill-date", nextBillDateFormatted)
     const fp = flatpickr(".date", {
       defaultDate: nextBillDateFormatted,
@@ -184,7 +184,7 @@ function showAllProducts(products) {
         e.stopPropagation();
         addProductFormErrors.forEach(function (el) { el.style.display = 'none'; });
 
-        axios.post(`${url}webflow/subscriptions/update`, {
+        axios.post(`${url}/webflow/subscriptions/update`, {
           productQty: quantityElement.value,
           price: priceElement.dataset.price,
           nextBillDate: nextBillDate,
@@ -218,11 +218,11 @@ function showAllProducts(products) {
 
   });
 
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
+  // window.onclick = function (event) {
+  //   if (event.target == modal) {
+  //     modal.style.display = "none";
+  //   }
+  // }
   closeModal.addEventListener("click", function (e) {
     e.preventDefault();
     modal.style.display = 'none';
@@ -242,5 +242,4 @@ function showAllProducts(products) {
     closeErrorBanner.style.display = 'none';
 
   });
-
 }
