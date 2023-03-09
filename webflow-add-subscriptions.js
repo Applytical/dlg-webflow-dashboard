@@ -228,6 +228,7 @@ function showAllProducts(products) {
     
     closeModal.addEventListener("click", function (e) {
       e.preventDefault();
+      e.stopPropagation();
       modal.style.display = 'none';
       axios.post(`${url}/webflow/subscriptions/order/cancel`, {
         orderId: response.data.orderId  
