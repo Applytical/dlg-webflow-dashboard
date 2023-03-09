@@ -34,7 +34,11 @@ function getSubscriptions(subscriptions) {
 
     const subscriptionNextBilldate = card.querySelector('.subscription-nextbilldate');
     const nextbilldate = card.querySelector('.nextbilldate');
-    subscriptionNextBilldate.textContent = subscription.nextBillDate;
+
+    // Reformat the next billing date
+    let nextBillDate = new Date(subscription.nextBillDate);
+    let nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + “/” + nextBillDate.getUTCDate() + “/” + nextBillDate.getUTCFullYear().toString();
+    subscriptionNextBilldate.textContent = nextBillDateFormatted;
     if (subscription.status != "ACTIVE") {
       nextbilldate.style.display = "none";
     }
