@@ -278,7 +278,7 @@ changeCardDetails.addEventListener("click", function (e) {
   });
   const orderId = sessionStorage.getItem("orderId");
   if (!orderId) {
-    axios.post(`${url}webflow/customer/getId`, {
+    axios.post(`${url}/webflow/customer/getId`, {
       customerId: customerId
     })
       .then((response) => {
