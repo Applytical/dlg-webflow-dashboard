@@ -119,7 +119,7 @@ async function ShowSubscription(response) {
 
   if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
     const subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-    const nextBillDateDiv = document.querySelector('.next-bill-div').style.display = "none";
+    const nextBillDateDiv = document.querySelector('.next-bill-date-div').style.display = "none";
     const hideUpdateSubButton = document.getElementById('updateSubButton').style.display = "none";
 
 
