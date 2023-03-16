@@ -131,7 +131,7 @@ async function ShowSubscription(response) {
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Cancelled";
     subscriptionStatusBadge.style.backgroundColor = "#404168";
-
+    const nextBillDateDiv = document.getElementById("nextBillDateDiv").style.display = "none";
     nextBillDate = new Date();
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
   }
