@@ -15,7 +15,7 @@ function getSubscriptions(subscriptions) {
   const cardContainer = document.getElementById("Cards-Container");
   const cancelledContainer = document.getElementById("Cancelled-Container");
 
-  subscriptions.forEach(subscription => {      
+  subscriptions.forEach(subscription => {
     const style = document.getElementById('cardstyle');
     // Copy the card and it's style
     const card = style.cloneNode(true)
@@ -65,14 +65,16 @@ function getSubscriptions(subscriptions) {
     });
 
     const subscriptionLink = card.querySelector('.subscription-link').addEventListener('click', function (e) {
-      document.location.href = "/account/subscription?id=" + subscription.purchaseId;
+      document.location.href = "/account/membership?id=" + subscription.purchaseId;
     });
 
     // Place the card into the div "Cards-Container"
     if (subscription.status == "ACTIVE") {
       cardContainer.appendChild(card);
     } else {
-      cancelledContainer.appendChild(card);
+      if (subscription.base_product_id == 276 || subscription.base_product_id == 278 || subscription.base_product_id == 355 || subscription.base_product_id == 279) {
+        cancelledContainer.appendChild(card);
+      }
     }
 
     // const hideLoading = document.getElementById('subscriptionLoading').style.display = 'none';
@@ -82,7 +84,7 @@ function getSubscriptions(subscriptions) {
   })
 }
 
-function showError(error){
+function showError(error) {
   if (error.response.data == "Could Not Find Customer") {
     window.location.href = "/account/no-subscription-page"
   } else {

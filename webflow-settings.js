@@ -113,7 +113,7 @@ billingAddressForm.forEach(function (el) {
     billingAddressErrors.forEach(function (el) { el.style.display = 'none'; });
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update billing address?'
-    subscriptionModelMessage.textContent = "Updating this billing address will update the billing address of all active subscriptions.";
+    subscriptionModelMessage.textContent = "Updating this billing address will update the billing address of all active memberships.";
 
     modal.style.display = 'flex';
     modalAgree.addEventListener('click', function (e) {
@@ -199,7 +199,7 @@ shippingAddressForm.forEach(function (el) {
 
     modalAgree.textContent = 'Update'
     modalTitle.textContent = 'Are you sure you want to update shipping address?'
-    subscriptionModelMessage.textContent = "Updating this shipping address will update the shipping address of all active subscriptions.";
+    subscriptionModelMessage.textContent = "Updating this shipping address will update the shipping address of all active memberships.";
 
 
     modal.style.display = 'flex';
@@ -278,7 +278,7 @@ changeCardDetails.addEventListener("click", function (e) {
   });
   const orderId = sessionStorage.getItem("orderId");
   if (!orderId) {
-    axios.post(`${url}webflow/customer/getId`, {
+    axios.post(`${url}/webflow/customer/getId`, {
       customerId: customerId
     })
       .then((response) => {

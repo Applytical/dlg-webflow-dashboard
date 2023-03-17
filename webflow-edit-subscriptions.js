@@ -1,7 +1,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const purchaseId = urlParams.get('id')
-if (purchaseId == undefined) { window.location.replace("/account/subscriptions") };
+if (purchaseId == undefined) { window.location.replace("/account/memberships") };
 axios.post(`${url}/webflow/subscriptions`, {
   purchaseId: purchaseId
 })
@@ -94,7 +94,7 @@ async function ShowSubscription(response) {
   const subscriptionProductImage = document.querySelector('.product-image');
   const placeholder = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
 
-  if(imageSrc != 404){
+  if (imageSrc != 404) {
     subscriptionProductImage.src = response.data.productImg;
     subscriptionProductImage.srcset = response.data.productImg;
   } else {
@@ -117,55 +117,50 @@ async function ShowSubscription(response) {
   let nextBillDate;
   let nextBillDateFormatted;
 
-  if (response.data.nextBillDate !== null) {
+  if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
+    const subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
+    const nextBillDateDiv = document.querySelector('.next-bill-date-div').style.display = "none";
+    const hideUpdateSubButton = document.getElementById('updateSubButton').style.display = "none";
 
-    const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-    subscriptionStatusBadge.textContent = "Active";
-    subscriptionStatusBadge.style.backgroundColor = "#ec008c";
-
-
-    nextBillDate = new Date(response.data.nextBillDate);
-    nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
-  } else {
 
     const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
     subscriptionStatusBadge.textContent = "Cancelled";
     subscriptionStatusBadge.style.backgroundColor = "#404168";
 
+
     nextBillDate = new Date();
     nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
-  }
+  } else {
+    const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
+    subscriptionStatusBadge.textContent = "Active";
+    subscriptionStatusBadge.style.backgroundColor = "#ec008c";
+    nextBillDate = new Date(response.data.nextBillDate);
+    nextBillDateFormatted = (nextBillDate.getUTCMonth() + 1).toString() + "/" + nextBillDate.getUTCDate() + "/" + nextBillDate.getUTCFullYear().toString();
 
-  const nextBillDateStorage = sessionStorage.setItem("next-bill-date", nextBillDateFormatted)
-  const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", nextBillDateFormatted)
 
-  let minDate = new Date();
-  let maxDate = new Date(nextBillDate);
-  maxDate.setDate(maxDate.getDate() + 30)
-  const fp = flatpickr(".date", {
-    defaultDate: nextBillDateFormatted,
-    dateFormat: "m-d-Y",
-    minDate: minDate, 
-  });
-
-  fp.config.onChange.push(function (dateStr) {
-    let date = new Date(dateStr);
-    const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
-    const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", dateFormatted)
-
-  });
-
-  // Hide elements based on subscription status 
-  if (response.data.nextBillDate == null && response.data.status == "CANCELLED") {
-    const subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-    const nextBillDateDiv = document.getElementById('nextBillDateDiv').style.display = "none";
-    const hideUpdateSubButton = document.getElementById('updateSubButton').style.display = "none";
-
-    const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
-  } else if (response.data.nextBillDate != null && response.data.status == "ACTIVE") {
     const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "none";
     var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "block";
+
+    let minDate = new Date();
+    let maxDate = new Date(nextBillDate);
+    maxDate.setDate(maxDate.getDate() + 30)
+    const fp = flatpickr(".date", {
+      defaultDate: nextBillDateFormatted,
+      dateFormat: "m-d-Y",
+      minDate: minDate,
+    });
+
+    fp.config.onChange.push(function (dateStr) {
+      let date = new Date(dateStr);
+      const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" + date.getUTCFullYear().toString();
+      const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", dateFormatted)
+
+    });
+    const nextBillDateStorage = sessionStorage.setItem("next-bill-date", nextBillDateFormatted)
+    const nextBillDateStorageForm = sessionStorage.setItem("next-bill-date-form", nextBillDateFormatted)
   }
+
+
   let hideContainer = document.getElementById("subscriptionLoading").style.display = "none";
   let updateContainer = document.getElementById("subscriptionLoaded").style.display = "block";
 };
