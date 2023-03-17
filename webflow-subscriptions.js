@@ -65,7 +65,7 @@ function getSubscriptions(subscriptions) {
     });
 
     const subscriptionLink = card.querySelector('.subscription-link').addEventListener('click', function (e) {
-      document.location.href = "/account/subscription?id=" + subscription.purchaseId;
+      document.location.href = "/account/membership?id=" + subscription.purchaseId;
     });
 
     // Place the card into the div "Cards-Container"
