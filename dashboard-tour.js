@@ -4,12 +4,19 @@ function init() {
 
   // Start tour
   introJs().start();
-
-  // SEt cookie to stop tour triggering again
-  setCookie('dlg.hidetour', true, 30);
 }
 
 init();
+
+// add a flag when we're done
+introJs().oncomplete(function () {
+  setCookie('dlg.hidetour', true, 30);
+})
+
+// add a flag when we exit
+introJs().onexit(function () {
+  setCookie('dlg.hidetour', true, 30);
+});
 
 // Cookie helper functions
 function setCookie(cname, cvalue, exdays) {
