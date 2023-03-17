@@ -1,21 +1,17 @@
-function init() {
-  // Hide tour if already shown
+var introguide = introJs();
+
+window.addEventListener('load', function () {
   if (getCookie('dlg.hidetour') == "true") return false;
 
-  // Start tour
-  introJs().start();
-}
+  introguide.start();
 
-init();
+  introguide.oncomplete(function () {
+    setCookie('dlg.hidetour', true, 30);
+  });
 
-// add a flag when we're done
-introJs().oncomplete(function () {
-  setCookie('dlg.hidetour', true, 30);
-})
-
-// add a flag when we exit
-introJs().onexit(function () {
-  setCookie('dlg.hidetour', true, 30);
+  introguide.onexit(function () {
+    setCookie('dlg.hidetour', true, 30);
+  });
 });
 
 // Cookie helper functions
