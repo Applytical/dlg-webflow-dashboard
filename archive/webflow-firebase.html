@@ -190,6 +190,7 @@
           });
       });
     });
+
     var forgotPasswordForm = document.querySelectorAll('[data-forgot-form]');
     var forgotErrors = document.querySelectorAll('[data-forgot-error]');
     var forgotLoading = document.querySelectorAll('[data-forgot-loading]');
@@ -269,38 +270,36 @@
       });
     });
 
-
-
- // Confirm the link is a sign-in with email link.
-  if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
-    // Additional state parameters can also be passed via URL.
-    // This can be used to continue the user's intended action before triggering
-    // the sign-in operation.
-    // Get the email if available. This should be available if the user completes
-    // the flow on the same device where they started it.
-    var email = window.localStorage.getItem('emailForSignIn');
-    if (!email) {
-      // User opened the link on a different device. To prevent session fixation
-      // attacks, ask the user to provide the associated email again. For example:
-      email = window.prompt('Please provide your email for confirmation');
+    // Confirm the link is a sign-in with email link.
+    if (firebase.auth().isSignInWithEmailLink(window.location.href)) {
+      // Additional state parameters can also be passed via URL.
+      // This can be used to continue the user's intended action before triggering
+      // the sign-in operation.
+      // Get the email if available. This should be available if the user completes
+      // the flow on the same device where they started it.
+      var email = window.localStorage.getItem('emailForSignIn');
+      if (!email) {
+        // User opened the link on a different device. To prevent session fixation
+        // attacks, ask the user to provide the associated email again. For example:
+        email = window.prompt('Please provide your email for confirmation');
+      }
+      // The client SDK will parse the code from the link for you.
+      firebase.auth().signInWithEmailLink(email, window.location.href)
+        .then((result) => {
+          console.log(result);
+          // Clear email from storage.
+          window.localStorage.removeItem('emailForSignIn');
+          // You can access the new user via result.user
+          // Additional user info profile not available via:
+          // result.additionalUserInfo.profile == null
+          // You can check if the user is new or existing:
+          // result.additionalUserInfo.isNewUser
+        })
+        .catch((error) => {
+          // Some error occurred, you can inspect the code: error.code
+          // Common errors could be invalid email and invalid or expired OTPs.
+        });
     }
-    // The client SDK will parse the code from the link for you.
-    firebase.auth().signInWithEmailLink(email, window.location.href)
-      .then((result) => {
-        console.log(result);
-        // Clear email from storage.
-        window.localStorage.removeItem('emailForSignIn');
-        // You can access the new user via result.user
-        // Additional user info profile not available via:
-        // result.additionalUserInfo.profile == null
-        // You can check if the user is new or existing:
-        // result.additionalUserInfo.isNewUser
-      })
-      .catch((error) => {
-        // Some error occurred, you can inspect the code: error.code
-        // Common errors could be invalid email and invalid or expired OTPs.
-      });
-  }
 
     firebase.auth().useDeviceLanguage();
 
@@ -308,7 +307,6 @@
     var phoneFormErrors = document.querySelectorAll('[data-phone-error]');
     var phoneFormLoading = document.querySelectorAll('[data-phone-loading]');
     var phoneFormIdle = document.querySelectorAll('[data-phone-idle]');
-
 
     var phoneNumber = document.querySelector('[data-form-phone-number]');
     var requestButton = document.querySelector('[data-form-phone-request]');
@@ -325,7 +323,44 @@
       });
       const appVerifier = window.recaptchaVerifier;
 
+      // Handle code request button
+      var requestButton = document.querySelector('[data-form-phone-request]');
 
+      requestButton.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        requestButton.value = "Request Sent";
+
+        firebase.auth().signInWithPhoneNumber(phoneNumber.value, appVerifier)
+          .then((confirmationResult) => {
+            // SMS sent. Prompt user to type the code from the message, then sign the
+            // user in with confirmationResult.confirm(code).
+            window.confirmationResult = confirmationResult;
+
+            setTimeout(() => {
+              requestButton.value = "Send Again";
+            }, 5000)
+
+            oneTimeLogin.style.display = "block";
+            // ...
+          }).catch((error) => {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            console.log(errorMessage);
+            phoneFormErrors.forEach(function (el) {
+              el.innerText = error.message;
+              el.style.display = 'block';
+            });
+            setTimeout(function () {
+              phoneFormIdle.forEach(function (el) { el.style.display = null; });
+              phoneFormLoading.forEach(function (el) { el.style.display = 'none'; });
+            }, 1000);
+          });
+
+      });
+
+      // Handle form submit
       el.addEventListener('submit', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -334,41 +369,6 @@
         phoneFormIdle.forEach(function (el) { el.style.display = 'none'; });
         phoneFormLoading.forEach(function (el) { el.style.display = 'block'; });
 
-        var requestButton = document.querySelector('[data-form-phone-request]');
-
-        requestButton.addEventListener('click', function (e) {
-          e.preventDefault();
-          e.stopPropagation();
-          requestButton.value = "Request Sent";
-
-          firebase.auth().signInWithPhoneNumber(phoneNumber.value, appVerifier)
-            .then((confirmationResult) => {
-              // SMS sent. Prompt user to type the code from the message, then sign the
-              // user in with confirmationResult.confirm(code).
-              window.confirmationResult = confirmationResult;
-
-              setTimeout(() => {
-                requestButton.value = "Send Again";
-              }, 5000)
-
-              oneTimeLogin.style.display = "block";
-              // ...
-            }).catch((error) => {
-              var errorCode = error.code;
-              var errorMessage = error.message;
-              console.log(errorCode);
-              console.log(errorMessage);
-              phoneFormErrors.forEach(function (el) {
-                el.innerText = error.message;
-                el.style.display = 'block';
-              });
-              setTimeout(function () {
-                phoneFormIdle.forEach(function (el) { el.style.display = null; });
-                phoneFormLoading.forEach(function (el) { el.style.display = 'none'; });
-              }, 1000);
-            });
-
-        });
         var oneTimeLogin = el.querySelector('[data-form-phone-login]');
         oneTimeLogin.addEventListener('click', function (e) {
           e.preventDefault();
@@ -417,7 +417,7 @@
 
         firebase.auth().signOut().then(function () {
           user = null;
-          
+
           const logout = sessionStorage.setItem("logout", "true");
           window.location.href = webflowAuth.logoutRedirectPath;
         })
