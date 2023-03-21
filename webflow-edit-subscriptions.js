@@ -1,7 +1,7 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const purchaseId = urlParams.get('id')
-if (purchaseId == undefined) { window.location.replace("/account/memberships") };
+if (purchaseId == undefined) { window.location.replace("/membership/all") };
 axios.post(`${url}/webflow/subscriptions`, {
   purchaseId: purchaseId
 })

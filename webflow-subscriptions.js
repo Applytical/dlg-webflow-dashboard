@@ -65,7 +65,7 @@ function getSubscriptions(subscriptions) {
     });
 
     const subscriptionLink = card.querySelector('.subscription-link').addEventListener('click', function (e) {
-      document.location.href = "/account/membership?id=" + subscription.purchaseId;
+      document.location.href = "/membership/edit?id=" + subscription.purchaseId;
     });
 
     // Place the card into the div "Cards-Container"
@@ -86,8 +86,17 @@ function getSubscriptions(subscriptions) {
 
 function showError(error) {
   if (error.response.data == "Could Not Find Customer") {
-    window.location.href = "/account/no-subscription-page"
+    window.location.href = "/membership/no-subscription-page"
   } else {
     const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
   }
 }
+
+
+modalAgree.addEventListner("click"), function (e) {
+  e.preventDefault();
+  e.stopPropagation();
+
+  console.log("Yes")
+
+};
