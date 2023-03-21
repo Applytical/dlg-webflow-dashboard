@@ -91,12 +91,3 @@ function showError(error) {
     const errorSubscription = document.getElementById('errorSubscriptions').style.display = 'flex';
   }
 }
-
-
-modalAgree.addEventListner("click"), function (e) {
-  e.preventDefault();
-  e.stopPropagation();
-
-  console.log("Yes")
-
-};
