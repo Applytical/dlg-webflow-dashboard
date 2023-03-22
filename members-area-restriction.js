@@ -19,7 +19,7 @@ const membersUrl = [
 
 console.log(window.location.pathname);
 
-if (membersUrl.some(url => window.location.pathname.startsWith(url))) {
+if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
     if (shopifyTags) {
         var search = "Livingood Daily Lifestyle";
