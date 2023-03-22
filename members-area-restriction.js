@@ -17,6 +17,8 @@ const membersUrl = [
 "/members-welcome"
 ]
 
+console.log(window.location.pathname);
+
 if (membersUrl.includes(window.location.pathname)) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
     if (shopifyTags) {
@@ -29,11 +31,6 @@ if (membersUrl.includes(window.location.pathname)) {
         window.location.href = "/no-membership";
     }
 
-    function membersIntitals(fullName) {
-        const namesArray = fullName.trim().split(' ');
-        if (namesArray.length === 1) return `${namesArray[0].charAt(0)}`;
-        else return `${namesArray[0].charAt(0)}${namesArray[namesArray.length - 1].charAt(0)}`;
-    }
     let membersAreaIntitals
 
     const name = sessionStorage.getItem("name");
@@ -53,4 +50,9 @@ if (membersUrl.includes(window.location.pathname)) {
 
     const navbar = document.getElementById('members-navigation').style.display = "block";
 
+}
+function membersIntitals(fullName) {
+    const namesArray = fullName.trim().split(' ');
+    if (namesArray.length === 1) return `${namesArray[0].charAt(0)}`;
+    else return `${namesArray[0].charAt(0)}${namesArray[namesArray.length - 1].charAt(0)}`;
 }
