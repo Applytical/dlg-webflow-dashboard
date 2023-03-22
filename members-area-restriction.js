@@ -19,8 +19,13 @@ const membersUrl = [
     "/membership"
 
 ];
+const membershipPages = [
+    "/membership/",
+    "/membership"
+]
 
-console.log(window.location.pathname);
+var navbar = document.getElementById('members-navigation');
+var membersAreaLink = document.getElementById('members-area-link');
 
 if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
@@ -38,14 +43,19 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const avatar = showAvatar(name);
 
 
-    const navbar = document.getElementById('members-navigation').style.display = "block";
-    const membersAreaLink = document.getElementById('members-area-link').style.display = "block";
+    navbar.style.display = "block";
+    membersAreaLink.style.display = "block";
 
 
-} else if (membersUrl.some(url => window.location.pathname.includes("no-membership"))) {
+} else if (membershipPages.some(url => window.location.pathname.includes(url))) {
+
+    navbar.style.display = "block";
+    membersAreaLink.style.display = "block";
+
+} else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
-}
+}   
 function membersIntitals(fullName) {
     const namesArray = fullName.trim().split(' ');
     if (namesArray.length === 1) return `${namesArray[0].charAt(0)}`;
