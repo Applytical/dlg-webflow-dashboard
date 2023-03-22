@@ -14,6 +14,7 @@ const membersUrl = [
 "/product-link/",
 "/resources/",
 "/members/",
+"/members-welcome",
 ]
 
 if (window.location.pathname.includes(membersUrl)) {
