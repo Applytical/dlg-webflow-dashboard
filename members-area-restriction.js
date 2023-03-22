@@ -31,8 +31,16 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
     if (shopifyTags) {
         var search = "Livingood Daily Lifestyle";
-        var arr = shopifyTags.split(", ");
-        if (arr.indexOf(search) == -1) {
+        const arr = shopifyTags.split(", ");
+        let isMember = false;
+
+        arr.forEach(tag => {
+            if (tag.includes(search)) {
+                isMember = true;
+            }
+        });
+
+        if (!isMember) {
             window.location.href = "/no-membership";
         }
     } else {
@@ -55,7 +63,7 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
 } else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
-}   
+}
 function membersIntitals(fullName) {
     const namesArray = fullName.trim().split(' ');
     if (namesArray.length === 1) return `${namesArray[0].charAt(0)}`;
