@@ -14,10 +14,10 @@ const membersUrl = [
 "/product-link/",
 "/resources/",
 "/members/",
-"/members-welcome",
+"/members-welcome"
 ]
 
-if (window.location.pathname.includes(membersUrl)) {
+if (membersUrl.includes(window.location.pathname)) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
     if (shopifyTags) {
         var search = "Livingood Daily Lifestyle";
