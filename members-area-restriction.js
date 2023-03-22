@@ -1,25 +1,25 @@
 const membersUrl = [
-    "/training/",
-"/grocery-store-tour/",
-"/grocery-store-tour-videos/",
-"/daily-challenge/",
-"/daily-challenge-resources/",
-"/health/",
-"/advanced-challenges/",
-"/workout-videos/",
-"/workouts/",
-"/meal-plans/",
-"/masterclassses/",
-"/masterclass-videos/",
-"/product-link/",
-"/resources/",
-"/members/",
+    "/training//*",
+"/grocery-store-tour/*",
+"/grocery-store-tour-videos/*",
+"/daily-challenge/*",
+"/daily-challenge-resources/*",
+"/health/*",
+"/advanced-challenges/*",
+"/workout-videos/*",
+"/workouts/*",
+"/meal-plans/*",
+"/masterclassses/*",
+"/masterclass-videos/*",
+"/product-link/*",
+"/resources/*",
+"/members/*",
 "/members-welcome"
-]
+];
 
 console.log(window.location.pathname);
 
-if (membersUrl.includes(window.location.pathname)) {
+if (membersUrl.some(url => window.location.pathname.startsWith(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
     if (shopifyTags) {
         var search = "Livingood Daily Lifestyle";
