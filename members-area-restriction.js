@@ -56,8 +56,6 @@ function showAvatar(name) {
 
     let membersAreaIntitals
 
-    const name = sessionStorage.getItem("name");
-
     if (name) {
         membersAreaIntitals = membersIntitals(name);
         const UserName = document.getElementById('UserName').textContent = name;
