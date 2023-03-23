@@ -9,7 +9,7 @@ const membersUrl = [
     "/workout-videos/",
     "/workouts/",
     "/meal-plans/",
-    "/masterclassses/",
+    "/masterclasses/",
     "/masterclass-videos/",
     "/product-link/",
     "/resources/",
