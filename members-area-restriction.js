@@ -32,35 +32,34 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const email = sessionStorage.getItem("email");
     if (email) {
 
-    }
-    if (shopifyTags) {
-        var search = "Livingood Daily Lifestyle";
-        const arr = shopifyTags.split(", ");
-        let isMember = false;
+        if (shopifyTags) {
+            var search = "Livingood Daily Lifestyle";
+            const arr = shopifyTags.split(", ");
+            let isMember = false;
 
-        arr.forEach(tag => {
-            if (tag.includes(search)) {
-                isMember = true;
+            arr.forEach(tag => {
+                if (tag.includes(search)) {
+                    isMember = true;
+                }
+            });
+
+            if (!isMember) {
+                window.location.href = "/no-membership";
             }
-        });
-
-        if (!isMember) {
+        } else {
             window.location.href = "/no-membership";
         }
+
+
+        const name = sessionStorage.getItem("name");
+        const avatar = showAvatar(name);
+
+
+        navbar.style.display = "block";
+        membersAreaLink.style.display = "block";
     } else {
-        window.location.href = "/no-membership";
+        window.location.href = "/";
     }
-}else{
-    window.location.href = "/";
-}
-
-const name = sessionStorage.getItem("name");
-const avatar = showAvatar(name);
-
-
-navbar.style.display = "block";
-membersAreaLink.style.display = "block";
-
 
 } else if (membershipPages.some(url => window.location.pathname.includes(url))) {
 
