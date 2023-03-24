@@ -29,7 +29,6 @@ const membershipModal = getElementById("membershipModal"); // Get the membership
 const ChangeMembership = getElementById("ChangeMembership"); // Get the "Change Membership" button element
 const cancelSubscriptionFlow = getElementById("cancelSubscriptionFlow"); // Get the "Cancel Subscription" button element
 const membershipModalClose = getElementById("membershipModalClose"); // Get the close button element of the membership
-modal
 const modalAgree = getElementById("membershipModalAgree"); // Get the "Agree" button element of the membership modal
 const modalCancel = getElementById("membershipModalCancel"); // Get the "Cancel" button element of the membership modal
 
@@ -52,12 +51,6 @@ async function ShowMemberships(response) {
     const currentPlan = el.querySelectorAll(".membership-btn");
 
     if (createdAt == lastUpdated) { // if created date is equal to last updated date
-      if (memberShipId == 278) {
-        var updateBillDateModal = document.getElementById('updateBillDateModal');
-        updateBillDateModal.addEventListener('click', function (e) {
-          showNextBillDateModal(e)
-        });
-      }
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan);
     } else if (lastUpdated24hours < lastUpdated) {
       updateMembershipStatus(el, response, productId, memberShipId,
@@ -92,7 +85,7 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
       // if membership id is equal to 278
       const showNextBillDate = document.getElementById("updateNextBillDate").style.display = "block";
       var updateBillDateModal = document.getElementById('updateBillDateModal');
-      updateBillDateModal.addEventListener('click', function (e) {
+      showNextBillDate.addEventListener('click', function (e) {
         showNextBillDateModal(e)
       });
       // display the "updateNextBillDate" element
@@ -166,6 +159,7 @@ function showModal(productId) {
 
 function showNextBillDateModal(e) {
   console.log(e);
+
   membershipModal.style.display = 'flex';
 
   let updateBillDateMembershipModal = document.getElementById("updateBillDateMembershipModal");
