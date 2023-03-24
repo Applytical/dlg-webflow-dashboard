@@ -31,6 +31,7 @@ const cancelSubscriptionFlow = getElementById("cancelSubscriptionFlow"); // Get 
 const membershipModalClose = getElementById("membershipModalClose"); // Get the close button element of the membership
 const modalAgree = getElementById("membershipModalAgree"); // Get the "Agree" button element of the membership modal
 const modalCancel = getElementById("membershipModalCancel"); // Get the "Cancel" button element of the membership modal
+let updateBillDateMembershipModal = getElementById("updateBillDateMembershipModal");
 
 
 async function ShowMemberships(response) {
@@ -163,7 +164,6 @@ function showNextBillDateModal(e) {
 
   membershipModal.style.display = 'flex';
 
-  let updateBillDateMembershipModal = document.getElementById("updateBillDateMembershipModal");
   updateBillDateMembershipModal.style.display = 'flex';
 
   let minDate = new Date();
@@ -233,9 +233,17 @@ window.onclick = function (event) {
   }
 }
 
+closeModal.addEventListener("click", function (e) {
+  e.preventDefault();
+  modal.style.display = 'none';
+  membershipModal.style.display = 'none';
+  updateBillDateMembershipModal.style.display = 'none';
+});
+
 membershipModalClose.addEventListener("click", function (e) {
   e.preventDefault();
   membershipModal.style.display = 'none';
   ChangeMembership.style.display = 'none';
-  cancelSubscriptionFlow.style.display = "none";
+  membershipModal.style.display = 'none';
+  updateBillDateMembershipModal.style.display = 'none';
 });
