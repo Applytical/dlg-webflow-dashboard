@@ -83,7 +83,8 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
 
     if (memberShipId == 278) {
       // if membership id is equal to 278
-      const showNextBillDate = document.getElementById("updateNextBillDate").style.display = "block";
+      const showNextBillDate = document.getElementById("updateNextBillDate");
+      showNextBillDate.style.display = "block";
       var updateBillDateModal = document.getElementById('updateBillDateModal');
       showNextBillDate.addEventListener('click', function (e) {
         showNextBillDateModal(e)
