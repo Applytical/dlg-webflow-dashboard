@@ -92,7 +92,7 @@ async function ShowSubscription(response) {
   });
   const imageSrc = UrlExists(response.data.productImg);
   const subscriptionProductImage = document.querySelector('.product-image');
-  const placeholder = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/63f5eadcde5015ee6c1476ab_placeholder.jpg";
+  const placeholder = "https://uploads-ssl.webflow.com/63a18f4b54dbb2f24a2ae326/641d8fd1c43e99ac0039b955_membership-placeholder.jpg";
 
   if (imageSrc != 404) {
     subscriptionProductImage.src = response.data.productImg;
