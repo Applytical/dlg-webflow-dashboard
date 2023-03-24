@@ -233,14 +233,7 @@ window.onclick = function (event) {
   }
 }
 
-closeModal.addEventListener("click", function (e) {
-  e.preventDefault();
-  modal.style.display = 'none';
-  membershipModal.style.display = 'none';
-  updateBillDateMembershipModal.style.display = 'none';
-});
-
-membershipModalClose.addEventListener("click", function (e) {
+modalCancel.addEventListener("click", function (e) {
   e.preventDefault();
   membershipModal.style.display = 'none';
   ChangeMembership.style.display = 'none';
