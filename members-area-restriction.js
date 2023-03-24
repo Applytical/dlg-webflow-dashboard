@@ -29,6 +29,10 @@ var membersAreaLink = document.getElementById('members-area-link');
 
 if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
+    const email = sessionStorage.getItem("email");
+    if (email) {
+
+    }
     if (shopifyTags) {
         var search = "Livingood Daily Lifestyle";
         const arr = shopifyTags.split(", ");
@@ -46,13 +50,16 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     } else {
         window.location.href = "/no-membership";
     }
+}else{
+    window.location.href = "/";
+}
 
-    const name = sessionStorage.getItem("name");
-    const avatar = showAvatar(name);
+const name = sessionStorage.getItem("name");
+const avatar = showAvatar(name);
 
 
-    navbar.style.display = "block";
-    membersAreaLink.style.display = "block";
+navbar.style.display = "block";
+membersAreaLink.style.display = "block";
 
 
 } else if (membershipPages.some(url => window.location.pathname.includes(url))) {
