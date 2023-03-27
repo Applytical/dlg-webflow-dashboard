@@ -15,8 +15,6 @@ const membersUrl = [
     "/resources/",
     "/members/",
     "/members-welcome",
-    "/membership/",
-    "/membership"
 
 ];
 // const membershipPages = [
