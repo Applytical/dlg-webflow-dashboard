@@ -3,7 +3,7 @@ const customerId = sessionStorage.getItem("shopifyCustomerId");
 // Check if customerId has a value
 if (customerId) {
   // Make a POST request to the specified URL with the customerId as data
-  axios.post(`${testingUrl}/webflow/shopify/history`, {
+  axios.post(`${url}/webflow/shopify/history`, {
     customerId: customerId
   })
     .then((response) => {
