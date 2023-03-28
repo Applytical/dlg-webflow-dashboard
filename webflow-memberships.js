@@ -27,11 +27,19 @@ const getElementById = (id) => document.getElementById(id);
 // Get various elements from the DOM using their ids and the getElementById helper function
 const membershipModal = getElementById("membershipModal"); // Get the membership modal element
 const ChangeMembership = getElementById("ChangeMembership"); // Get the "Change Membership" button element
-const cancelSubscriptionFlow = getElementById("cancelSubscriptionFlow"); // Get the "Cancel Subscription" button element
+const cancelSubscriptionFlow = getElementById("cancelSubscriptionFlowBtn"); // Get the "Cancel Subscription" button element
 const membershipModalClose = getElementById("membershipModalClose"); // Get the close button element of the membership
 const modalAgree = getElementById("membershipModalAgree"); // Get the "Agree" button element of the membership modal
 const modalCancel = getElementById("membershipModalCancel"); // Get the "Cancel" button element of the membership modal
 let updateBillDateMembershipModal = getElementById("updateBillDateMembershipModal");
+
+cancelSubscriptionFlow.addEventListener("click", async function (e) {
+
+  
+}
+
+
+
 
 
 async function ShowMemberships(response) {
@@ -105,12 +113,16 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
       el.classList.add("btn-secondary");
 
       // Disable click event for the button
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        console.log("You Clicked " + productId);
-        showModal(productId);
-      });
+      if(lessThan == true){
+        el.style.pointerEvents = "none";
+      }else {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log("You Clicked " + productId);
+          showModal(productId);
+        });
+      }
     });
   }
 }
