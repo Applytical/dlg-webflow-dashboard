@@ -45,100 +45,100 @@ cancelSubscriptionFlow.addEventListener("click", async function (e) {
   cancelMembershipFlow.style.display = 'block';
 
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
-  cancelFlow.forEach(function (el) { 
-  el.addEventListener('submit', async function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    const active_radio = document.querySelector('.w--redirected-checked');
-    const wrapper = active_radio.parentElement;
-    let reason = wrapper.querySelector('span.w-form-label').innerHTML;
-    if (reason == "Other") {
-      cancellationReasonsDiv.style.display = "none";
-      otherReasonCancel.style.display = "block";
-
-      var cancelFlow = document.getElementById('otherReasonCancel');
-
-      var otherReasonSubmit = document.getElementById('otherReasonBtn');
-      otherReasonSubmit.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const otherTextField = document.getElementById("otherTextField");
-        const request = {
-          purchaseId: purchaseId,
-          reason: otherTextField.value
-        }
-        const sendRequest = cancelFlowRequest(request);
-      });
-
-    } else {
-      cancellationReasonsDiv.style.display = "none";
-      areYouSure.style.display = "block";
-
-      var cancel = document.getElementById('yesCancelBtn');
-      cancel.addEventListener('click', function (e) {
+  cancelFlow.forEach(function (el) {
+    el.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const active_radio = document.querySelector('.w--redirected-checked');
+      const wrapper = active_radio.parentElement;
+      let reason = wrapper.querySelector('span.w-form-label').innerHTML;
+      if (reason == "Other") {
         cancellationReasonsDiv.style.display = "none";
-        otherReasonCancel.style.display = "none";
-        areYouSure.style.display = "none";
-        changeBillDateModal.style.display = "none";
-        e.preventDefault();
-        e.stopPropagation();
-        const request = {
-          purchaseId: purchaseId,
-          reason: reason
-        }
-        const sendRequest = cancelFlowRequest(request);
-      });
+        otherReasonCancel.style.display = "block";
 
-      var closeModal = document.getElementById('noCancelBtn');
-      closeModal.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        modal.style.display = 'none';
+        var cancelFlow = document.getElementById('otherReasonCancel');
+
+        var otherReasonSubmit = document.getElementById('otherReasonBtn');
+        otherReasonSubmit.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          const otherTextField = document.getElementById("otherTextField");
+          const request = {
+            purchaseId: purchaseId,
+            reason: otherTextField.value
+          }
+          const sendRequest = cancelFlowRequest(request);
+        });
+
+      } else {
         cancellationReasonsDiv.style.display = "none";
-        otherReasonCancel.style.display = "none";
-        areYouSure.style.display = "none";
-        changeBillDateModal.style.display = "none";
-      });
-    }
-  });
-  const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
+        areYouSure.style.display = "block";
 
-  cancelFlowGoBack.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    otherReasonCancel.style.display = "none";
-    changeBillDateModal.style.display = "none";
-    areYouSure.style.display = "none";
-    cancellationReasonsDiv.style.display = "block";
-  });
+        var cancel = document.getElementById('yesCancelBtn');
+        cancel.addEventListener('click', function (e) {
+          cancellationReasonsDiv.style.display = "none";
+          otherReasonCancel.style.display = "none";
+          areYouSure.style.display = "none";
+          changeBillDateModal.style.display = "none";
+          e.preventDefault();
+          e.stopPropagation();
+          const request = {
+            purchaseId: purchaseId,
+            reason: reason
+          }
+          const sendRequest = cancelFlowRequest(request);
+        });
 
-  const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
+        var closeModal = document.getElementById('noCancelBtn');
+        closeModal.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          modal.style.display = 'none';
+          cancellationReasonsDiv.style.display = "none";
+          otherReasonCancel.style.display = "none";
+          areYouSure.style.display = "none";
+          changeBillDateModal.style.display = "none";
+        });
+      }
+    });
+    const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
 
-  cancelFlowBillDateGoBack.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    changeBillDateModal.style.display = "none";
-    otherReasonCancel.style.display = "none";
-    areYouSure.style.display = "none";
-    cancellationReasonsDiv.style.display = "block";
-  });
+    cancelFlowGoBack.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      otherReasonCancel.style.display = "none";
+      changeBillDateModal.style.display = "none";
+      areYouSure.style.display = "none";
+      cancellationReasonsDiv.style.display = "block";
+    });
 
-  modalClose.addEventListener('click', function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    cancelSubscriptionFlow.style.display = "none";
-    areYouSure.style.display = "none";
-    modal.style.display = 'none';
-  });
+    const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
 
-  cancelFlowModalClose.addEventListener("click", function (e) {
-    e.preventDefault();
-    modal.style.display = 'none';
-    cancelSubscriptionFlow.style.display = "none";
-    areYouSure.style.display = "none";
+    cancelFlowBillDateGoBack.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      changeBillDateModal.style.display = "none";
+      otherReasonCancel.style.display = "none";
+      areYouSure.style.display = "none";
+      cancellationReasonsDiv.style.display = "block";
+    });
+
+    modalClose.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      cancelSubscriptionFlow.style.display = "none";
+      areYouSure.style.display = "none";
+      modal.style.display = 'none';
+    });
+
+    cancelFlowModalClose.addEventListener("click", function (e) {
+      e.preventDefault();
+      modal.style.display = 'none';
+      cancelSubscriptionFlow.style.display = "none";
+      areYouSure.style.display = "none";
+    });
   });
 });
-
 
 
 
