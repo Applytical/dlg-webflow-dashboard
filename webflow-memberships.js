@@ -105,11 +105,6 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
       el.classList.add("btn-secondary");
 
       // Disable click event for the button
-      el.style.pointerEvents = "none"
-    });
-
-    // Add click event listener to the button
-    currentPlan.forEach(function (el) {
       el.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
