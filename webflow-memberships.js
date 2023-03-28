@@ -86,11 +86,12 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
       // if membership id is equal to 278
       const showNextBillDate = document.getElementById("updateNextBillDate");
       showNextBillDate.style.display = "block";
+
+      // display the "updateNextBillDate" element
       var updateBillDateModal = document.getElementById('updateBillDateModal');
       showNextBillDate.addEventListener('click', function (e) {
         showNextBillDateModal(e)
       });
-      // display the "updateNextBillDate" element
     }
 
   } else {
@@ -221,6 +222,14 @@ function showNextBillDateModal(e) {
         }, 3000);
       });
 
+  });
+
+  var noBillDataChange = document.getElementById('noBillDataChange');
+  noBillDataChange.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    membershipModal.style.display = 'none';
+    ChangeMembership.style.display = 'none';
   });
 }
 
