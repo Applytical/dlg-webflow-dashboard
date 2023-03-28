@@ -33,7 +33,7 @@ const modalAgree = getElementById("membershipModalAgree"); // Get the "Agree" bu
 const modalCancel = getElementById("membershipModalCancel"); // Get the "Cancel" button element of the membership modal
 let updateBillDateMembershipModal = getElementById("updateBillDateMembershipModal");
 
-cancelSubscriptionFlow.addEventListener("click", async function (e) {
+cancelSubscriptionFlow.addEventListener("click", async function (el) {
   const cancelFlowModalClose = document.getElementById("cancelFlowModalCancel");
   const modalClose = document.getElementById('closeModal');
   const cancellationReasonsDiv = document.getElementById("cancellationReasons");
