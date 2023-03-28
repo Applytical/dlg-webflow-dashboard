@@ -27,25 +27,25 @@ const getElementById = (id) => document.getElementById(id);
 // Get various elements from the DOM using their ids and the getElementById helper function
 const membershipModal = getElementById("membershipModal"); // Get the membership modal element
 const ChangeMembership = getElementById("ChangeMembership"); // Get the "Change Membership" button element
-const cancelSubscriptionFlow = getElementById("cancelSubscriptionFlowBtn"); // Get the "Cancel Subscription" button element
+const cancelSubscriptionFlowBtn = getElementById("cancelSubscriptionFlowBtn"); // Get the "Cancel Subscription" button element
 const membershipModalClose = getElementById("membershipModalClose"); // Get the close button element of the membership
 const modalAgree = getElementById("membershipModalAgree"); // Get the "Agree" button element of the membership modal
 const modalCancel = getElementById("membershipModalCancel"); // Get the "Cancel" button element of the membership modal
 let updateBillDateMembershipModal = getElementById("updateBillDateMembershipModal");
 
-cancelSubscriptionFlow.addEventListener("click", async function (el) {
-  const cancelFlowModalClose = document.getElementById("cancelFlowModalCancel");
-  const modalClose = document.getElementById('closeModal');
-  const cancellationReasonsDiv = document.getElementById("cancellationReasons");
-  const areYouSure = document.getElementById("areYouSure");
-  const otherReasonCancel = document.getElementById("otherReasonCancel");
-  var changeBillDateModal = document.getElementById('changeBillDateModal');
-
-  cancellationReasonsDiv.style.display = "block";
-  otherReasonCancel.style.display = "none";
-
+cancelSubscriptionFlow.addEventListener("click", async function (e) {
+  const cancelFlowModalClose = getElementById("cancelFlowModalCancel");
+  const modalClose = getElementById('closeModal');
+  const cancellationReasonsDiv = getElementById("cancellationReasons");
+  const areYouSure = getElementById("areYouSure");
+  const otherReasonCancel = getElementById("otherReasonCancel");
+  const cancelMembershipFlow = getElementById("cancelMembershipFlow");
+  var changeBillDateModal = getElementById('changeBillDateModal');
   membershipModal.style.display = 'flex';
+  cancelMembershipFlow.style.display = 'block';
 
+  var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
+  cancelFlow.forEach(function (el) { 
   el.addEventListener('submit', async function (e) {
     e.preventDefault();
     e.stopPropagation();
