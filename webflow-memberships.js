@@ -50,14 +50,14 @@ async function ShowMemberships(response) {
     const productId = el.getAttribute("data-product-id");
 
     const currentPlan = el.querySelectorAll(".membership-btn");
-
+    let lessThan = false;
     if (createdAt == lastUpdated) { // if created date is equal to last updated date
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan);
+      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     } else if (lastUpdated24hours < lastUpdated) {
-      updateMembershipStatus(el, response, productId, memberShipId,
-        currentPlan);
+      lessThan = true;
+      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan);
+      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     }
   });
 
@@ -65,7 +65,7 @@ async function ShowMemberships(response) {
   const dashboard = document.getElementById("membershipsDiv").style.display = "block";
 }
 
-function updateMembershipStatus(el, response, productId, memberShipId, currentPlan) {
+function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
   if (productId == memberShipId) {
     // If product ID matches the membership ID
     console.log(productId);
