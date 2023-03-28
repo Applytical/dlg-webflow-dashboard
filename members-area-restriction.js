@@ -17,10 +17,10 @@ const membersUrl = [
     "/members-welcome",
 
 ];
-// const membershipPages = [
-//     "/membership/",
-//     "/membership"
-// ]
+const membershipPages = [
+    "/membership/",
+    "/membership"
+]
 
 var navbar = document.getElementById('members-navigation');
 var membersAreaLink = document.getElementById('members-area-link');
@@ -60,12 +60,12 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     }
 
 } 
-// else if (membershipPages.some(url => window.location.pathname.includes(url))) {
+else if (membershipPages.some(url => window.location.pathname.includes(url))) {
 
-//     navbar.style.display = "block";
-//     membersAreaLink.style.display = "block";
+    navbar.style.display = "block";
+    // membersAreaLink.style.display = "block";
 
-// } 
+} 
 else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
