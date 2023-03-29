@@ -14,6 +14,11 @@ window.addEventListener('load', function () {
   introguide.onexit(function () {
     setCookie('dlg.hidetour', true, 30);
   });
+
+  const showTourButton = document.querySelector('#showTour');
+  showTourButton.addEventListener('click', function () {
+    introguide.start();
+  })
 });
 
 // Cookie helper functions
