@@ -59,13 +59,32 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
         window.location.href = "/";
     }
 
-} 
+}
 else if (membershipPages.some(url => window.location.pathname.includes(url))) {
+    const shopifyTags = sessionStorage.getItem("shopifyTags");
+
+    if (shopifyTags) {
+        var search = "Livingood Daily Lifestyle";
+        var checkoutChampTag = "ccportal";
+        var LoopTag = "Loop Active Subscriber";
+        const arr = shopifyTags.split(", ");
+        let isMember = false;
+
+        arr.forEach(tag => {
+            if (tag.includes(checkoutChampTag)) {
+                const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
+                isMember = true;
+            } else if (tag.includes(LoopTag)) {
+                isMember = true;
+                const LoopLink = document.getElementById("LoopLink").style.display = "flex";
+            }
+        });
+    }
 
     navbar.style.display = "none";
     membersAreaLink.style.display = "block";
 
-} 
+}
 else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
