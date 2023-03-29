@@ -15,8 +15,6 @@ const membersUrl = [
     "/resources/",
     "/members/",
     "/members-welcome",
-    "/membership/",
-    "/membership"
 
 ];
 const membershipPages = [
@@ -32,42 +30,65 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const email = sessionStorage.getItem("email");
     if (email) {
 
+        if (shopifyTags) {
+            var search = "Livingood Daily Lifestyle";
+            const arr = shopifyTags.split(", ");
+            let isMember = false;
+
+            arr.forEach(tag => {
+                if (tag.includes(search)) {
+                    isMember = true;
+                }
+            });
+
+            if (!isMember) {
+                window.location.href = "/no-membership";
+            }
+        } else {
+            window.location.href = "/no-membership";
+        }
+
+
+        const name = sessionStorage.getItem("name");
+        const avatar = showAvatar(name);
+
+
+        navbar.style.display = "block";
+        membersAreaLink.style.display = "block";
+    } else {
+        window.location.href = "/";
     }
+
+}
+else if (membershipPages.some(url => window.location.pathname.includes(url))) {
+    const shopifyTags = sessionStorage.getItem("shopifyTags");
+
     if (shopifyTags) {
         var search = "Livingood Daily Lifestyle";
+        var checkoutChampTag = "ccportal";
+        var LoopTag = "Loop Active Subscriber";
         const arr = shopifyTags.split(", ");
         let isMember = false;
 
         arr.forEach(tag => {
-            if (tag.includes(search)) {
+            if (tag.includes(checkoutChampTag)) {
+                const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
+                const CheckoutChampNavLink = document.getElementById("CheckoutChampNavLink").style.display = "block";
                 isMember = true;
+            } else if (tag.includes(LoopTag)) {
+                isMember = true;
+                const LoopLink = document.getElementById("LoopLink").style.display = "flex";
+                const LoopNavLink = document.getElementById("LoopNavLink").style.display = "block";
+
             }
         });
-
-        if (!isMember) {
-            window.location.href = "/no-membership";
-        }
-    } else {
-        window.location.href = "/no-membership";
     }
-}else{
-    window.location.href = "/";
-}
 
-const name = sessionStorage.getItem("name");
-const avatar = showAvatar(name);
-
-
-navbar.style.display = "block";
-membersAreaLink.style.display = "block";
-
-
-} else if (membershipPages.some(url => window.location.pathname.includes(url))) {
-
-    navbar.style.display = "block";
+    navbar.style.display = "none";
     membersAreaLink.style.display = "block";
 
-} else if (window.location.pathname.includes("no-membership")) {
+}
+else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
 }

@@ -68,11 +68,11 @@ function getSubscriptions(subscriptions) {
       document.location.href = "/membership/edit?id=" + subscription.purchaseId;
     });
 
-    // Place the card into the div "Cards-Container"
-    if (subscription.status == "ACTIVE") {
-      cardContainer.appendChild(card);
-    } else {
-      if (subscription.base_product_id == 276 || subscription.base_product_id == 278 || subscription.base_product_id == 355 || subscription.base_product_id == 279) {
+    if (subscription.base_product_id == 276 || subscription.base_product_id == 278 || subscription.base_product_id == 355 || subscription.base_product_id == 279) {
+      // Place the card into the div "Cards-Container"
+      if (subscription.status == "ACTIVE") {
+        cardContainer.appendChild(card);
+      } else {
         cancelledContainer.appendChild(card);
       }
     }
