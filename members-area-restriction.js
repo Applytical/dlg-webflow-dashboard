@@ -73,10 +73,13 @@ else if (membershipPages.some(url => window.location.pathname.includes(url))) {
         arr.forEach(tag => {
             if (tag.includes(checkoutChampTag)) {
                 const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
+                const CheckoutChampNavLink = document.getElementById("CheckoutChampNavLink").style.display = "block";
                 isMember = true;
             } else if (tag.includes(LoopTag)) {
                 isMember = true;
                 const LoopLink = document.getElementById("LoopLink").style.display = "flex";
+                const LoopNavLink = document.getElementById("LoopNavLink").style.display = "block";
+
             }
         });
     }
