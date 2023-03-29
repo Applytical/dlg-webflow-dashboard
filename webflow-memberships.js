@@ -43,6 +43,8 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
   var changeBillDateModal = getElementById('changeBillDateModal');
   membershipModal.style.display = 'flex';
   cancelMembershipFlow.style.display = 'block';
+  const currentPlan = document.querySelector(".featured");
+  const purchaseId = currentPlan.getAttribute("data--purchase-id");
 
   var cancelFlow = document.querySelectorAll('[data-cancel-sub-form]');
   cancelFlow.forEach(function (el) {
@@ -133,8 +135,8 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
 
     cancelFlowModalClose.addEventListener("click", function (e) {
       e.preventDefault();
-      modal.style.display = 'none';
-      cancelSubscriptionFlow.style.display = "none";
+      membershipModal.style.display = 'none';
+      cancelMembershipFlow.style.display = 'none';
       areYouSure.style.display = "none";
     });
   });
