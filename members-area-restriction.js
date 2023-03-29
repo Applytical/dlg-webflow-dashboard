@@ -62,7 +62,7 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
 } 
 else if (membershipPages.some(url => window.location.pathname.includes(url))) {
 
-    // navbar.style.display = "block";
+    navbar.style.display = "none";
     membersAreaLink.style.display = "block";
 
 } 
