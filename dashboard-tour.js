@@ -1,4 +1,4 @@
-console.log("Starting tour");
+console.log("Starting tour!");
 
 var introguide = introJs();
 
