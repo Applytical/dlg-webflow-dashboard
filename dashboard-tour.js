@@ -1,3 +1,5 @@
+console.log("Starting tour");
+
 var introguide = introJs();
 
 window.addEventListener('load', function () {
