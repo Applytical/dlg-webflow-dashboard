@@ -1,24 +1,31 @@
-console.log("Starting tour!");
-
 var introguide = introJs();
 
-window.addEventListener('load', function () {
+window.addEventListener('DOMContentLoaded', function () {
+  const showTourButton = document.querySelector('#showTour');
+  console.log(showTourButton);
+  showTourButton.addEventListener('click', function () {
+    console.log("Opening Tour");
+    introguide.start();
+  });
+
   if (getCookie('dlg.hidetour') == "true") return false;
 
-  introguide.start();
+  // Add delay before tour starts
+  var delayInMilliseconds = 1000; //3 seconds
+  setTimeout(function () {
+    // Start tour
+    introguide.start();
+  }, delayInMilliseconds);
 
+  // When tour finished, hide tour
   introguide.oncomplete(function () {
     setCookie('dlg.hidetour', true, 30);
   });
 
+  // When tour existted, hide tour
   introguide.onexit(function () {
     setCookie('dlg.hidetour', true, 30);
   });
-
-  const showTourButton = document.querySelector('#showTour');
-  showTourButton.addEventListener('click', function () {
-    introguide.start();
-  })
 });
 
 // Cookie helper functions
