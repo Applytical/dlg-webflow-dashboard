@@ -95,7 +95,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
         closeModal.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
-          modal.style.display = 'none';
+          membershipModal.style.display = 'none';
           cancellationReasonsDiv.style.display = "none";
           otherReasonCancel.style.display = "none";
           areYouSure.style.display = "none";
