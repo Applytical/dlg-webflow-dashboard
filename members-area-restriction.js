@@ -73,7 +73,7 @@ else if (membershipPages.some(url => window.location.pathname.includes(url))) {
 
         arr.forEach(tag => {
             if (tag.includes(checkoutChampTag)) {
-                if (window.location.pathname == '/membership') {
+                if (window.location.pathname == '/membership/all') {
                     const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
                 }
                 const CheckoutChampNavLink = document.getElementById("CheckoutChampNavLink").style.display = "block";
