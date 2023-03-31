@@ -19,7 +19,8 @@ const membersUrl = [
 ];
 const membershipPages = [
     "/membership/",
-    "/membership"
+    "/membership",
+    "membership/edit"
 ]
 
 var navbar = document.getElementById('members-navigation');
