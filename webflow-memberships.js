@@ -129,8 +129,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
     modalClose.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      const cancelMembershipFlow = getElementById("cancelMembershipFlow");
-      cancelSubscriptionFlow.style.display = "none";
+      cancelMembershipFlow.style.display = "none";
       areYouSure.style.display = "none";
       modal.style.display = 'none';
     });
