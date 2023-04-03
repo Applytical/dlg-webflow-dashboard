@@ -42,7 +42,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
   const cancelMembershipFlow = getElementById("cancelMembershipFlow");
   var changeBillDateModal = getElementById('changeBillDateModal');
   membershipModal.style.display = 'flex';
-  cancellationReasonsDiv.style.display = "flex";
+  cancellationReasonsDiv.style.display = "block";
   cancelMembershipFlow.style.display = 'block';
   const currentPlan = document.querySelector(".featured");
   const purchaseId = currentPlan.getAttribute("data--purchase-id");
@@ -61,7 +61,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
 
         var cancelFlow = document.getElementById('otherReasonCancel');
 
-        var otherReasonSubmit = document.getElementById('otherReasonBtn');
+        var otherReasonSubmit = getElementById('otherReasonBtn');
         otherReasonSubmit.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
