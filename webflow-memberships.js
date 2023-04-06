@@ -152,27 +152,12 @@ async function cancelFlowRequest(cancelPayload) {
   })
     .then((response) => {
       if (response.status == 200) {
-        modal.style.display = 'none';
+        membershipModal.style.display = 'none';
         cancelSubscriptionFlow.style.display = "none";
-        const successBanner = document.getElementById('successBanner').style.display = 'block';
-        const successBannerMessage = document.getElementById('successBannerMessage');
-        successBannerMessage.textContent = "Subscription Cancelled";;
-        const subscriptionStatusBadge = document.getElementsByClassName('subscription-badge')[0];
-        subscriptionStatusBadge.textContent = "Cancelled";
-        subscriptionStatusBadge.style.backgroundColor = "#404168";
-        var subscriptionCancel = document.getElementById('cancelSubscription').style.display = "none";
-        const subscriptionStatusUpdate = document.getElementById('reactivateSubscription').style.display = "block";
-
-        setTimeout(() => {
-          window.location.href = " /account/subscriptions";
-        }, 3000);
-
-
+        console.log(response);
       }
     }).catch((error) => {
-      const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-      const errorMessageBanner = document.getElementById('errorBannerMessage');
-      errorMessageBanner.textContent = error.response.data
+      console.log(error)
       setTimeout(() => {
         errorBanner.style.display = 'none';
       }, 3000);
