@@ -177,7 +177,7 @@ async function cancelFlowRequest(cancelPayload) {
         errorBanner.style.display = 'none';
       }, 3000);
     });
-
+  }
 
 
   async function ShowMemberships(response) {
