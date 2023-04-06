@@ -54,7 +54,7 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
         const avatar = showAvatar(name);
 
 
-        navbar.style.display = "block";ß
+        navbar.style.display = "block";
     } else {
         window.location.href = "/";
     }
