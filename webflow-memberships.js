@@ -184,11 +184,10 @@ async function ShowMemberships(response) {
     let lessThan = false;
     if (createdAt == lastUpdated) { // if created date is equal to last updated date
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    } else if (lastUpdated24hours < lastUpdated) {
+    } else if (lastUpdated < lastUpdated24hours) {
       lessThan = true;
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
-      lessThan = true;
+    } else if (lastUpdated > lastUpdated24hours) { // If lastUpdated time is more than 24 hours ago
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     }
   });
