@@ -185,6 +185,7 @@ async function ShowMemberships(response) {
     if (createdAt == lastUpdated) { // if created date is equal to last updated date
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     } else if (lastUpdated24hours < lastUpdated) {
+      lessThan = true;
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
@@ -196,24 +197,29 @@ async function ShowMemberships(response) {
 }
 
 function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
-  if (lessThan !== false) {
 
-    if (productId == memberShipId) {
-      // If product ID matches the membership ID
-      console.log(productId);
-      console.log("Active Plan");
+  if (lessThan === true) {
+    const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+    lastUpdatedlessthan24.style.display = "block";
+  }
 
-      // Add "featured" class to the element
-      el.classList.add("featured");
-      el.dataset.PurchaseId = response.data.purchaseId;
+  if (productId == memberShipId) {
+    // If product ID matches the membership ID
+    console.log(productId);
+    console.log("Active Plan");
 
-      // Update current plan text and style
-      currentPlan.forEach(function (el) {
-        el.textContent = "Active Plan";
-        el.classList.remove("btn-secondary");
-        el.classList.add("btn-primary");
-      });
+    // Add "featured" class to the element
+    el.classList.add("featured");
+    el.dataset.PurchaseId = response.data.purchaseId;
 
+    // Update current plan text and style
+    currentPlan.forEach(function (el) {
+      el.textContent = "Active Plan";
+      el.classList.remove("btn-secondary");
+      el.classList.add("btn-primary");
+    });
+
+    if (lessThan !== true) {
       if (memberShipId == 278) {
         // if membership id is equal to 278
         const showNextBillDate = document.getElementById("updateNextBillDate");
@@ -225,90 +231,32 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
           showNextBillDateModal(e)
         });
       }
-
-    } else {
-      // If product ID doesn't match the membership ID
-      console.log(productId);
-      console.log("Possible Upgrade");
-
-      // Update current plan button style
-      currentPlan.forEach(function (el) {
-        el.classList.remove("btn-primary");
-        el.classList.add("btn-secondary");
-
-        // Disable click event for the button
-        if (lessThan == true) {
-          el.style.pointerEvents = "none";
-        } else {
-          el.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log("You Clicked " + productId);
-            showModal(productId);
-          });
-        }
-      });
     }
+
   } else {
-    console.log("Less Than");
-    const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
-    lastUpdatedlessthan24.stlye.display = "block";
+    // If product ID doesn't match the membership ID
+    console.log(productId);
+    console.log("Possible Upgrade");
 
-    if (productId == memberShipId) {
-      // If product ID matches the membership ID
-      console.log(productId);
-      console.log("Active Plan");
+    // Update current plan button style
+    currentPlan.forEach(function (el) {
+      el.classList.remove("btn-primary");
+      el.classList.add("btn-secondary");
 
-      // Add "featured" class to the element
-      el.classList.add("featured");
-      el.dataset.PurchaseId = response.data.purchaseId;
-
-      // Update current plan text and style
-      currentPlan.forEach(function (el) {
-        el.textContent = "Active Plan";
-        el.classList.remove("btn-secondary");
-        el.classList.add("btn-primary");
-      });
-
-      // if (memberShipId == 278) {
-      //   // if membership id is equal to 278
-      //   const showNextBillDate = document.getElementById("updateNextBillDate");
-      //   showNextBillDate.style.display = "block";
-
-      //   // display the "updateNextBillDate" element
-      //   var updateBillDateModal = document.getElementById('updateBillDateModal');
-      //   showNextBillDate.addEventListener('click', function (e) {
-      //     showNextBillDateModal(e)
-      //   });
-      // }
-
-    } else {
-      // If product ID doesn't match the membership ID
-      console.log(productId);
-      console.log("Possible Upgrade");
-
-      // Update current plan button style
-      currentPlan.forEach(function (el) {
-        el.classList.remove("btn-primary");
-        el.classList.add("btn-secondary");
-
-        // Disable click event for the button
-        if (lessThan == true) {
-          el.style.pointerEvents = "none";
-        } else {
-          el.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log("You Clicked " + productId);
-            showModal(productId);
-          });
-        }
-      });
-    }
-
+      // Disable click event for the button
+      if (lessThan === true) {
+        el.style.pointerEvents = "none";
+      } else {
+        el.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log("You Clicked " + productId);
+          showModal(productId);
+        });
+      }
+    });
   }
 }
-
 function showModal(productId) {
   membershipModal.style.display = 'flex';
   ChangeMembership.style.display = 'flex';
