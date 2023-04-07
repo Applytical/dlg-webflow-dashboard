@@ -79,10 +79,6 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
 
         var cancel = document.getElementById('yesCancelBtn');
         cancel.addEventListener('click', function (e) {
-          cancellationReasonsDiv.style.display = "none";
-          otherReasonCancel.style.display = "none";
-          areYouSure.style.display = "none";
-          changeBillDateModal.style.display = "none";
           e.preventDefault();
           e.stopPropagation();
           const request = {
@@ -154,7 +150,6 @@ async function cancelFlowRequest(cancelPayload) {
       if (response.status == 200) {
         membershipModal.style.display = 'none';
         cancelSubscriptionFlow.style.display = "none";
-        console.log(response);
       }
     }).catch((error) => {
       console.log(error)
@@ -177,12 +172,11 @@ async function ShowMemberships(response) {
   const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000);
 
   if (response.data.status === "ACTIVE") {
-    const membershipCards = document.querySelector(".membership-cards");
-
+    
     modules.forEach(function (el) {
-
+      
       const productId = el.getAttribute("data-product-id");
-
+      
       const currentPlan = el.querySelectorAll(".membership-btn");
       let lessThan = false;
       if (createdAt == lastUpdated) { // if created date is equal to last updated date
@@ -194,9 +188,10 @@ async function ShowMemberships(response) {
         updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
       }
     });
-
+    
     const loading = document.getElementById("membershipsLoading").style.display = "none";
-    membershipCards.style = "grid";
+    const membershipCards = document.querySelector(".membership-cards");
+    membershipCards.style.display = "grid";
 
   }else {
     const loading = document.getElementById("membershipsLoading").style.display = "none";
