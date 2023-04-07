@@ -191,7 +191,7 @@ async function ShowMemberships(response) {
     
     const loading = document.getElementById("membershipsLoading").style.display = "none";
     const membershipCards = document.querySelector(".membership-cards");
-    membershipCards.style.display = "grid";
+    membershipCards.style.display = "block";
 
   }else {
     const loading = document.getElementById("membershipsLoading").style.display = "none";
