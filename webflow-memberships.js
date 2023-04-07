@@ -307,134 +307,135 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
     }
 
   }
+}
 
-  function showModal(productId) {
-    membershipModal.style.display = 'flex';
-    ChangeMembership.style.display = 'flex';
+function showModal(productId) {
+  membershipModal.style.display = 'flex';
+  ChangeMembership.style.display = 'flex';
 
-    const monthlyId = 278;
-    const lifetimeId = 101;
-    const annualId = 276;
+  const monthlyId = 278;
+  const lifetimeId = 101;
+  const annualId = 276;
 
-    let subscriptionModalTitle = ChangeMembership.querySelector("#subscriptionModalTitle");
+  let subscriptionModalTitle = ChangeMembership.querySelector("#subscriptionModalTitle");
 
-    const currentPlan = document.querySelector(".featured");
-    const currentPlanProductId = currentPlan.getAttribute("data-product-id");
-    const purchaseId = currentPlan.getAttribute("data--purchase-id");
+  const currentPlan = document.querySelector(".featured");
+  const currentPlanProductId = currentPlan.getAttribute("data-product-id");
+  const purchaseId = currentPlan.getAttribute("data--purchase-id");
 
-    // Monthly to Annual
-    if (productId == annualId && currentPlanProductId == monthlyId) {
+  // Monthly to Annual
+  if (productId == annualId && currentPlanProductId == monthlyId) {
 
-      subscriptionModalTitle.textContent = "Are You Sure You Want to Upgrade Your Monthly To Annual Membership"
+    subscriptionModalTitle.textContent = "Are You Sure You Want to Upgrade Your Monthly To Annual Membership"
 
-    } else if (productId == lifetimeId && currentPlanProductId == monthlyId) {
-      subscriptionModalTitle.textContent = "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership"
-    }
-
-    const modalAgree = document.getElementById("membershipModalAgree");
-    modalAgree.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-
-      axios.post(`${testingUrl}/webflow/memberships/upgrade`, {
-        productId: productId,
-        originalProductId: currentPlanProductId,
-        purchaseId: purchaseId
-      }).then((response) => {
-        console.log(response);
-
-      }).catch((error) => {
-        console.log(error);
-      });
-    });
+  } else if (productId == lifetimeId && currentPlanProductId == monthlyId) {
+    subscriptionModalTitle.textContent = "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership"
   }
 
-  function showNextBillDateModal(e) {
-    console.log(e);
-
-    membershipModal.style.display = 'flex';
-
-    updateBillDateMembershipModal.style.display = 'flex';
-
-    let minDate = new Date();
-    let maxDate = new Date(minDate.getMonth() + 1);
-    const nextBillDateStorage = sessionStorage.getItem("next-bill-date")
-    const date = new Date(nextBillDateStorage);
-
-    const fp = flatpickr(".modal-date-membership", {
-      defaultDate: date,
-      dateFormat: "m-d-Y",
-      minDate: minDate,
-      maxDate: new Date().fp_incr(30),
-      inline: true
-
-    });
-
-    fp.config.onChange.push(function (dateStr) {
-      let date = new Date(dateStr);
-      const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" +
-        date.getUTCFullYear().toString();
-      const nextBillDateStorage = sessionStorage.setItem("next-bill-date-changed", dateFormatted);
-    });
-
-    var updateBillDateModal = document.getElementById('updateBillDateModal');
-    updateBillDateModal.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
-      axios.post(`${url}/webflow/subscriptions/update`, {
-        nextBillDate: nextBillDateStorage,
-      })
-        .then((response) => {
-          if (response.status == 200) {
-            membershipModal.style.display = 'none';
-            updateBillDateModal.style.display = "none";
-            const successBanner = document.getElementById('successBanner').style.display = 'block';
-            const successBannerMessage = document.getElementById('successBannerMessage');
-            successBannerMessage.textContent = "Subscription Updated";
-            setTimeout(() => {
-              const successBanner = document.getElementById('successBanner').style.display = 'none';
-            }, 3000);
-            const myTimeout = setTimeout(refreshPage, 5000);
-          }
-        })
-        .catch((error) => {
-          modal.style.display = 'none';
-          cancellationReasonsDiv.style.display = "none";
-          otherReasonCancel.style.display = "none";
-          changeBillDateModal.style.display = "none";
-          const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-          const errorMessageBanner = document.getElementById('errorBannerMessage');
-          errorMessageBanner.textContent = error.response.data;
-          setTimeout(() => {
-            const errorBanner = document.getElementById('errorBanner').style.display = 'none';
-          }, 3000);
-        });
-
-    });
-
-    var noBillDataChange = document.getElementById('noBillDataChange');
-    noBillDataChange.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      membershipModal.style.display = 'none';
-      ChangeMembership.style.display = 'none';
-    });
-  }
-
-
-  window.onclick = function (event) {
-    if (event.target == membershipModal) {
-      membershipModal.style.display = 'none';
-      ChangeMembership.style.display = 'none';
-      cancelSubscriptionFlow.style.display = "none";
-    }
-  }
-
-  modalCancel.addEventListener("click", function (e) {
+  const modalAgree = document.getElementById("membershipModalAgree");
+  modalAgree.addEventListener('click', function (e) {
     e.preventDefault();
+    e.stopPropagation();
+
+    axios.post(`${testingUrl}/webflow/memberships/upgrade`, {
+      productId: productId,
+      originalProductId: currentPlanProductId,
+      purchaseId: purchaseId
+    }).then((response) => {
+      console.log(response);
+
+    }).catch((error) => {
+      console.log(error);
+    });
+  });
+}
+
+function showNextBillDateModal(e) {
+  console.log(e);
+
+  membershipModal.style.display = 'flex';
+
+  updateBillDateMembershipModal.style.display = 'flex';
+
+  let minDate = new Date();
+  let maxDate = new Date(minDate.getMonth() + 1);
+  const nextBillDateStorage = sessionStorage.getItem("next-bill-date")
+  const date = new Date(nextBillDateStorage);
+
+  const fp = flatpickr(".modal-date-membership", {
+    defaultDate: date,
+    dateFormat: "m-d-Y",
+    minDate: minDate,
+    maxDate: new Date().fp_incr(30),
+    inline: true
+
+  });
+
+  fp.config.onChange.push(function (dateStr) {
+    let date = new Date(dateStr);
+    const dateFormatted = (date.getUTCMonth() + 1).toString() + "/" + date.getUTCDate() + "/" +
+      date.getUTCFullYear().toString();
+    const nextBillDateStorage = sessionStorage.setItem("next-bill-date-changed", dateFormatted);
+  });
+
+  var updateBillDateModal = document.getElementById('updateBillDateModal');
+  updateBillDateModal.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
+    axios.post(`${url}/webflow/subscriptions/update`, {
+      nextBillDate: nextBillDateStorage,
+    })
+      .then((response) => {
+        if (response.status == 200) {
+          membershipModal.style.display = 'none';
+          updateBillDateModal.style.display = "none";
+          const successBanner = document.getElementById('successBanner').style.display = 'block';
+          const successBannerMessage = document.getElementById('successBannerMessage');
+          successBannerMessage.textContent = "Subscription Updated";
+          setTimeout(() => {
+            const successBanner = document.getElementById('successBanner').style.display = 'none';
+          }, 3000);
+          const myTimeout = setTimeout(refreshPage, 5000);
+        }
+      })
+      .catch((error) => {
+        modal.style.display = 'none';
+        cancellationReasonsDiv.style.display = "none";
+        otherReasonCancel.style.display = "none";
+        changeBillDateModal.style.display = "none";
+        const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+        const errorMessageBanner = document.getElementById('errorBannerMessage');
+        errorMessageBanner.textContent = error.response.data;
+        setTimeout(() => {
+          const errorBanner = document.getElementById('errorBanner').style.display = 'none';
+        }, 3000);
+      });
+
+  });
+
+  var noBillDataChange = document.getElementById('noBillDataChange');
+  noBillDataChange.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
     membershipModal.style.display = 'none';
     ChangeMembership.style.display = 'none';
-    membershipModal.style.display = 'none';
-    updateBillDateMembershipModal.style.display = 'none';
   });
+}
+
+
+window.onclick = function (event) {
+  if (event.target == membershipModal) {
+    membershipModal.style.display = 'none';
+    ChangeMembership.style.display = 'none';
+    cancelSubscriptionFlow.style.display = "none";
+  }
+}
+
+modalCancel.addEventListener("click", function (e) {
+  e.preventDefault();
+  membershipModal.style.display = 'none';
+  ChangeMembership.style.display = 'none';
+  membershipModal.style.display = 'none';
+  updateBillDateMembershipModal.style.display = 'none';
+});
