@@ -197,7 +197,7 @@ async function ShowMemberships(response) {
 }
 
 function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
-
+  console.log(lessThan);
   if (lessThan === true) {
     const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
     lastUpdatedlessthan24.style.display = "block";
