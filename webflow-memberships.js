@@ -174,30 +174,41 @@ async function ShowMemberships(response) {
   // Membership last updated
   const lastUpdated = new Date(response.data.dateUpdated).getTime();
   // Membership last updated + 24 Hours
-  const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000)
+  const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000);
 
-  modules.forEach(function (el) {
+  if (response.data.status === "ACTIVE") {
+    const membershipCards = document.querySelector(".membership-cards");
 
-    const productId = el.getAttribute("data-product-id");
+    modules.forEach(function (el) {
 
-    const currentPlan = el.querySelectorAll(".membership-btn");
-    let lessThan = false;
-    if (createdAt == lastUpdated) { // if created date is equal to last updated date
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    } else if (lastUpdated < lastUpdated24hours) {
-      lessThan = true;
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    } else if (lastUpdated > lastUpdated24hours) { // If lastUpdated time is more than 24 hours ago
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    }
-  });
+      const productId = el.getAttribute("data-product-id");
 
-  const loading = document.getElementById("membershipsLoading").style.display = "none";
+      const currentPlan = el.querySelectorAll(".membership-btn");
+      let lessThan = false;
+      if (createdAt == lastUpdated) { // if created date is equal to last updated date
+        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+      } else if (lastUpdated < lastUpdated24hours) {
+        lessThan = true;
+        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+      } else if (lastUpdated > lastUpdated24hours) { // If lastUpdated time is more than 24 hours ago
+        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+      }
+    });
+
+    const loading = document.getElementById("membershipsLoading").style.display = "none";
+    membershipCards.style = "grid";
+
+  }else {
+    const loading = document.getElementById("membershipsLoading").style.display = "none";
+    const subscriptionStatus = document.querySelector(".membership-cancelled");
+    subscriptionStatus.style.display = "block";
+
+  }
+
   const dashboard = document.getElementById("membershipsDiv").style.display = "block";
 }
 
 function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
-  console.log(lessThan);
   if (lessThan === true) {
     const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
     lastUpdatedlessthan24.style.display = "block";
