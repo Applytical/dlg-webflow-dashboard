@@ -188,6 +188,7 @@ async function ShowMemberships(response) {
       lessThan = true;
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
+      lessThan = true;
       updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
     }
   });
