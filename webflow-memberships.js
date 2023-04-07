@@ -162,41 +162,42 @@ async function cancelFlowRequest(cancelPayload) {
         errorBanner.style.display = 'none';
       }, 3000);
     });
-  }
+}
 
 
-  async function ShowMemberships(response) {
-    const modules = document.querySelectorAll("[data-product-id]");
-    const memberShipId = response.data.membershipId;
+async function ShowMemberships(response) {
+  const modules = document.querySelectorAll("[data-product-id]");
+  const memberShipId = response.data.membershipId;
 
-    const createdAt = new Date(response.data.dateCreated).getTime();
+  const createdAt = new Date(response.data.dateCreated).getTime();
 
-    // Membership last updated
-    const lastUpdated = new Date(response.data.dateUpdated).getTime();
-    // Membership last updated + 24 Hours
-    const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000)
+  // Membership last updated
+  const lastUpdated = new Date(response.data.dateUpdated).getTime();
+  // Membership last updated + 24 Hours
+  const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000)
 
-    modules.forEach(function (el) {
+  modules.forEach(function (el) {
 
-      const productId = el.getAttribute("data-product-id");
+    const productId = el.getAttribute("data-product-id");
 
-      const currentPlan = el.querySelectorAll(".membership-btn");
-      let lessThan = false;
-      if (createdAt == lastUpdated) { // if created date is equal to last updated date
-        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-      } else if (lastUpdated24hours < lastUpdated) {
-        lessThan = true;
-        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-      } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
-        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-      }
-    });
+    const currentPlan = el.querySelectorAll(".membership-btn");
+    let lessThan = false;
+    if (createdAt == lastUpdated) { // if created date is equal to last updated date
+      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+    } else if (lastUpdated24hours < lastUpdated) {
+      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+    } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
+      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+    }
+  });
 
-    const loading = document.getElementById("membershipsLoading").style.display = "none";
-    const dashboard = document.getElementById("membershipsDiv").style.display = "block";
-  }
+  const loading = document.getElementById("membershipsLoading").style.display = "none";
+  const dashboard = document.getElementById("membershipsDiv").style.display = "block";
+}
 
-  function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
+function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
+  if (lessThan !== false) {
+
     if (productId == memberShipId) {
       // If product ID matches the membership ID
       console.log(productId);
@@ -248,7 +249,65 @@ async function cancelFlowRequest(cancelPayload) {
         }
       });
     }
+  } else {
+    console.log("Less Than");
+    const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+    lastUpdatedlessthan24.stlye.display = "block";
+
+    if (productId == memberShipId) {
+      // If product ID matches the membership ID
+      console.log(productId);
+      console.log("Active Plan");
+
+      // Add "featured" class to the element
+      el.classList.add("featured");
+      el.dataset.PurchaseId = response.data.purchaseId;
+
+      // Update current plan text and style
+      currentPlan.forEach(function (el) {
+        el.textContent = "Active Plan";
+        el.classList.remove("btn-secondary");
+        el.classList.add("btn-primary");
+      });
+
+      // if (memberShipId == 278) {
+      //   // if membership id is equal to 278
+      //   const showNextBillDate = document.getElementById("updateNextBillDate");
+      //   showNextBillDate.style.display = "block";
+
+      //   // display the "updateNextBillDate" element
+      //   var updateBillDateModal = document.getElementById('updateBillDateModal');
+      //   showNextBillDate.addEventListener('click', function (e) {
+      //     showNextBillDateModal(e)
+      //   });
+      // }
+
+    } else {
+      // If product ID doesn't match the membership ID
+      console.log(productId);
+      console.log("Possible Upgrade");
+
+      // Update current plan button style
+      currentPlan.forEach(function (el) {
+        el.classList.remove("btn-primary");
+        el.classList.add("btn-secondary");
+
+        // Disable click event for the button
+        if (lessThan == true) {
+          el.style.pointerEvents = "none";
+        } else {
+          el.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("You Clicked " + productId);
+            showModal(productId);
+          });
+        }
+      });
+    }
+
   }
+
   function showModal(productId) {
     membershipModal.style.display = 'flex';
     ChangeMembership.style.display = 'flex';
