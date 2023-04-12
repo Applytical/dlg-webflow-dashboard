@@ -52,7 +52,6 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
         const name = sessionStorage.getItem("name");
         const avatar = showAvatar(name);
 
-
         navbar.style.display = "block";
         membersAreaLink.style.display = "block";
     } else {
@@ -92,6 +91,7 @@ else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
 }
+
 function membersIntitals(fullName) {
     const namesArray = fullName.trim().split(' ');
     if (namesArray.length === 1) return `${namesArray[0].charAt(0)}`;
@@ -109,7 +109,7 @@ function showAvatar(name) {
         const email = sessionStorage.getItem("email");
         membersAreaIntitals = membersIntitals(email);
         const EmailField = document.getElementById('email').textContent = email;
-
+        const UserName = document.getElementById('UserName').textContent = "Unknown";
     }
 
     const avatar = document.getElementById('avatarImage').textContent = membersAreaIntitals;
