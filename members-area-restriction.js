@@ -25,7 +25,7 @@ const membershipPages = [
 
 var navbar = document.getElementById('members-navigation');
 var membersAreaLink = document.getElementById('members-area-link');
-var search = document.getElementById('top-search');
+var searchBar = document.getElementById('top-search');
 
 if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
@@ -86,7 +86,7 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     }
 
     navbar.style.display = "none";
-    search.style.display = "none";
+    searchBar.style.display = "none";
     membersAreaLink.style.display = "block";
 
 } else if (window.location.pathname.includes("no-membership")) {
@@ -94,7 +94,7 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
     const avatar = showAvatar(name);
 } else {
     navbar.style.display = "none";
-    search.style.display = "none";
+    searchBar.style.display = "none";
 }
 
 function membersIntitals(fullName) {
