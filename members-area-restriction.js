@@ -58,8 +58,7 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
         window.location.href = "/";
     }
 
-}
-else if (membershipPages.some(url => window.location.pathname.includes(url))) {
+} else if (membershipPages.some(url => window.location.pathname.includes(url))) {
     const shopifyTags = sessionStorage.getItem("shopifyTags");
 
     if (shopifyTags) {
@@ -88,10 +87,11 @@ else if (membershipPages.some(url => window.location.pathname.includes(url))) {
     navbar.style.display = "none";
     membersAreaLink.style.display = "block";
 
-}
-else if (window.location.pathname.includes("no-membership")) {
+} else if (window.location.pathname.includes("no-membership")) {
     const name = sessionStorage.getItem("name");
     const avatar = showAvatar(name);
+} else {
+    navbar.style.display = "none";
 }
 
 function membersIntitals(fullName) {
