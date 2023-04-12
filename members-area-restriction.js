@@ -107,6 +107,8 @@ function showAvatar(name) {
 
     let membersAreaIntitals
 
+    console.log("NAME: " + name);
+
     if (name) {
         membersAreaIntitals = membersIntitals(name);
         const UserName = document.getElementById('UserName').textContent = name;
