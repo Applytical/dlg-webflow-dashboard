@@ -42,6 +42,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
   const cancelMembershipFlow = getElementById("cancelMembershipFlow");
   var changeBillDateModal = getElementById('changeBillDateModal');
   membershipModal.style.display = 'flex';
+  cancellationReasonsDiv.style.display = "block";
   cancelMembershipFlow.style.display = 'block';
   const currentPlan = document.querySelector(".featured");
   const purchaseId = currentPlan.getAttribute("data--purchase-id");
@@ -60,7 +61,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
 
         var cancelFlow = document.getElementById('otherReasonCancel');
 
-        var otherReasonSubmit = document.getElementById('otherReasonBtn');
+        var otherReasonSubmit = getElementById('otherReasonBtn');
         otherReasonSubmit.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
@@ -78,10 +79,6 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
 
         var cancel = document.getElementById('yesCancelBtn');
         cancel.addEventListener('click', function (e) {
-          cancellationReasonsDiv.style.display = "none";
-          otherReasonCancel.style.display = "none";
-          areYouSure.style.display = "none";
-          changeBillDateModal.style.display = "none";
           e.preventDefault();
           e.stopPropagation();
           const request = {
@@ -95,7 +92,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
         closeModal.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
-          modal.style.display = 'none';
+          membershipModal.style.display = 'none';
           cancellationReasonsDiv.style.display = "none";
           otherReasonCancel.style.display = "none";
           areYouSure.style.display = "none";
@@ -128,7 +125,8 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
     modalClose.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      cancelSubscriptionFlow.style.display = "none";
+      membershipModal.style.display = 'none';
+      cancelMembershipFlow.style.display = "none";
       areYouSure.style.display = "none";
       modal.style.display = 'none';
     });
@@ -142,7 +140,24 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
   });
 });
 
+async function cancelFlowRequest(cancelPayload) {
 
+  axios.post(`${testingUrl}/webflow/subscriptions/cancel`, {
+    purchaseId: cancelPayload.purchaseId,
+    cancelReason: cancelPayload.reason
+  })
+    .then((response) => {
+      if (response.status == 200) {
+        membershipModal.style.display = 'none';
+        cancelSubscriptionFlow.style.display = "none";
+      }
+    }).catch((error) => {
+      console.log(error)
+      setTimeout(() => {
+        errorBanner.style.display = 'none';
+      }, 3000);
+    });
+}
 
 
 async function ShowMemberships(response) {
@@ -154,29 +169,46 @@ async function ShowMemberships(response) {
   // Membership last updated
   const lastUpdated = new Date(response.data.dateUpdated).getTime();
   // Membership last updated + 24 Hours
-  const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000)
+  const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000);
 
-  modules.forEach(function (el) {
+  if (response.data.status === "ACTIVE") {
+    
+    modules.forEach(function (el) {
+      
+      const productId = el.getAttribute("data-product-id");
+      
+      const currentPlan = el.querySelectorAll(".membership-btn");
+      let lessThan = false;
+      if (createdAt == lastUpdated) { // if created date is equal to last updated date
+        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+      } else if (lastUpdated < lastUpdated24hours) {
+        lessThan = true;
+        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+      } else if (lastUpdated > lastUpdated24hours) { // If lastUpdated time is more than 24 hours ago
+        updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
+      }
+    });
+    
+    const loading = document.getElementById("membershipsLoading").style.display = "none";
+    const membershipCards = document.querySelector(".membership-cards");
+    membershipCards.style.display = "block";
 
-    const productId = el.getAttribute("data-product-id");
+  }else {
+    const loading = document.getElementById("membershipsLoading").style.display = "none";
+    const subscriptionStatus = document.querySelector(".membership-cancelled");
+    subscriptionStatus.style.display = "block";
 
-    const currentPlan = el.querySelectorAll(".membership-btn");
-    let lessThan = false;
-    if (createdAt == lastUpdated) { // if created date is equal to last updated date
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    } else if (lastUpdated24hours < lastUpdated) {
-      lessThan = true;
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    } else if (lastUpdated24hours > lastUpdated) { // If lastUpdated time is more than 24 hours ago
-      updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
-    }
-  });
+  }
 
-  const loading = document.getElementById("membershipsLoading").style.display = "none";
   const dashboard = document.getElementById("membershipsDiv").style.display = "block";
 }
 
 function updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan) {
+  if (lessThan === true) {
+    const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+    lastUpdatedlessthan24.style.display = "block";
+  }
+
   if (productId == memberShipId) {
     // If product ID matches the membership ID
     console.log(productId);
@@ -193,16 +225,18 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
       el.classList.add("btn-primary");
     });
 
-    if (memberShipId == 278) {
-      // if membership id is equal to 278
-      const showNextBillDate = document.getElementById("updateNextBillDate");
-      showNextBillDate.style.display = "block";
+    if (lessThan !== true) {
+      if (memberShipId == 278) {
+        // if membership id is equal to 278
+        const showNextBillDate = document.getElementById("updateNextBillDate");
+        showNextBillDate.style.display = "block";
 
-      // display the "updateNextBillDate" element
-      var updateBillDateModal = document.getElementById('updateBillDateModal');
-      showNextBillDate.addEventListener('click', function (e) {
-        showNextBillDateModal(e)
-      });
+        // display the "updateNextBillDate" element
+        var updateBillDateModal = document.getElementById('updateBillDateModal');
+        showNextBillDate.addEventListener('click', function (e) {
+          showNextBillDateModal(e)
+        });
+      }
     }
 
   } else {
@@ -216,7 +250,7 @@ function updateMembershipStatus(el, response, productId, memberShipId, currentPl
       el.classList.add("btn-secondary");
 
       // Disable click event for the button
-      if (lessThan == true) {
+      if (lessThan === true) {
         el.style.pointerEvents = "none";
       } else {
         el.addEventListener('click', function (e) {

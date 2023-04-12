@@ -19,7 +19,8 @@ const membersUrl = [
 ];
 const membershipPages = [
     "/membership/",
-    "/membership"
+    "/membership",
+    "membership/edit"
 ]
 
 var navbar = document.getElementById('members-navigation');
@@ -53,7 +54,6 @@ if (membersUrl.some(url => window.location.pathname.includes(url))) {
         const avatar = showAvatar(name);
 
         navbar.style.display = "block";
-        membersAreaLink.style.display = "block";
     } else {
         window.location.href = "/";
     }
@@ -71,7 +71,9 @@ else if (membershipPages.some(url => window.location.pathname.includes(url))) {
 
         arr.forEach(tag => {
             if (tag.includes(checkoutChampTag)) {
-                const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
+                if (window.location.pathname == '/membership/all') {
+                    const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
+                }
                 const CheckoutChampNavLink = document.getElementById("CheckoutChampNavLink").style.display = "block";
                 isMember = true;
             } else if (tag.includes(LoopTag)) {
