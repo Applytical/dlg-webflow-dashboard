@@ -265,30 +265,53 @@ function showModal(productId) {
   const currentPlanProductId = currentPlan.getAttribute("data-product-id");
   const purchaseId = currentPlan.getAttribute("data--purchase-id");
 
-  // Monthly to Annual
+  const upgradeTypeMap = {
+    MonthlyToAnnual: "Are You Sure You Want to Upgrade Your Monthly To Annual Membership",
+    AnnualToMonthly: "Are You Sure You Want to Downgrade Your Annual To Monthly Membership",
+    MonthlyToLifestyle: "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership"
+  };
+  
+  let upgradeType = null;
+  
   if (productId == annualId && currentPlanProductId == monthlyId) {
-
-    subscriptionModalTitle.textContent = "Are You Sure You Want to Upgrade Your Monthly To Annual Membership"
-
+    upgradeType = 'MonthlyToAnnual';
+  } else if (productId == monthlyId && currentPlanProductId == annualId) {
+    upgradeType = 'AnnualToMonthly';
   } else if (productId == lifetimeId && currentPlanProductId == monthlyId) {
-    subscriptionModalTitle.textContent = "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership"
+    upgradeType = 'MonthlyToLifestyle';
   }
-
+  
+  subscriptionModalTitle.textContent = upgradeTypeMap[upgradeType];
+  
   const modalAgree = document.getElementById("membershipModalAgree");
   modalAgree.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-
-    axios.post(`${testingUrl}/webflow/memberships/upgrade`, {
+  
+    const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
+  
+    axios.post(endpoint, {
       productId: productId,
       originalProductId: currentPlanProductId,
-      purchaseId: purchaseId
+      purchaseId: purchaseId,
+      upgradeType: upgradeType
     }).then((response) => {
-      console.log(response);
-
+      const successBanner = document.getElementById('successBanner').style.display = 'block';
+      const successBannerMessage = document.getElementById('successBannerMessage');
+      successBannerMessage.textContent = "Membership Updated";
+      setTimeout(() => {
+        const successBanner = document.getElementById('successBanner').style.display = 'none';
+      }, 3000);
     }).catch((error) => {
       console.log(error);
     });
+  });
+
+  membershipModalClose.addEventListener("click", (e) => {
+    e.preventDefault();
+    membershipModal.style.display = 'none';
+    ChangeMembership.style.display = 'none';
+    updateBillDateMembershipModal.style.display = 'none';
   });
 }
 
@@ -333,7 +356,7 @@ function showNextBillDateModal(e) {
           updateBillDateModal.style.display = "none";
           const successBanner = document.getElementById('successBanner').style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
-          successBannerMessage.textContent = "Subscription Updated";
+          successBannerMessage.textContent = "Membership Updated";
           setTimeout(() => {
             const successBanner = document.getElementById('successBanner').style.display = 'none';
           }, 3000);
