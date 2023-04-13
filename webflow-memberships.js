@@ -100,42 +100,30 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
         });
       }
     });
+
+
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
-
-    cancelFlowGoBack.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      otherReasonCancel.style.display = "none";
-      changeBillDateModal.style.display = "none";
-      areYouSure.style.display = "none";
-      cancellationReasonsDiv.style.display = "block";
-    });
-
     const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
 
-    cancelFlowBillDateGoBack.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      changeBillDateModal.style.display = "none";
-      otherReasonCancel.style.display = "none";
-      areYouSure.style.display = "none";
-      cancellationReasonsDiv.style.display = "block";
+    [cancelFlowGoBack, cancelFlowBillDateGoBack].forEach((element) => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        otherReasonCancel.style.display = "none";
+        changeBillDateModal.style.display = "none";
+        areYouSure.style.display = "none";
+        cancellationReasonsDiv.style.display = "block";
+      });
     });
 
-    modalClose.addEventListener('click', function (e) {
-      e.preventDefault();
-      e.stopPropagation();
-      membershipModal.style.display = 'none';
-      cancelMembershipFlow.style.display = "none";
-      areYouSure.style.display = "none";
-      modal.style.display = 'none';
-    });
-
-    cancelFlowModalClose.addEventListener("click", function (e) {
-      e.preventDefault();
-      membershipModal.style.display = 'none';
-      cancelMembershipFlow.style.display = 'none';
-      areYouSure.style.display = "none";
+    [modalClose, cancelFlowModalClose].forEach((element) => {
+      element.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        membershipModal.style.display = 'none';
+        cancelMembershipFlow.style.display = "none";
+        areYouSure.style.display = "none";
+      });
     });
   });
 });
@@ -172,28 +160,28 @@ async function ShowMemberships(response) {
   const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000);
 
   if (response.data.status === "ACTIVE") {
-    
+
     modules.forEach(function (el) {
-      
+
       const productId = el.getAttribute("data-product-id");
-      
+
       const currentPlan = el.querySelectorAll(".membership-btn");
       let lessThan = false;
       if (createdAt == lastUpdated) { // if created date is equal to last updated date
         updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
       } else if (lastUpdated < lastUpdated24hours) {
-        lessThan = true;
+        // lessThan = true; // CHANGE BACK WHEN TESTING 24 HOURS
         updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
       } else if (lastUpdated > lastUpdated24hours) { // If lastUpdated time is more than 24 hours ago
         updateMembershipStatus(el, response, productId, memberShipId, currentPlan, lessThan);
       }
     });
-    
+
     const loading = document.getElementById("membershipsLoading").style.display = "none";
     const membershipCards = document.querySelector(".membership-cards");
     membershipCards.style.display = "block";
 
-  }else {
+  } else {
     const loading = document.getElementById("membershipsLoading").style.display = "none";
     const subscriptionStatus = document.querySelector(".membership-cancelled");
     subscriptionStatus.style.display = "block";
@@ -305,7 +293,6 @@ function showModal(productId) {
 }
 
 function showNextBillDateModal(e) {
-  console.log(e);
 
   membershipModal.style.display = 'flex';
 
@@ -378,7 +365,7 @@ function showNextBillDateModal(e) {
 }
 
 
-window.onclick = function (event) {
+window.onclick = (event) => {
   if (event.target == membershipModal) {
     membershipModal.style.display = 'none';
     ChangeMembership.style.display = 'none';
@@ -386,10 +373,9 @@ window.onclick = function (event) {
   }
 }
 
-modalCancel.addEventListener("click", function (e) {
+modalCancel.addEventListener("click", (e) => {
   e.preventDefault();
   membershipModal.style.display = 'none';
   ChangeMembership.style.display = 'none';
-  membershipModal.style.display = 'none';
   updateBillDateMembershipModal.style.display = 'none';
 });
