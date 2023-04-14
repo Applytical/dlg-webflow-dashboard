@@ -39,6 +39,7 @@ if (shopifyTags) {
 }
 
 async function showLifeStyleCard() {
+  const modules = document.querySelectorAll("[data-product-id]");
 
   modules.forEach(function (el) {
 
