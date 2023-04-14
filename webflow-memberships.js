@@ -291,7 +291,7 @@ function showModal(productId) {
     e.stopPropagation();
 
 
-    const lastUpdated = sessionStorage.getItem("Membership Last Updated At");
+    const lastUpdated = new Date(sessionStorage.getItem("Membership Last Updated At"));
     // Membership last updated + 24 Hours
     const lastUpdated24hours = new Date(lastUpdated).getTime() + (24 * 60 * 60 * 1000);
 
