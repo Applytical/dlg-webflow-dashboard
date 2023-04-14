@@ -153,9 +153,11 @@ async function ShowMemberships(response) {
   const memberShipId = response.data.membershipId;
 
   const createdAt = new Date(response.data.dateCreated).getTime();
+  const addCreatedAt = sessionStorage.setItem("Membership Created At", createdAt);
 
   // Membership last updated
   const lastUpdated = new Date(response.data.dateUpdated).getTime();
+  const addLastUpdated = sessionStorage.setItem("Membership Last Updated At", lastUpdated);
   // Membership last updated + 24 Hours
   const lastUpdated24hours = new Date(response.data.dateUpdated).getTime() + (24 * 60 * 60 * 1000);
 
@@ -296,14 +298,26 @@ function showModal(productId) {
       purchaseId: purchaseId,
       upgradeType: upgradeType
     }).then((response) => {
+      membershipModal.style.display = 'none';
+      ChangeMembership.style.display = 'none';
+      updateBillDateMembershipModal.style.display = 'none';
       const successBanner = document.getElementById('successBanner').style.display = 'block';
       const successBannerMessage = document.getElementById('successBannerMessage');
       successBannerMessage.textContent = "Membership Updated";
       setTimeout(() => {
         const successBanner = document.getElementById('successBanner').style.display = 'none';
+        window.location.reload();
       }, 3000);
     }).catch((error) => {
-      console.log(error);
+      if(error.response.data == "Cannot force billing on a subscription twice within 24 hours"){
+        const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+        lastUpdatedlessthan24.style.display = "block";
+        membershipModal.style.display = 'none';
+        ChangeMembership.style.display = 'none';
+        updateBillDateMembershipModal.style.display = 'none';
+        setTimeout(function(){ window.location.reload(); }, 3000);
+      }
+
     });
   });
 
