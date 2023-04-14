@@ -3,42 +3,39 @@ const customerId = sessionStorage.getItem("customerId");
 const customerEmail = sessionStorage.getItem("email");
 const shopifyTags = sessionStorage.getItem("shopifyTags");
 
-if (shopifyTags) {
-  var search = "Livingood Daily Lifestyle";
-  const arr = shopifyTags.split(", ");
+var search = "Livingood Daily Lifestyle";
+const arr = shopifyTags.split(", ");
 
 
-  arr.forEach(tag => {
-    if (tag.includes(search)) {
-      showLifeStyleCard();
-    } else {
+arr.forEach(tag => {
+  if (tag.includes(search)) {
+    showLifeTimeCard();
+  } else {
 
-      const fetchMembership = (payload) => {
-        const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
-        const key = payload.customerId ? 'customerId' : 'customerEmail';
-        axios.post(`${testingUrl}${endpoint}`, {
-          [key]: payload[key]
-        })
-          .then((response) => {
-            if (response.status == 200) {
-              ShowMemberships(response);
-              const billdate = sessionStorage.setItem("next-bill-date", response.data.nextBillDate)
-            }
-          });
-      }
-
-      if (customerId) {
-        fetchMembership({ customerId });
-      } else if (customerEmail) {
-        fetchMembership({ customerEmail });
-      }
+    const fetchMembership = (payload) => {
+      const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
+      const key = payload.customerId ? 'customerId' : 'customerEmail';
+      axios.post(`${testingUrl}${endpoint}`, {
+        [key]: payload[key]
+      })
+        .then((response) => {
+          if (response.status == 200) {
+            ShowMemberships(response);
+            const billdate = sessionStorage.setItem("next-bill-date", response.data.nextBillDate)
+          }
+        });
     }
-  });
 
+    if (customerId) {
+      fetchMembership({ customerId });
+    } else if (customerEmail) {
+      fetchMembership({ customerEmail });
+    }
+  }
+});
 
-}
-
-async function showLifeStyleCard() {
+async function showLifeTimeCard() {
+  const hideActions = document.querySelector(".membership-actions").style.display = "none";
   const modules = document.querySelectorAll("[data-product-id]");
 
   modules.forEach(function (el) {
@@ -51,7 +48,7 @@ async function showLifeStyleCard() {
 
       // Add "featured" class to the element
       el.classList.add("featured");
-    
+
       // Update current plan text and style
       currentPlan.forEach(function (el) {
         el.textContent = "Active Plan";
@@ -59,13 +56,14 @@ async function showLifeStyleCard() {
         el.classList.add("btn-primary");
       });
     } else {
+
+      el.style.removeAttribute('font-family');
       // Update current plan button style
       currentPlan.forEach(function (el) {
         el.classList.remove("btn-primary");
         el.classList.add("btn-secondary");
 
         // Disable click event for the button
-
         el.style.pointerEvents = "none";
 
       });
@@ -74,6 +72,7 @@ async function showLifeStyleCard() {
     const membershipCards = document.querySelector(".membership-cards");
     membershipCards.style.display = "block";
     const loading = document.getElementById("membershipsLoading").style.display = "none";
+    el.s
   });
 
 }
