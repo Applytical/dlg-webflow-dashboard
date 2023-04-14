@@ -56,8 +56,6 @@ async function showLifeTimeCard() {
         el.classList.add("btn-primary");
       });
     } else {
-
-      el.style.removeAttribute('font-family');
       // Update current plan button style
       currentPlan.forEach(function (el) {
         el.classList.remove("btn-primary");
@@ -72,7 +70,6 @@ async function showLifeTimeCard() {
     const membershipCards = document.querySelector(".membership-cards");
     membershipCards.style.display = "block";
     const loading = document.getElementById("membershipsLoading").style.display = "none";
-    el.s
   });
 
 }
