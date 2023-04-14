@@ -59,7 +59,7 @@ async function showLifeTimeCard() {
       // Update current plan button style
       currentPlan.forEach(function (el) {
         el.classList.remove("btn-primary");
-        el.classList.add("btn-secondary");
+        el.classList.add("btn-lifetime");
 
         // Disable click event for the button
         el.style.pointerEvents = "none";
