@@ -70,7 +70,7 @@ async function showLifeStyleCard() {
 
       });
     }
-
+    const dashboard = document.getElementById("membershipsDiv").style.display = "block";
     const membershipCards = document.querySelector(".membership-cards");
     membershipCards.style.display = "block";
     const loading = document.getElementById("membershipsLoading").style.display = "none";
