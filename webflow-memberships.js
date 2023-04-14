@@ -272,9 +272,9 @@ function showModal(productId) {
     AnnualToMonthly: "Are You Sure You Want to Downgrade Your Annual To Monthly Membership",
     MonthlyToLifestyle: "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership"
   };
-  
+
   let upgradeType = null;
-  
+
   if (productId == annualId && currentPlanProductId == monthlyId) {
     upgradeType = 'MonthlyToAnnual';
   } else if (productId == monthlyId && currentPlanProductId == annualId) {
@@ -282,43 +282,53 @@ function showModal(productId) {
   } else if (productId == lifetimeId && currentPlanProductId == monthlyId) {
     upgradeType = 'MonthlyToLifestyle';
   }
-  
+
   subscriptionModalTitle.textContent = upgradeTypeMap[upgradeType];
-  
+
   const modalAgree = document.getElementById("membershipModalAgree");
   modalAgree.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-  
-    const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
-  
-    axios.post(endpoint, {
-      productId: productId,
-      originalProductId: currentPlanProductId,
-      purchaseId: purchaseId,
-      upgradeType: upgradeType
-    }).then((response) => {
-      membershipModal.style.display = 'none';
-      ChangeMembership.style.display = 'none';
-      updateBillDateMembershipModal.style.display = 'none';
-      const successBanner = document.getElementById('successBanner').style.display = 'block';
-      const successBannerMessage = document.getElementById('successBannerMessage');
-      successBannerMessage.textContent = "Membership Updated";
-      setTimeout(() => {
-        const successBanner = document.getElementById('successBanner').style.display = 'none';
-        window.location.reload();
-      }, 3000);
-    }).catch((error) => {
-      if(error.response.data == "Cannot force billing on a subscription twice within 24 hours"){
-        const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
-        lastUpdatedlessthan24.style.display = "block";
+
+
+    const lastUpdated = sessionStorage.getItem("Membership Last Updated At");
+    // Membership last updated + 24 Hours
+    const lastUpdated24hours = new Date(lastUpdated).getTime() + (24 * 60 * 60 * 1000);
+
+    if (lastUpdated < lastUpdated24hours) {
+      const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+      lastUpdatedlessthan24.style.display = "block";
+    } else {
+      const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
+
+      axios.post(endpoint, {
+        productId: productId,
+        originalProductId: currentPlanProductId,
+        purchaseId: purchaseId,
+        upgradeType: upgradeType
+      }).then((response) => {
         membershipModal.style.display = 'none';
         ChangeMembership.style.display = 'none';
         updateBillDateMembershipModal.style.display = 'none';
-        setTimeout(function(){ window.location.reload(); }, 3000);
-      }
+        const successBanner = document.getElementById('successBanner').style.display = 'block';
+        const successBannerMessage = document.getElementById('successBannerMessage');
+        successBannerMessage.textContent = "Membership Updated";
+        setTimeout(() => {
+          const successBanner = document.getElementById('successBanner').style.display = 'none';
+          window.location.reload();
+        }, 3000);
+      }).catch((error) => {
+        if (error.response.data == "Cannot force billing on a subscription twice within 24 hours") {
+          const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+          lastUpdatedlessthan24.style.display = "block";
+          membershipModal.style.display = 'none';
+          ChangeMembership.style.display = 'none';
+          updateBillDateMembershipModal.style.display = 'none';
+          setTimeout(function () { window.location.reload(); }, 3000);
+        }
 
-    });
+      });
+    }
   });
 
   membershipModalClose.addEventListener("click", (e) => {
