@@ -51,8 +51,7 @@ async function showLifeStyleCard() {
 
       // Add "featured" class to the element
       el.classList.add("featured");
-      el.dataset.PurchaseId = response.data.purchaseId;
-
+    
       // Update current plan text and style
       currentPlan.forEach(function (el) {
         el.textContent = "Active Plan";
@@ -72,9 +71,9 @@ async function showLifeStyleCard() {
       });
     }
 
-    const loading = document.getElementById("membershipsLoading").style.display = "none";
     const membershipCards = document.querySelector(".membership-cards");
     membershipCards.style.display = "block";
+    const loading = document.getElementById("membershipsLoading").style.display = "none";
   });
 
 }
