@@ -1,24 +1,77 @@
 const testingUrl = "https://9fae-80-6-132-186.ngrok.io";
 const customerId = sessionStorage.getItem("customerId");
 const customerEmail = sessionStorage.getItem("email");
-const fetchMembership = (payload) => {
-  const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
-  const key = payload.customerId ? 'customerId' : 'customerEmail';
-  axios.post(`${testingUrl}${endpoint}`, {
-    [key]: payload[key]
-  })
-    .then((response) => {
-      if (response.status == 200) {
-        ShowMemberships(response);
-        const billdate = sessionStorage.setItem("next-bill-date", response.data.nextBillDate)
+const shopifyTags = sessionStorage.getItem("shopifyTags");
+
+if (shopifyTags) {
+  var search = "Livingood Daily Lifestyle";
+  const arr = shopifyTags.split(", ");
+
+
+  arr.forEach(tag => {
+    if (tag.includes(search)) {
+      showLifeStyleCard();
+    } else {
+
+      const fetchMembership = (payload) => {
+        const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
+        const key = payload.customerId ? 'customerId' : 'customerEmail';
+        axios.post(`${testingUrl}${endpoint}`, {
+          [key]: payload[key]
+        })
+          .then((response) => {
+            if (response.status == 200) {
+              ShowMemberships(response);
+              const billdate = sessionStorage.setItem("next-bill-date", response.data.nextBillDate)
+            }
+          });
       }
-    });
+
+      if (customerId) {
+        fetchMembership({ customerId });
+      } else if (customerEmail) {
+        fetchMembership({ customerEmail });
+      }
+    }
+  });
+
+
 }
 
-if (customerId) {
-  fetchMembership({ customerId });
-} else if (customerEmail) {
-  fetchMembership({ customerEmail });
+async function showLifeStyleCard() {
+
+  modules.forEach(function (el) {
+
+    const productId = el.getAttribute("data-product-id");
+
+    const currentPlan = el.querySelectorAll(".membership-btn");
+
+    if (productId == 101) {
+
+      // Add "featured" class to the element
+      el.classList.add("featured");
+      el.dataset.PurchaseId = response.data.purchaseId;
+
+      // Update current plan text and style
+      currentPlan.forEach(function (el) {
+        el.textContent = "Active Plan";
+        el.classList.remove("btn-secondary");
+        el.classList.add("btn-primary");
+      });
+    } else {
+      // Update current plan button style
+      currentPlan.forEach(function (el) {
+        el.classList.remove("btn-primary");
+        el.classList.add("btn-secondary");
+
+        // Disable click event for the button
+
+        el.style.pointerEvents = "none";
+
+      });
+    }
+  });
+
 }
 
 // Define a helper function that takes an id and returns the corresponding element with that id
@@ -290,45 +343,36 @@ function showModal(productId) {
     e.preventDefault();
     e.stopPropagation();
 
+    const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
 
-    const lastUpdated = new Date(sessionStorage.getItem("Membership Last Updated At"));
-    // Membership last updated + 24 Hours
-    const lastUpdated24hours = new Date(lastUpdated).getTime() + (24 * 60 * 60 * 1000);
-
-    if (lastUpdated < lastUpdated24hours) {
-      const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
-      lastUpdatedlessthan24.style.display = "block";
-    } else {
-      const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
-
-      axios.post(endpoint, {
-        productId: productId,
-        originalProductId: currentPlanProductId,
-        purchaseId: purchaseId,
-        upgradeType: upgradeType
-      }).then((response) => {
+    axios.post(endpoint, {
+      productId: productId,
+      originalProductId: currentPlanProductId,
+      purchaseId: purchaseId,
+      upgradeType: upgradeType
+    }).then((response) => {
+      membershipModal.style.display = 'none';
+      ChangeMembership.style.display = 'none';
+      updateBillDateMembershipModal.style.display = 'none';
+      const successBanner = document.getElementById('successBanner').style.display = 'block';
+      const successBannerMessage = document.getElementById('successBannerMessage');
+      successBannerMessage.textContent = "Membership Updated";
+      setTimeout(() => {
+        const successBanner = document.getElementById('successBanner').style.display = 'none';
+        window.location.reload();
+      }, 3000);
+    }).catch((error) => {
+      if (error.response.data == "Cannot force billing on a subscription twice within 24 hours") {
+        const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
+        lastUpdatedlessthan24.style.display = "block";
         membershipModal.style.display = 'none';
         ChangeMembership.style.display = 'none';
         updateBillDateMembershipModal.style.display = 'none';
-        const successBanner = document.getElementById('successBanner').style.display = 'block';
-        const successBannerMessage = document.getElementById('successBannerMessage');
-        successBannerMessage.textContent = "Membership Updated";
-        setTimeout(() => {
-          const successBanner = document.getElementById('successBanner').style.display = 'none';
-          window.location.reload();
-        }, 3000);
-      }).catch((error) => {
-        if (error.response.data == "Cannot force billing on a subscription twice within 24 hours") {
-          const lastUpdatedlessthan24 = document.querySelector(".membership-24-hour-check");
-          lastUpdatedlessthan24.style.display = "block";
-          membershipModal.style.display = 'none';
-          ChangeMembership.style.display = 'none';
-          updateBillDateMembershipModal.style.display = 'none';
-          setTimeout(function () { window.location.reload(); }, 3000);
-        }
+        setTimeout(function () { window.location.reload(); }, 3000);
+      }
 
-      });
-    }
+    });
+
   });
 
   membershipModalClose.addEventListener("click", (e) => {
