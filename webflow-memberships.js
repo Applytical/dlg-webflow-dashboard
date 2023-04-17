@@ -343,7 +343,7 @@ function showModal(productId) {
     e.preventDefault();
     e.stopPropagation();
 
-    const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
+    const endpoint = `${testingUrl}/webflow/memberships/upgrade`;
 
     axios.post(endpoint, {
       productId: productId,
