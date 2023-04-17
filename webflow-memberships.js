@@ -349,7 +349,8 @@ function showModal(productId) {
       productId: productId,
       originalProductId: currentPlanProductId,
       purchaseId: purchaseId,
-      upgradeType: upgradeType
+      upgradeType: upgradeType,
+      customerId: customerId,
     }).then((response) => {
       membershipModal.style.display = 'none';
       ChangeMembership.style.display = 'none';
