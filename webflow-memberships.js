@@ -342,8 +342,8 @@ function showModal(productId) {
   modalAgree.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
-
-    const endpoint = `${testingUrl}/webflow/memberships/upgrade`;
+    const customerId = sessionStorage.getItem("customerId");
+    const endpoint = `${testingUrl}/webflow/memberships/${upgradeType === 'AnnualToMonthly' ? 'downgrade' : 'upgrade'}`;
 
     axios.post(endpoint, {
       productId: productId,
