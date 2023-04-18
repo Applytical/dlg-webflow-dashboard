@@ -441,10 +441,9 @@ function showNextBillDateModal(e) {
         }
       })
       .catch((error) => {
-        modal.style.display = 'none';
-        cancellationReasonsDiv.style.display = "none";
-        otherReasonCancel.style.display = "none";
-        changeBillDateModal.style.display = "none";
+        membershipModal.style.display = 'none';
+        updateBillDateModal.style.display = "none";
+        updateBillDateMembershipModal.style.display = 'none';
         const errorBanner = document.getElementById('errorBanner').style.display = 'block';
         const errorMessageBanner = document.getElementById('errorBannerMessage');
         errorMessageBanner.textContent = error.response.data;
@@ -460,7 +459,8 @@ function showNextBillDateModal(e) {
     e.preventDefault();
     e.stopPropagation();
     membershipModal.style.display = 'none';
-    ChangeMembership.style.display = 'none';
+    updateBillDateModal.style.display = "none";
+    updateBillDateMembershipModal.style.display = 'none';
   });
 }
 
