@@ -20,19 +20,17 @@ const fetchMembership = (payload) => {
     });
 }
 
-arr.forEach(tag => {
-  if (tag.includes(search)) {
-    console.log("Lifetime")
-    // showLifeTimeCard();
-  } else {
-    console.log("Membership")
-    if (customerId) {
-      // fetchMembership({ customerId });
-    } else if (customerEmail) {
-      // fetchMembership({ customerEmail });
-    }
+for (let i = 0; i < arr.length; i++) {
+  if (arr[i].includes(search)) {
+    found = true;
+    console.log("Lifetime");
+    break;
   }
-});
+}
+
+if (!found) {
+  console.log("Membership");
+}
 
 async function showLifeTimeCard() {
   const hideActions = document.querySelector(".membership-actions").style.display = "none";
