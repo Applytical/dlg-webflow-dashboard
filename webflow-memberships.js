@@ -22,12 +22,14 @@ const fetchMembership = (payload) => {
 
 arr.forEach(tag => {
   if (tag.includes(search)) {
-    showLifeTimeCard();
+    console.log("Lifetime")
+    // showLifeTimeCard();
   } else {
+    console.log("Membership")
     if (customerId) {
-      fetchMembership({ customerId });
+      // fetchMembership({ customerId });
     } else if (customerEmail) {
-      fetchMembership({ customerEmail });
+      // fetchMembership({ customerEmail });
     }
   }
 });
