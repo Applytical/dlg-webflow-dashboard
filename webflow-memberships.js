@@ -417,41 +417,41 @@ function showNextBillDateModal(e) {
     const nextBillDateStorage = sessionStorage.setItem("next-bill-date-changed", dateFormatted);
   });
 
-  var updateBillDateModal = document.getElementById('updateBillDateModal');
+  const updateBillDateModal = document.getElementById('updateBillDateModal');
   updateBillDateModal.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
     const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
-    axios.post(`${url}/webflow/memberships/update/date`, {
+    axios.post(`${testingUrl}/webflow/memberships/update/date`, {
       nextBillDate: nextBillDateStorage,
       purchaseId: purchaseId,
     })
       .then((response) => {
         if (response.status == 200) {
-          membershipModal.style.display = 'none';
-          updateBillDateModal.style.display = "none";
-          updateBillDateMembershipModal.style.display = 'none';
-          const successBanner = document.getElementById('successBanner').style.display = 'block';
+          updateBillDateMembershipModal.style.display = "none";
+          membershipModal.style.display = "none";
+          const successBanner = document.getElementById('successBanner');
+          successBanner.style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
           successBannerMessage.textContent = "Membership Updated";
           setTimeout(() => {
-            const successBanner = document.getElementById('successBanner').style.display = 'none';
+            successBanner.style.display = 'none';
           }, 3000);
-          const myTimeout = setTimeout(refreshPage, 5000);
+          setTimeout(refreshPage, 5000);
         }
       })
       .catch((error) => {
-        membershipModal.style.display = 'none';
-        updateBillDateModal.style.display = "none";
-        updateBillDateMembershipModal.style.display = 'none';
-        const errorBanner = document.getElementById('errorBanner').style.display = 'block';
-        const errorMessageBanner = document.getElementById('errorBannerMessage');
-        errorMessageBanner.textContent = error.response.data;
+        updateBillDateMembershipModal.style.display = "none";
+        membershipModal.style.display = "none";
+        console.log(error);
+        // const errorBanner = document.getElementById('errorBanner');
+        // errorBanner.style.display = 'block';
+        // const errorMessageBanner = document.getElementById('errorBannerMessage');
+        // errorMessageBanner.textContent = error.response.data;
         setTimeout(() => {
-          const errorBanner = document.getElementById('errorBanner').style.display = 'none';
+          errorBanner.style.display = 'none';
         }, 3000);
       });
-
   });
 
   var noBillDataChange = document.getElementById('noBillDataChange');
@@ -470,6 +470,7 @@ window.onclick = (event) => {
     membershipModal.style.display = 'none';
     ChangeMembership.style.display = 'none';
     cancelSubscriptionFlow.style.display = "none";
+    updateBillDateMembershipModal.style.display = "none";
   }
 }
 
