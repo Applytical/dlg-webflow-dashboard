@@ -393,6 +393,9 @@ function showNextBillDateModal(e) {
 
   updateBillDateMembershipModal.style.display = 'flex';
 
+  const currentPlan = document.querySelector(".featured");
+  const purchaseId = currentPlan.getAttribute("data--purchase-id");
+
   let minDate = new Date();
   let maxDate = new Date(minDate.getMonth() + 1);
   const nextBillDateStorage = sessionStorage.getItem("next-bill-date")
@@ -419,13 +422,15 @@ function showNextBillDateModal(e) {
     e.preventDefault();
     e.stopPropagation();
     const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
-    axios.post(`${url}/webflow/subscriptions/update`, {
+    axios.post(`${url}/webflow/membership/update/date`, {
       nextBillDate: nextBillDateStorage,
+      purchaseId: purchaseId,
     })
       .then((response) => {
         if (response.status == 200) {
           membershipModal.style.display = 'none';
           updateBillDateModal.style.display = "none";
+          updateBillDateMembershipModal.style.display = 'none';
           const successBanner = document.getElementById('successBanner').style.display = 'block';
           const successBannerMessage = document.getElementById('successBannerMessage');
           successBannerMessage.textContent = "Membership Updated";
