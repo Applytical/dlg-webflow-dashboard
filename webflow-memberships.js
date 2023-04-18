@@ -422,7 +422,7 @@ function showNextBillDateModal(e) {
     e.preventDefault();
     e.stopPropagation();
     const nextBillDateStorage = sessionStorage.getItem("next-bill-date-changed");
-    axios.post(`${url}/webflow/membership/update/date`, {
+    axios.post(`${url}/webflow/memberships/update/date`, {
       nextBillDate: nextBillDateStorage,
       purchaseId: purchaseId,
     })
