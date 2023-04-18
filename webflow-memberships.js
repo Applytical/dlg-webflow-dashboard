@@ -453,6 +453,7 @@ function showNextBillDateModal(e) {
     updateBillDateMembershipModal.style.display = 'none';
   });
   const closeNextBilldDateModal = document.getElementById("membershipModalClose");
+  console.log(closeNextBilldDateModal);
   closeNextBilldDateModal.addEventListener("click", (e) => {
     e.preventDefault();
     membershipModal.style.display = 'none';
