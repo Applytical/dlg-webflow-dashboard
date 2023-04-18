@@ -3,29 +3,27 @@ const customerId = sessionStorage.getItem("customerId");
 const customerEmail = sessionStorage.getItem("email");
 const shopifyTags = sessionStorage.getItem("shopifyTags");
 
-var search = "Livingood Daily Lifestyle";
+const search = "Livingood Daily Lifestyle";
 const arr = shopifyTags.split(", ");
 
+const fetchMembership = (payload) => {
+  const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
+  const key = payload.customerId ? 'customerId' : 'customerEmail';
+  axios.post(`${testingUrl}${endpoint}`, {
+    [key]: payload[key]
+  })
+    .then((response) => {
+      if (response.status == 200) {
+        ShowMemberships(response);
+        sessionStorage.setItem("next-bill-date", response.data.nextBillDate);
+      }
+    });
+}
 
 arr.forEach(tag => {
   if (tag.includes(search)) {
     showLifeTimeCard();
   } else {
-
-    const fetchMembership = (payload) => {
-      const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
-      const key = payload.customerId ? 'customerId' : 'customerEmail';
-      axios.post(`${testingUrl}${endpoint}`, {
-        [key]: payload[key]
-      })
-        .then((response) => {
-          if (response.status == 200) {
-            ShowMemberships(response);
-            const billdate = sessionStorage.setItem("next-bill-date", response.data.nextBillDate)
-          }
-        });
-    }
-
     if (customerId) {
       fetchMembership({ customerId });
     } else if (customerEmail) {
