@@ -158,6 +158,14 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
     });
 
 
+    membershipModalClose.addEventListener("click", (e) => {
+      e.preventDefault();
+      membershipModal.style.display = 'none';
+      ChangeMembership.style.display = 'none';
+      updateBillDateMembershipModal.style.display = 'none';
+    });
+
+
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
     const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
 
@@ -452,21 +460,13 @@ function showNextBillDateModal(e) {
     membershipModal.style.display = 'none';
     updateBillDateMembershipModal.style.display = 'none';
   });
-  const closeNextBilldDateModal = document.getElementById("membershipModalClose");
-  console.log(closeNextBilldDateModal);
+  const closeNextBilldDateModal = document.getElementById("nextBillDateModalClose");
   closeNextBilldDateModal.addEventListener("click", (e) => {
     e.preventDefault();
     membershipModal.style.display = 'none';
     updateBillDateMembershipModal.style.display = 'none';
   });
 }
-
-membershipModalClose.addEventListener("click", (e) => {
-  e.preventDefault();
-  membershipModal.style.display = 'none';
-  ChangeMembership.style.display = 'none';
-  updateBillDateMembershipModal.style.display = 'none';
-});
 
 window.onclick = (event) => {
   if (event.target == membershipModal) {
