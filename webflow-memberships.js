@@ -378,13 +378,6 @@ function showModal(productId) {
     });
 
   });
-
-  membershipModalClose.addEventListener("click", (e) => {
-    e.preventDefault();
-    membershipModal.style.display = 'none';
-    ChangeMembership.style.display = 'none';
-    updateBillDateMembershipModal.style.display = 'none';
-  });
 }
 
 function showNextBillDateModal(e) {
@@ -459,11 +452,16 @@ function showNextBillDateModal(e) {
     e.preventDefault();
     e.stopPropagation();
     membershipModal.style.display = 'none';
-    updateBillDateModal.style.display = "none";
     updateBillDateMembershipModal.style.display = 'none';
   });
 }
 
+membershipModalClose.addEventListener("click", (e) => {
+  e.preventDefault();
+  membershipModal.style.display = 'none';
+  ChangeMembership.style.display = 'none';
+  updateBillDateMembershipModal.style.display = 'none';
+});
 
 window.onclick = (event) => {
   if (event.target == membershipModal) {
