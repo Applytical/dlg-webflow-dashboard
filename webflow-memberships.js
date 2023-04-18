@@ -84,6 +84,7 @@ const getElementById = (id) => document.getElementById(id);
 const membershipModal = getElementById("membershipModal"); // Get the membership modal element
 const ChangeMembership = getElementById("ChangeMembership"); // Get the "Change Membership" button element
 const cancelMembershipFlowBtn = getElementById("cancelMembershipFlowBtn"); // Get the "Cancel Membership" button element
+const cancelMembershipFlow = getElementById("cancelMembershipFlow");
 const membershipModalClose = getElementById("membershipModalClose"); // Get the close button element of the membership
 const modalAgree = getElementById("membershipModalAgree"); // Get the "Agree" button element of the membership modal
 const modalCancel = getElementById("membershipModalCancel"); // Get the "Cancel" button element of the membership modal
@@ -95,7 +96,6 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
   const cancellationReasonsDiv = getElementById("cancellationReasons");
   const areYouSure = getElementById("areYouSure");
   const otherReasonCancel = getElementById("otherReasonCancel");
-  const cancelMembershipFlow = getElementById("cancelMembershipFlow");
   var changeBillDateModal = getElementById('changeBillDateModal');
   membershipModal.style.display = 'flex';
   cancellationReasonsDiv.style.display = "block";
@@ -467,7 +467,7 @@ window.onclick = (event) => {
   if (event.target == membershipModal) {
     membershipModal.style.display = 'none';
     ChangeMembership.style.display = 'none';
-    cancelSubscriptionFlow.style.display = "none";
+    cancelMembershipFlow.style.display = "none";
     updateBillDateMembershipModal.style.display = "none";
   }
 }
