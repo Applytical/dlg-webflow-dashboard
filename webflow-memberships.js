@@ -23,13 +23,17 @@ const fetchMembership = (payload) => {
 for (let i = 0; i < arr.length; i++) {
   if (arr[i].includes(search)) {
     found = true;
-    console.log("Lifetime");
+    showLifeTimeCard();
     break;
   }
 }
 
 if (!found) {
-  console.log("Membership");
+  if (customerId) {
+    fetchMembership({ customerId });
+  } else if (customerEmail) {
+    fetchMembership({ customerEmail });
+  }
 }
 
 async function showLifeTimeCard() {
