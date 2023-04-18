@@ -334,18 +334,20 @@ function showModal(productId) {
   const upgradeTypeMap = {
     MonthlyToAnnual: "Are You Sure You Want to Upgrade Your Monthly To Annual Membership",
     AnnualToMonthly: "Are You Sure You Want to Downgrade Your Annual To Monthly Membership",
-    MonthlyToLifestyle: "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership"
+    MonthlyToLifestyle: "Are You Sure You Want to Upgrade Your Monthly To Lifetime Membership",
+    AnnualToLifestyle: "Are You Sure You Want to Upgrade Your Annual To Lifetime Membership",
   };
 
   let upgradeType = null;
 
   if (productId == annualId && currentPlanProductId == monthlyId) {
     upgradeType = 'MonthlyToAnnual';
-  } else if (productId == monthlyId && currentPlanProductId == annualId) {
-    upgradeType = 'AnnualToMonthly';
   } else if (productId == lifetimeId && currentPlanProductId == monthlyId) {
     upgradeType = 'MonthlyToLifestyle';
-  }
+  } else if (productId == lifetimeId && currentPlanProductId == annualId) {
+    upgradeType = 'AnnualToLifestyle';
+  } else if (productId == monthlyId && currentPlanProductId == annualId) {
+    upgradeType = 'AnnualToMonthly';
 
   subscriptionModalTitle.textContent = upgradeTypeMap[upgradeType];
 
