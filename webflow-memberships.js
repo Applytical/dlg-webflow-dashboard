@@ -2,6 +2,7 @@ const testingUrl = "https://9fae-80-6-132-186.ngrok.io";
 const customerId = sessionStorage.getItem("customerId");
 const customerEmail = sessionStorage.getItem("email");
 const shopifyTags = sessionStorage.getItem("shopifyTags");
+let found = false;
 
 const search = "Livingood Daily Lifestyle";
 const arr = shopifyTags.split(", ");
