@@ -348,7 +348,7 @@ function showModal(productId) {
     upgradeType = 'AnnualToLifestyle';
   } else if (productId == monthlyId && currentPlanProductId == annualId) {
     upgradeType = 'AnnualToMonthly';
-
+  }
   subscriptionModalTitle.textContent = upgradeTypeMap[upgradeType];
 
   const modalAgree = document.getElementById("membershipModalAgree");
