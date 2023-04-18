@@ -430,17 +430,15 @@ function showNextBillDateModal(e) {
           setTimeout(() => {
             successBanner.style.display = 'none';
           }, 3000);
-          setTimeout(refreshPage, 5000);
         }
       })
       .catch((error) => {
         updateBillDateMembershipModal.style.display = "none";
         membershipModal.style.display = "none";
-        console.log(error);
-        // const errorBanner = document.getElementById('errorBanner');
-        // errorBanner.style.display = 'block';
-        // const errorMessageBanner = document.getElementById('errorBannerMessage');
-        // errorMessageBanner.textContent = error.response.data;
+        const errorBanner = document.getElementById('errorBanner');
+        errorBanner.style.display = 'block';
+        const errorMessageBanner = document.getElementById('errorBannerMessage');
+        errorMessageBanner.textContent = error.response.data;
         setTimeout(() => {
           errorBanner.style.display = 'none';
         }, 3000);
@@ -451,6 +449,12 @@ function showNextBillDateModal(e) {
   noBillDataChange.addEventListener('click', function (e) {
     e.preventDefault();
     e.stopPropagation();
+    membershipModal.style.display = 'none';
+    updateBillDateMembershipModal.style.display = 'none';
+  });
+
+  membershipModalClose.addEventListener("click", (e) => {
+    e.preventDefault();
     membershipModal.style.display = 'none';
     updateBillDateMembershipModal.style.display = 'none';
   });
