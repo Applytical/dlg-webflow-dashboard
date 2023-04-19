@@ -5,7 +5,7 @@ const shopifyCustomerTags = sessionStorage.getItem("shopifyTags");
 let found = false;
 
 const lifetime = "Livingood Daily Lifestyle";
-const tags = shopifyTags.split(", ");
+const tags = shopifyCustomerTags.split(", ");
 
 const fetchMembership = (payload) => {
   const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
