@@ -180,8 +180,8 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
     const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
 
-    cancelFlowGoBack.forEach((element) => {
-      element.addEventListener('click', (e) => {
+    // cancelFlowGoBack.forEach((element) => {
+      cancelFlowGoBack.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
         otherReasonCancel.style.display = "none";
@@ -189,7 +189,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
         areYouSure.style.display = "none";
         cancellationReasonsDiv.style.display = "block";
       });
-    });
+    // });
 
     [modalClose, cancelFlowModalClose].forEach((element) => {
       element.addEventListener('click', (e) => {
