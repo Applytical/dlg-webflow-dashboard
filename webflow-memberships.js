@@ -46,6 +46,8 @@ async function showLifeTimeCard() {
     const productId = el.getAttribute("data-product-id");
 
     const currentPlan = el.querySelectorAll(".membership-btn");
+    // const lifeTimeBtn = el.querySelectorAll(".btn-lifetime-disabled");
+
 
     if (productId == 101) {
 
@@ -61,10 +63,16 @@ async function showLifeTimeCard() {
     } else {
       // Update current plan button style
       currentPlan.forEach(function (el) {
-        el.classList.remove("btn-primary");
+        el.style.remove("hover-none");
         el.classList.add("btn-lifetime-disabled");
-        el.textContent = "Downgrade not available";
 
+        // Disable click event for the button
+        el.style.pointerEvents = "none";
+
+      });
+
+      lifeTimeBtn.forEach(function (el) {
+      
         // Disable click event for the button
         el.style.pointerEvents = "none";
 
