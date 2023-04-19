@@ -46,7 +46,7 @@ async function showLifeTimeCard() {
     const productId = el.getAttribute("data-product-id");
 
     const currentPlan = el.querySelectorAll(".membership-btn");
-    // const lifeTimeBtn = el.querySelectorAll(".btn-lifetime-disabled");
+    const lifeTimeBtn = el.querySelectorAll(".btn-lifetime");
 
 
     if (productId == 101) {
@@ -63,8 +63,7 @@ async function showLifeTimeCard() {
     } else {
       // Update current plan button style
       currentPlan.forEach(function (el) {
-        // el.style.remove("hover-none");
-        el.classList.add("btn-lifetime-disabled");
+        el.style.display = "none";
 
         // Disable click event for the button
         el.style.pointerEvents = "none";
@@ -72,7 +71,8 @@ async function showLifeTimeCard() {
       });
 
       lifeTimeBtn.forEach(function (el) {
-      
+        el.style.display = "block";
+
         // Disable click event for the button
         el.style.pointerEvents = "none";
 
