@@ -185,7 +185,6 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
         e.preventDefault();
         e.stopPropagation();
         otherReasonCancel.style.display = "none";
-        changeBillDateModal.style.display = "none";
         areYouSure.style.display = "none";
         cancellationReasonsDiv.style.display = "block";
       });
