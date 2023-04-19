@@ -63,7 +63,7 @@ async function showLifeTimeCard() {
     } else {
       // Update current plan button style
       currentPlan.forEach(function (el) {
-        el.style.remove("hover-none");
+        // el.style.remove("hover-none");
         el.classList.add("btn-lifetime-disabled");
 
         // Disable click event for the button
