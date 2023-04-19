@@ -1,11 +1,11 @@
 const testingUrl = "https://9fae-80-6-132-186.ngrok.io";
 const customerId = sessionStorage.getItem("customerId");
 const customerEmail = sessionStorage.getItem("email");
-const shopifyTags = sessionStorage.getItem("shopifyTags");
+const shopifyCustomerTags = sessionStorage.getItem("shopifyTags");
 let found = false;
 
-const search = "Livingood Daily Lifestyle";
-const arr = shopifyTags.split(", ");
+const lifetime = "Livingood Daily Lifestyle";
+const tags = shopifyTags.split(", ");
 
 const fetchMembership = (payload) => {
   const endpoint = payload.customerId ? '/webflow/memberships/id' : '/webflow/memberships/email';
@@ -21,8 +21,8 @@ const fetchMembership = (payload) => {
     });
 }
 
-for (let i = 0; i < arr.length; i++) {
-  if (arr[i].includes(search)) {
+for (let i = 0; i < tags.length; i++) {
+  if (tags[i].includes(lifetime)) {
     found = true;
     showLifeTimeCard();
     break;
