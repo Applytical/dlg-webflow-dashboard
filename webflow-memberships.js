@@ -180,7 +180,7 @@ cancelMembershipFlowBtn.addEventListener("click", async function (e) {
     const cancelFlowGoBack = document.getElementById("cancelFlowGoBack");
     const cancelFlowBillDateGoBack = document.getElementById("cancelFlowBillDateGoBack");
 
-    [cancelFlowGoBack, cancelFlowBillDateGoBack].forEach((element) => {
+    cancelFlowGoBack.forEach((element) => {
       element.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
