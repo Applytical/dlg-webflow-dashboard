@@ -1,0 +1,49 @@
+<style>
+ .isDisabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5;
+  text-decoration: none;
+}   
+</style>
+<script>
+    const emailCustomLink = document.getElementById('secureLink');
+    // const emailCustomLinkErrors = document.querySelectorAll('[data-custom-email-error]');
+    // const emailCustomLinkSuccess = document.querySelectorAll('[data-custom-email-success]');
+    // const emailCustomLinkLoading = document.querySelectorAll('[data-custom-email-loading]');
+    // const emailCustomLinkBtn = document.querySelectorAll('[data-custom-email-btn]');
+    // const emailCustomLinkIdle = document.querySelectorAll('[data-custom-email-idle]');
+  
+    emailCustomLink.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+  
+      const email = sessionStorage.getItem("email");
+      window.localStorage.setItem('emailForSignIn', email);
+  
+  
+      axios.post(`${url}/firebase/customer/send-custom-verification-email`, {
+        userEmail: email,
+        redirectUrl: "https://hub.livingooddaily.com/account/finish-signup"
+      })
+        .then((response) => {
+          console.log(response);
+          if(response.status == 200){
+                        let successBanner = document.getElementById('secureLinkSuccess').style.display = "block";
+              emailCustomLink.classList.add("isDisabled");
+                       setTimeout(() => {
+                 let successBanner = document.getElementById('secureLinkSuccess').style.display = 'none';
+                emailCustomLink.classList.remove("isDisabled");
+                }, 5000);
+          }
+        })
+        .catch((error) => {
+                          const errorBanner = document.getElementById('secureLinkError').style.display = "block";
+                       setTimeout(() => {
+                 emailCustomLink.classList.remove("isDisabled");
+                  const errorBanner = document.getElementById('secureLinkError').style.display = 'none';
+                }, 5000);
+        });
+    });
+  </script>
+  

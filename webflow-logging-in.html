@@ -1,0 +1,25 @@
+<script>
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const token = urlParams.get('token');
+    if(token){
+    
+    firebase.auth().signInWithCustomToken(token)
+      .then((authUser) => {
+        // Signed in
+        var user = authUser;
+         window.location.href = webflowAuth.loginRedirectPath;
+        // ...
+      })
+      .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+          const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+          const errorMessageBanner = document.getElementById('errorBannerMessage');
+          errorMessageBanner.textContent = errorMessage
+    
+      });
+    } else {
+    windows.location.href = "/"
+    }
+</script>

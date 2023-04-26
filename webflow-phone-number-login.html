@@ -1,0 +1,214 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.min.css" rel="stylesheet"/>
+
+<style>
+.hide {
+		display: none;
+}
+#valid-msg {
+    color: #10B981;
+}
+#error-msg {
+		color: #F43F5E;
+}
+.iti {
+	width: 100%;
+}
+.iti__flag-container {
+  margin-left: 12px;
+}
+.iti--allow-dropdown input,
+.iti--allow-dropdown input[type=tel],
+.iti--allow-dropdown input[type=text],
+.iti--separate-dial-code input,
+.iti--separate-dial-code input[type=tel],
+.iti--separate-dial-code input[type=text] {
+    padding-left: 64px;
+    padding-right: 156px;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js"></script>
+
+<!-- Intl-tel-input -->
+<script>
+var input = document.querySelector("#phone"),
+	dialCode = document.querySelector(".dialCode"),
+ 	errorMsg = document.querySelector("#error-msg"),
+    validMsg = document.querySelector("#valid-msg");
+
+var iti = intlTelInput(input, {
+  initialCountry: "us",
+  placeholderNumberType: 'FIXED_LINE',
+    customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+    if (selectedCountryData.iso2 == "us") {
+    	selectedCountryPlaceholder = "(999) 999-9999"
+    }
+    return selectedCountryPlaceholder;
+  },
+});
+
+var updateInputValue = function (event) {
+       dialCode.value = "+" + iti.getSelectedCountryData().dialCode;
+};
+input.addEventListener('input', updateInputValue, false);
+input.addEventListener('countrychange', updateInputValue, false);
+
+var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+var reset = function() {
+  input.classList.remove("error");
+  errorMsg.innerHTML = "";
+  errorMsg.classList.add("hide");
+  validMsg.classList.add("hide");
+};
+
+input.addEventListener('blur', function() {
+  reset();
+  if (input.value.trim()) {
+    if (iti.isValidNumber()) {
+      validMsg.classList.remove("hide");
+    } else {
+      input.classList.add("error");
+      var errorCode = iti.getValidationError();
+      errorMsg.innerHTML = errorMap[errorCode];
+      errorMsg.classList.remove("hide");
+    }
+  }
+});
+
+input.addEventListener('change', reset);
+input.addEventListener('keyup', reset);
+
+ firebase.auth().useDeviceLanguage();
+    var phoneLink = document.querySelectorAll('[data-phone-form]');
+    var phoneFormErrors = document.querySelectorAll('[data-phone-error]');
+    var phoneFormLoading = document.querySelectorAll('[data-phone-loading]');
+    var phoneFormIdle = document.querySelectorAll('[data-phone-idle]');
+    var phoneNumber = document.querySelector('[data-form-phone-number]');
+    var accountEmail = document.getElementById('accountEmail');
+    var currentEmailGrid = document.getElementById('currentEmailGrid');
+    const phoneNumberEmail = sessionStorage.getItem("email");
+
+    if (phoneNumberEmail) {
+     accountEmail.value = phoneNumberEmail;
+     var currentEmail = document.getElementById('currentEmail');
+     currentEmail.textContent = phoneNumberEmail;
+
+    } else {
+    	 currentEmailGrid.style.display = "none";
+       accountEmail.style.display = "block";
+    }
+    var requestButton = document.querySelector('[data-form-phone-request]');
+    var oneTimeLogin = document.querySelector('[data-form-phone-login]');
+
+    phoneLink.forEach(function (el) {
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('phone', {
+        'size': 'invisible',
+        'callback': (response) => {
+          //reCAPTCHA solved, allow signInWithPhoneNumber.
+          onSignInSubmit();
+        }
+      });
+      const appVerifier = window.recaptchaVerifier;
+      
+      // Handle code request button
+      var requestButton = document.querySelector('[data-form-phone-request]')
+			requestButton.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          requestButton.value = "Request Sent";
+					const phoneNummber = dialCode.value + phoneNumber.value;
+          console.log(phoneNumber);
+          firebase.auth().signInWithPhoneNumber(dialCode.value+phoneNumber.value, appVerifier)
+            .then((confirmationResult) => {
+              // SMS sent. Prompt user to type the code from the message, then sign the
+              // user in with confirmationResult.confirm(code).
+              window.confirmationResult = confirmationResult;
+
+              setTimeout(() => {
+                requestButton.value = "Send Again";
+              }, 5000)
+
+              oneTimeLogin.style.display = "block";
+              // ...
+            }).catch((error) => {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              console.log(errorCode);
+              console.log(errorMessage);
+              phoneFormErrors.forEach(function (el) {
+                el.innerText = error.message;
+                el.style.display = 'block';
+              });
+              setTimeout(function () {
+                phoneFormIdle.forEach(function (el) { el.style.display = null; });
+                phoneFormLoading.forEach(function (el) { el.style.display = 'none'; });
+              }, 1000);
+            });
+
+        });
+        
+      // Handle submit
+      var oneTimeLogin = el.querySelector('[data-form-phone-login]');
+      oneTimeLogin.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        var phoneNumberCode = el.querySelector('[data-form-phone-code]');
+        phoneNumberCode.innerHTML = `<i class="fa fa-circle-o-notch fa-spin"></i>Loading`;
+        confirmationResult.confirm(phoneNumberCode.value).then((authUser) => {
+          // User signed in successfully.
+          user = authUser;
+           const urlHistory = localStorage.getItem('url');
+		switch (urlHistory) {
+    		case "Membership":
+            	localStorage.removeItem('url');
+        		window.location.href = webflowAuth.loginRedirectPath;
+        		break;
+    		case "OrderHistory":
+        		localStorage.removeItem('url');
+        		window.location.href = webflowAuth.loginRedirectOrderHistoryPath;
+        		break;
+            case "LoopHubLink":
+        		localStorage.removeItem('url');
+        		const shopifyCustomerId = sessionStorage.getItem("shopifyCustomerId");
+		if (shopifyCustomerId) {
+			const token = sessionStorage.getItem("loginToken");
+			const url = `https://dr-livingood.myshopify.com/a/loop_subscriptions/customer/${shopifyCustomerId}?token=${token}`
+		window.open(url, '_blank');
+        } else {
+			const url = `https://hub.livingooddaily.com/no-subscriptions`
+            window.open(url, '_blank');
+		}
+    window.location.href = "/home";
+        		break;
+    		default:
+        window.location.href = webflowAuth.loginRedirectPath;
+		}
+        }).catch((error) => {
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          phoneFormErrors.forEach(function (el) {
+            el.innerText = error.message;
+            el.style.display = 'block';
+          });
+          setTimeout(function () {
+            phoneFormIdle.forEach(function (el) { el.style.display = null; });
+            phoneFormLoading.forEach(function (el) { el.style.display = 'none'; });
+          }, 1000);
+        });
+      });
+
+      el.addEventListener('submit', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        phoneFormErrors.forEach(function (el) { el.style.display = 'none'; });
+        phoneFormIdle.forEach(function (el) { el.style.display = 'none'; });
+        phoneFormLoading.forEach(function (el) { el.style.display = 'block'; });
+        ;
+      })
+    });
+</script>

@@ -1,0 +1,51 @@
+<script>
+    const shopifyCustomerTags = sessionStorage.getItem("shopifyTags");
+  
+    if (shopifyCustomerTags) {
+      var lifestyleTag = "Livingood Daily Lifestyle";
+      var checkoutChampTag = "ccportal";
+      var LoopTag = "Loop Active Subscriber";
+  
+      const array = shopifyCustomerTags.split(", ");
+      let isMember = false;
+  
+      array.forEach(tag => {
+        if (tag.includes(lifestyleTag)) {
+          isMember = true;
+  
+          const MembershipLink = document.getElementById("MembershipLink").style.display = "flex";
+          const MembersAreaLink = document.getElementById("MembersAreaLink").style.display = "flex";
+        } else if (tag.includes(checkoutChampTag)) {
+          const CheckoutChampLink = document.getElementById("CheckoutChampLink").style.display = "flex";
+          isMember = true;
+        } else if (tag.includes(LoopTag)) {
+          isMember = true;
+          const LoopLink = document.getElementById("LoopLink").style.display = "flex";
+        }
+      });
+    } else {
+      //window.location.href = "/";
+    }
+    const orderHistory = document.getElementById("orderHistory");
+  
+    orderHistory.addEventListener('click', function (e) {
+      const addOrderHistory = localStorage.setItem("url", "OrderHistory");
+  
+    });
+    const MembershipLink = document.getElementById("MembershipLink");
+  
+    MembershipLink.addEventListener('click', function (e) {
+      const MembershipLink = localStorage.setItem("url", "Membership");
+  
+    });
+    
+    
+     //const LoopHubLink = document.getElementById("LoopHubLink");
+  
+   // LoopHubLink.addEventListener('click', function (e) {
+     // const LoopHubLink = localStorage.setItem("url", "LoopHubLink");
+  
+   // });
+    
+  
+  </script>

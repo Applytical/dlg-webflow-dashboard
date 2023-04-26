@@ -1,0 +1,79 @@
+<script>
+  const logout = sessionStorage.getItem("logout");
+  if(logout){
+     const SuccessBanner = document.getElementById('successBanner').style.display = 'block';
+   const successBannerMessage = document.getElementById('successBannerMessage');
+     successBannerMessage.textContent = "You have Been Logged Out";
+    sessionStorage.removeItem('logout');
+  }
+ 
+  const closeSucessBanner = document.getElementById('successBanner');
+ 
+ closeSucessBanner.addEventListener("click", function (e) {
+   e.preventDefault();
+   closeSucessBanner.style.display = 'none';
+ 
+ });
+const emailCustomLink = document.querySelectorAll('[data-custom-email]');
+const emailCustomLinkErrors = document.querySelectorAll('[data-custom-email-error]');
+const emailCustomLinkSuccess = document.querySelectorAll('[data-custom-email-success]');
+const emailCustomLinkLoading = document.querySelectorAll('[data-custom-email-loading]');
+const emailCustomLinkIdle = document.querySelectorAll('[data-custom-email-idle]');
+
+emailCustomLink.forEach(function (el) {
+  var customerEmail = el.querySelector('[data-link-email-custom]');
+
+  el.addEventListener('submit', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    emailCustomLinkErrors.forEach(function (el) { el.style.display = 'none'; });
+    emailCustomLinkSuccess.forEach(function (el) { el.style.display = 'none'; })
+    emailCustomLinkLoading.forEach(function (el) { el.style.display = 'block'; });
+    emailCustomLinkIdle.forEach(function (el) { el.style.display = 'none'; });
+   
+    axios.post(`${url}/firebase/customer/check`, {
+      email: customerEmail.value
+    })
+      .then((response) => {
+      if(response.status == 200){
+        console.log(response);
+        window.localStorage.setItem('emailForSignIn', customerEmail.value);
+        window.sessionStorage.setItem('email', customerEmail.value);
+        if (response.data.first_name || response.data.last_name) {
+          sessionStorage.setItem("name", response.data.first_name + " " + response.data.last_name );
+        }
+        if (response.data.shopifyCustomerId) {
+          sessionStorage.setItem("shopifyCustomerId", response.data.shopifyCustomerId);
+        }
+        if (response.data.loopToken) {
+          sessionStorage.setItem("loginToken", response.data.loopToken);
+        }
+        if (response.data.shopifyTags) {
+          console.log(response.data.shopifyTags);
+          const tagsArray = response.data.shopifyTags.split(',');
+          sessionStorage.setItem("shopifyTags", tagsArray);
+        }
+        window.location.href = "/account/login";
+      }
+      })
+      .catch((error) => {
+      console.log(error.response);
+        if(error.response.data == "Customer Not Found"){
+            window.sessionStorage.setItem('email', customerEmail.value);
+            window.location.href = "/account/login/create";
+        }else {
+          setTimeout(function () {
+            emailCustomLinkErrors.forEach(function (el) {
+              el.innerText = error.message;
+              el.style.display = 'block';
+            });
+
+            emailCustomLinkIdle.forEach(function (el) { el.style.display = null; });
+            emailCustomLinkLoading.forEach(function (el) { el.style.display = 'none'; });
+          }, 1000);
+        }
+      });
+  });
+});
+</script>

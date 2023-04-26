@@ -1,0 +1,130 @@
+<script>
+    const logout = sessionStorage.getItem("logout");
+  
+    if (logout) {
+      const SuccessBanner = document.getElementById('successBanner').style.display = 'block';
+      const successBannerMessage = document.getElementById('successBannerMessage');
+      successBannerMessage.textContent = "You have Been Logged Out";
+      sessionStorage.removeItem('logout');
+    }
+  
+    const closeSucessBanner = document.getElementById('successBanner');
+  
+    closeSucessBanner.addEventListener("click", function (e) {
+      e.preventDefault();
+      closeSucessBanner.style.display = 'none';
+  
+    });
+  
+    // Get query string from URL
+    const queryString = window.location.search;
+    // Create URLSearchParams object from query string
+    const urlParams = new URLSearchParams(queryString);
+    // Get email parameter from URL
+    const platformEmail = urlParams.get('email')
+  
+  
+    const emailCustomLink = document.querySelectorAll('[data-custom-email]');
+    const emailCustomLinkErrors = document.querySelectorAll('[data-custom-email-error]');
+    const emailCustomLinkSuccess = document.querySelectorAll('[data-custom-email-success]');
+    const emailCustomLinkLoading = document.querySelectorAll('[data-custom-email-loading]');
+    const emailCustomLinkIdle = document.querySelectorAll('[data-custom-email-idle]');
+  
+  
+    emailCustomLink.forEach(function (el) {
+  
+      if (platformEmail) {
+  
+        var customerEmail = el.querySelector('[data-link-email-custom]').value = platformEmail;
+  
+        // Send POST request to check if customer exists in Firebase
+        axios.post(`${url}/firebase/customer/check`, {
+          email: platformEmail
+        })
+          .then((response) => {
+            // If customer is found
+            if (response.status == 200) {
+              // Store email in local and session storage
+              window.localStorage.setItem('emailForSignIn', platformEmail);
+              window.sessionStorage.setItem('email', platformEmail);
+              // Store customer name, ID, and login token in session storage
+              sessionStorage.setItem("name", response.data.first_name + " " + response.data.last_name);
+              sessionStorage.setItem("shopifyCustomerId", response.data.shopifyCustomerId);
+              sessionStorage.setItem("loginToken", response.data.loopToken);
+              console.log(response.data.shopifyTags);
+              // Split tags string into array and store in session storage
+              const tagsArray = response.data.shopifyTags.split(',');
+              sessionStorage.setItem("shopifyTags", tagsArray);
+              // Redirect to login page
+              window.location.href = "/account/login";
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            // If customer is not found
+            if (error.response.data == "Customer Not Found") {
+              // Store email in session storage and redirect to create account page
+              window.sessionStorage.setItem('email', platformEmail);
+              window.location.href = "/account/login/create";
+            } else {
+              // Show error message on page
+              const errorBanner = document.getElementById('errorBanner').style.display = 'block';
+              const errorMessageBanner = document.getElementById('errorBannerMessage');
+              errorMessageBanner.textContent = error.response.data
+            }
+          });
+      } else {
+        var customerEmail = el.querySelector('[data-link-email-custom]');
+         var LoadingLink = el.querySelector(".global-link-loading");
+        LoadingLink.style.display = "none";
+              var SubmitBtn = el.querySelector(".global-link-submit");
+        SubmitBtn.style.display = "block";
+        
+    
+        el.addEventListener('submit', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+  
+          emailCustomLinkErrors.forEach(function (el) { el.style.display = 'none'; });
+          emailCustomLinkSuccess.forEach(function (el) { el.style.display = 'none'; })
+          emailCustomLinkLoading.forEach(function (el) { el.style.display = 'block'; });
+          emailCustomLinkIdle.forEach(function (el) { el.style.display = 'none'; });
+  
+          axios.post(`${url}/firebase/customer/check`, {
+            email: customerEmail.value
+          })
+            .then((response) => {
+              if (response.status == 200) {
+                console.log(response);
+                window.localStorage.setItem('emailForSignIn', customerEmail.value);
+                window.sessionStorage.setItem('email', customerEmail.value);
+                sessionStorage.setItem("name", response.data.first_name + " " + response.data.last_name);
+                sessionStorage.setItem("shopifyCustomerId", response.data.shopifyCustomerId);
+                sessionStorage.setItem("loginToken", response.data.loopToken);
+                console.log(response.data.shopifyTags);
+                const tagsArray = response.data.shopifyTags.split(',');
+                sessionStorage.setItem("shopifyTags", tagsArray);
+                window.location.href = "/account/login";
+              }
+            })
+            .catch((error) => {
+              if (error.response.data == "Customer Not Found") {
+                window.sessionStorage.setItem('email', customerEmail.value);
+                window.location.href = "/account/login/create";
+              } else {
+                setTimeout(function () {
+                  emailCustomLinkErrors.forEach(function (el) {
+                    el.innerText = error.message;
+                    el.style.display = 'block';
+                  });
+  
+                  emailCustomLinkIdle.forEach(function (el) { el.style.display = null; });
+                  emailCustomLinkLoading.forEach(function (el) { el.style.display = 'none'; });
+                }, 1000);
+              }
+            });
+        });
+      }
+    });
+  
+  </script>

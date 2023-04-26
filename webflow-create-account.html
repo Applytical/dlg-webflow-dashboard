@@ -1,0 +1,147 @@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.min.css" rel="stylesheet"/>
+
+<style>
+.hide {
+		display: none;
+}
+#valid-msg {
+    color: #10B981;
+}
+#error-msg {
+		color: #F43F5E;
+}
+.iti {
+	width: 100%;
+}
+.iti__flag-container {
+  margin-left: 12px;
+}
+.iti--allow-dropdown input,
+.iti--allow-dropdown input[type=tel],
+.iti--allow-dropdown input[type=text],
+.iti--separate-dial-code input,
+.iti--separate-dial-code input[type=tel],
+.iti--separate-dial-code input[type=text] {
+    padding-left: 64px;
+    padding-right: 12px;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.min.js"></script>
+
+<!-- Intl-tel-input -->
+<script>
+  var input = document.querySelector("#phone"),
+    dialCode = document.querySelector(".dialCode"),
+    errorMsg = document.querySelector("#error-msg"),
+    validMsg = document.querySelector("#valid-msg");
+
+    var iti = intlTelInput(input, {
+      initialCountry: "us",
+      placeholderNumberType: 'FIXED_LINE',
+        customPlaceholder: function(selectedCountryPlaceholder, selectedCountryData) {
+        if (selectedCountryData.iso2 == "us") {
+          selectedCountryPlaceholder = "(999) 999-9999"
+        }
+        return selectedCountryPlaceholder;
+      },
+    });
+
+  var updateInputValue = function (event) {
+    dialCode.value = "+" + iti.getSelectedCountryData().dialCode;
+  };
+  input.addEventListener('input', updateInputValue, false);
+  input.addEventListener('countrychange', updateInputValue, false);
+
+  var errorMap = ["Invalid number", "Invalid country code", "Too short", "Too long", "Invalid number"];
+
+  var reset = function () {
+    input.classList.remove("error");
+    errorMsg.innerHTML = "";
+    errorMsg.classList.add("hide");
+    validMsg.classList.add("hide");
+  };
+
+  input.addEventListener('blur', function () {
+    reset();
+    if (input.value.trim()) {
+      if (iti.isValidNumber()) {
+        validMsg.classList.remove("hide");
+      } else {
+        input.classList.add("error");
+        var errorCode = iti.getValidationError();
+        errorMsg.innerHTML = errorMap[errorCode];
+        errorMsg.classList.remove("hide");
+      }
+    }
+  });
+
+  input.addEventListener('change', reset);
+  input.addEventListener('keyup', reset);
+
+  // Sign Up Form Event Listerner
+  const signupForms = document.querySelectorAll('[data-signup-form]');
+  const signupErrors = document.querySelectorAll('[data-signup-error]');
+  const signupLoading = document.querySelectorAll('[data-signup-loading]');
+  const signupSuccess = document.querySelectorAll('[data-signup-success]');
+  
+  const hideFormOnSuccess = document.querySelectorAll('[data-form-success]');
+  const signupIdle = document.querySelectorAll('[data-signup-idle]');
+
+  signupForms.forEach(function (el) {
+
+    // Define Form fields Selectors
+    const signupEmail = el.querySelector('[data-signup-email]');
+    const signupPhone = el.querySelector('[data-signup-phone]');
+    let uuid = self.crypto.randomUUID();
+    const signupPassword = el.querySelector('[data-signup-password]');
+    if (signupPassword.value == null) {
+    	signupPassword.value = uuid;
+    }
+    
+    const email = sessionStorage.getItem("email");
+  	if(email){
+ 			signupEmail.value = email
+  	}
+
+    el.addEventListener('submit', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      signupErrors.forEach(function (el) { el.style.display = 'none'; });
+      signupLoading.forEach(function (el) { el.style.display = 'block'; });
+      signupIdle.forEach(function (el) { el.style.display = 'none'; });
+
+
+      axios.post(`${url}/firebase/customer/create`, {
+        email: signupEmail.value,
+        phone: dialCode.value+signupPhone.value,
+        password: signupPassword.value
+      })
+        .then((response) => {
+          if (response.status == 200) {
+       
+            signupSuccess.forEach(function (el) {
+              el.style.display = 'block';
+            });
+             hideFormOnSuccess.forEach(function (el) {
+              el.style.display = 'none';
+            });
+
+
+          }
+        })
+        .catch((error) => {
+          setTimeout(function () {
+            signupErrors.forEach(function (el) {
+              el.innerText = error.response.data;
+              el.style.display = 'block';
+            });
+
+            signupLoading.forEach(function (el) { el.style.display = 'none'; });
+            signupIdle.forEach(function (el) { el.style.display = null; });
+          }, 1000);
+        });
+    });
+  });
+</script>

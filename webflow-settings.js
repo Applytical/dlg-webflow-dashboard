@@ -1,5 +1,7 @@
 const customerEmail = sessionStorage.getItem("email");
+const mainDashboard = document.getElementById('mainDashboard').style.display = 'flex';
 const customerId = sessionStorage.getItem("customerId");
+const cardUrl = "https://hub2.livingooddaily.com/auth";
 axios.post(`${url}/webflow/customer/`, {
   email: customerEmail
 })

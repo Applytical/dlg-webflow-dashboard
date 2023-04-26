@@ -1,0 +1,8 @@
+<script>
+    const name = sessionStorage.getItem("name");
+    if(name){
+    const welcomeMessage = document.getElementById("MembersWelcomeMessage");
+    const firstName = name.substring(0, name.indexOf(' ')); // First Name
+    welcomeMessage.textContent = `Welcome, ${firstName}`
+    }
+</script>
